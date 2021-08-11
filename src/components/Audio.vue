@@ -13,17 +13,32 @@
     <Button @click="sendFile()" style="margin-right: 10px">Send File to Microcontroller</Button>
   </Panel>
   <Panel header="Record Audio">
-    <p>In this panel, you can record some audio, select the language which you spoke and then send that for processing towards the microcontroller. Be aware, the compression on the audio is quite severe, so quality is not very good.</p>
-    <Button @click="startRecord()" type="button" id="button_record" class="p-button" style="margin-right: 10px">Record</Button>
-    <Button @click="stopRecord()" type="button" id="button_stop" class="p-button-danger" style="margin-right: 10px">Stop Recording</Button>
-    <Button id="play-btn" class="p-button" disabled>play</Button><br>
+    <p>In this panel, you can record some audio, select the language which you spoke and then send that for processing
+      towards the microcontroller. Be aware, the compression on the audio is quite severe, so quality is not very
+      good.</p>
+    <Button @click="startRecord()" type="button" id="button_record" class="p-button" style="margin-right: 10px">Record
+    </Button>
+    <Button @click="stopRecord()" type="button" id="button_stop" class="p-button-danger" style="margin-right: 10px">Stop
+      Recording
+    </Button>
+    <Button id="play-btn" class="p-button" disabled>play</Button>
+    <br>
 
     <AutoComplete v-model="selectedLanguage2" :dropdown="true" :suggestions="filteredLanguages.value"
                   placeholder="Select language" @complete="searchLanguage($event)"
-                  field="language" style="margin-bottom: 10px; margin-top: 10px"/> <br>
+                  field="language" style="margin-bottom: 10px; margin-top: 10px"/>
+    <br>
 
     <Button @click="sendRecording()" id="send-btn" class="p-button" disabled>Send Audio!</Button>
 
+  </Panel>
+  <Panel header="Stream Audio">
+    <p>In this panel, you can stream audio IN REALTIME to the prototype.</p>
+    <Button @click="startStream()" type="button" id="start_stream" class="p-button" style="margin-right: 10px">Start
+      stream
+    </Button>
+    <Button @click="stopStream()" type="button" id="stop_stream" class="p-button" style="margin-right: 10px">Stop stream
+    </Button>
   </Panel>
 
 </template>
@@ -208,6 +223,102 @@ export default defineComponent({
       fileReader.readAsArrayBuffer(blob);
     }
 
+    function startStream() {
+      const startRecording = document.getElementById('start_stream');
+      const stopRecording = document.getElementById('stop_stream');
+
+      // @ts-ignore
+      // eslint-disable-next-line no-undef
+      const socketio = io('http://127.0.0.1:5000/');
+      const socket = socketio.on('connect', function() {
+        // @ts-ignore
+        startRecording.disabled = false;
+      });
+
+      socket.on('connect response', function(data: any) {
+        console.log(data);
+      });
+
+      // @ts-ignore
+      startRecording.disabled = true;
+      let blobCounter = 0;
+
+      navigator.getUserMedia({
+        audio: true
+      }, function (stream) {
+        // @ts-ignore
+        // eslint-disable-next-line no-undef
+        let recordAudio = RecordRTC(stream, {
+          type: 'audio',
+          mimeType: 'audio/webm',
+          sampleRate: 44100,
+          desiredSampRate: 16000,
+
+          // @ts-ignore
+          // eslint-disable-next-line no-undef
+          recorderType: StereoAudioRecorder,
+          numberOfAudioChannels: 1,
+
+
+          //1)
+          // get intervals based blobs
+          // value in milliseconds
+          // as you might not want to make detect calls every seconds
+          timeSlice: 2000,
+
+          //2)
+          // as soon as the stream is available
+          ondataavailable: function (blob: any) {
+
+            // @ts-ignore
+            if (stopRecording.disabled == false) {
+              // 3
+              // making use of socket.io-stream for bi-directional
+              // streaming, create a stream
+
+              //var stream = ss.createStream();
+
+              // stream directly to server
+              // it will be temp. stored locally\
+
+              console.log("Sending a blob to backend")
+              socket.emit('stream', {
+                'data': blob,
+                'size': blob.size,
+                'order': blobCounter
+              })
+
+              blobCounter++;
+
+              //ss(socket).emit('stream', stream, {
+              //    name: 'stream.wav',
+              //    size: blob.size
+              //});
+              // pipe the audio blob to the read stream
+              //ss.createBlobReadStream(blob).pipe(stream);
+            }
+          }
+        });
+
+        recordAudio.startRecording();
+        // @ts-ignore
+        stopRecording.disabled = false;
+      }, function (error) {
+        console.error(JSON.stringify(error));
+      });
+    }
+
+    function stopStream() {
+      const startRecording = document.getElementById('start_stream');
+      const stopRecording = document.getElementById('stop_stream');
+
+      // recording stopped
+      // @ts-ignore
+      startRecording.disabled = false;
+      // @ts-ignore
+      stopRecording.disabled = true;
+    }
+
     return {
       selectedLanguage1,
       selectedLanguage2,
@@ -221,6 +332,8 @@ export default defineComponent({
       startRecord,
       stopRecord,
       sendRecording,
+      startStream,
+      stopStream
     }
   },
   created() {
