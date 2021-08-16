@@ -56,6 +56,7 @@ export default defineComponent({
     let recorder: any; // Stores the MediaRecorder object
     let mime: any; // Stores the mime type of the recording
     let audio: any = undefined; // Stores the audio of the recording
+    let socket: any; // Stores the socket connection for audio streaming
 
     // Set supported languages.
     const languages = ref([
@@ -180,6 +181,7 @@ export default defineComponent({
     function stopRecord() {
       // @ts-ignore
       recorder.stop();
+      
     }
 
     /**
@@ -230,9 +232,9 @@ export default defineComponent({
       // @ts-ignore
       // eslint-disable-next-line no-undef
       const socketio = io('http://127.0.0.1:5000/');
-      const socket = socketio.on('connect', function() {
+      socket = socketio.on('connect', function() {
         // @ts-ignore
-        startRecording.disabled = false;
+        startRecording.disabled = true;
       });
 
       socket.on('connect response', function(data: any) {
@@ -317,6 +319,11 @@ export default defineComponent({
       startRecording.disabled = false;
       // @ts-ignore
       stopRecording.disabled = true;
+
+      // disconnect the socket
+      socket.disconnect();
+
+      
     }
 
     return {
