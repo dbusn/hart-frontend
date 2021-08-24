@@ -6,10 +6,10 @@ import App from './App.vue'
 import PrimeVue from 'primevue/config'
 import Button from "primevue/button";
 
-import 'primevue/resources/themes/mdc-dark-deeppurple/theme.css'
+// import 'primevue/resources/themes/mdc-dark-deeppurple/theme.css'
 import 'primevue/resources/themes/mdc-light-deeppurple/theme.css';
 
-import './assets/layout/dark-mode.css'
+// import './assets/layout/dark-mode.css'
 import './assets/layout/light-mode.css'
 
 import 'primevue/resources/primevue.min.css';

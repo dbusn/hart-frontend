@@ -60,6 +60,21 @@ export default class APIWrapper {
     }
 
     /**
+     * Loops over and activates all motors in order.
+     */
+    public static checkMotors(): any {
+        return backendApi.post('/api/v1/check_motors')
+            .then(handleApiResponse)
+            .catch(handleApiErrorResponse);
+    }
+
+    public static checkSpecificMotor(body: any, config?: AxiosRequestConfig): any {
+        return backendApi.post('/api/v1/check_specific_motor', body, config)
+            .then(handleApiResponse)
+            .catch(handleApiErrorResponse)
+    }
+
+    /**
      * Sends a phoneme to the microcontroller via the microcontroller/phonemes backend endpoint.
      *
      * @param body      JSON containing the phonemes to send (check backend endpoint for specification).
