@@ -12,9 +12,14 @@ const db = getFirestore();
 
 export default class ActivityLogger {
 
+    /*
+    Log the forcedidentifcation activity
+    */
     public static async log_activity(type : string, sent: string, guess: string){
         const d = new Date()
         let res;
+
+        
         if(sent == guess){
             res = "Correct"
         } else {

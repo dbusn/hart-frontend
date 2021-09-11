@@ -51,6 +51,7 @@ import {createApp, defineComponent, ref} from "vue";
 import {getRandom} from "@/helpers/array.helper";
 import Button from "primevue/button";
 import APIWrapper from "@/backend.api";
+import ActivityLogger from "@/helpers/logging"
 
 export default defineComponent({
   name: 'Words',
@@ -219,6 +220,10 @@ export default defineComponent({
             btn.style.background = "red";
             guessesCell.innerHTML += "<span style='background: red; margin-right: 3px; padding: 2px'>" + word + "</span>";
           }
+
+          // Log the identification
+          ActivityLogger.log_activity("word", playedWord, word)
+
           setTimeout(() => {
             btn.style.background = bgColor
           }, 1000);

@@ -60,6 +60,7 @@ import {createApp, defineComponent, ref} from "vue";
 import APIWrapper from "@/backend.api";
 import Button from "primevue/button";
 import {getRandom} from "@/helpers/array.helper";
+import ActivityLogger from "@/helpers/logging"
 
 export default defineComponent({
   name: 'Phonemes',
@@ -191,6 +192,10 @@ export default defineComponent({
             btn.style.background = "red";
             guessesCell.innerHTML += "<span style='background: red; margin-right: 3px; padding: 2px'>" + phoneme + "</span>";
           }
+
+          // Log the identification
+          ActivityLogger.log_activity("phoneme", playedPhoneme, phoneme)
+
           setTimeout(() => {
             btn.style.background = bgColor
           }, 1000);
