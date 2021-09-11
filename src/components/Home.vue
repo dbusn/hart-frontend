@@ -18,7 +18,7 @@ export default defineComponent({
 
     function test_log() {
         console.log("yuh")
-        ActivityLogger.logGenericEvent("notification_received")
+        ActivityLogger.log_activity("phoneme", "AH", "EE")
     }
 
     return {
