@@ -1,11 +1,11 @@
 export class ThemeChanger {
 
     constructor() {
-        document.styleSheets[0].disabled = true;
-        document.styleSheets[1].disabled = false;
-
-        document.styleSheets[2].disabled = true;
-        document.styleSheets[3].disabled = false;
+        // document.styleSheets[0].disabled = true;
+        // document.styleSheets[1].disabled = false;
+        //
+        // document.styleSheets[2].disabled = true;
+        // document.styleSheets[3].disabled = false;
     }
 
     darkThemeSwitch() {

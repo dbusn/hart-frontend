@@ -5,20 +5,20 @@
 <script lang="ts">
 
 import {defineComponent} from "vue";
-import {ThemeChanger} from "@/helpers/darkmode.helper";
+// import {ThemeChanger} from "@/helpers/darkmode.helper";
 
 export default defineComponent({
   name: 'Navbar',
   setup() {
-    const themeChanger = new ThemeChanger();
+    // const themeChanger = new ThemeChanger();
 
     const items = [
-      {label: 'Home', icon: 'pi pi-fw pi-home', to: '/'},
+      {label: 'Home', icon: 'pi pi-fw piq-home', to: '/'},
       {label: 'Documentation', icon: 'pi pi-fw pi-file', to: '/documentation'},
       {label: 'Phonemes', icon: 'pi pi-fw pi-comment', to: '/phonemes'},
       {label: 'Words', icon: 'pi pi-fw pi-comments', to: '/words'},
       {label: 'Audio', icon: 'pi pi-fw pi-play', to: '/audio'},
-      {label: 'Theme', icon: 'pi pi-fw pi-palette', command:() => {themeChanger.darkThemeSwitch()}}
+      // {label: 'Theme', icon: 'pi pi-fw pi-palette', command:() => {themeChanger.darkThemeSwitch()}}
     ];
 
     return {
