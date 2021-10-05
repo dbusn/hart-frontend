@@ -1,6 +1,7 @@
 # frontend
 
 ## Project setup
+Make sure to install while running terminal in admin mode.
 ```
 npm install
 ```
@@ -19,6 +20,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
