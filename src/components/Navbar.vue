@@ -18,7 +18,8 @@ export default defineComponent({
       {label: 'Phonemes', icon: 'pi pi-fw pi-comment', to: '/phonemes'},
       {label: 'Words', icon: 'pi pi-fw pi-comments', to: '/words'},
       {label: 'Audio', icon: 'pi pi-fw pi-play', to: '/audio'},
-      {label: 'Theme', icon: 'pi pi-fw pi-palette', command:() => {themeChanger.darkThemeSwitch()}}
+      {label: 'Theme', icon: 'pi pi-fw pi-palette', command:() => {themeChanger.darkThemeSwitch()}},
+      {label: 'Sign In', icon: 'pi pi-fw pi-sign-in', to: '/SignIn'}
     ];
 
     return {
