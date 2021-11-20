@@ -1,5 +1,5 @@
 <template>
-  <TabMenu :model="items" >something else</TabMenu>
+  <TabMenu :model="items" class="p-shadow-2">something else</TabMenu>
 </template>
 
 <script lang="ts">

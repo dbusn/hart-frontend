@@ -1,22 +1,22 @@
 <template class="temp">
-  <h1>Phonemes!</h1>
+  <h1 style="margin-bottom: 4px">Phonemes</h1>
 
   <!-- Panel for sending a specific phoneme -->
-  <Panel header="Send a chosen phoneme">
+  <Panel header="Send a chosen phoneme" class="p-shadow-4" style="width: 70%">
     <p>To just try out how a single phoneme feels, and play it on the prototype, you can select a phoneme in the
-      dropdown menu and send it to the arduino by clicking the button.</p>
+      dropdown menu and send it to the prototype</p>
 
-    <Dropdown v-model="dropdownPhoneme" :options="phonemes" optionLabel="name" placeholder="Phoneme" :filter="true"
+    <Dropdown v-model="dropdownPhoneme" class="p-shadow-2" :options="phonemes" optionLabel="name" placeholder="Phoneme" :filter="true"
               style="margin-right: 10px"/>
-    <Button @click="sendDropdownPhoneme()" style="padding: 1.2rem">Send phoneme!</Button>
+    <Button @click="sendDropdownPhoneme()" class="p-shadow-2" style="padding: 0.9rem">Send phoneme</Button>
   </Panel>
 
   <!-- Main panel for training -->
-  <Panel header="Training">
-    <p>Select which phonemes you want to train on!</p>
+  <Panel header="Training" class="p-shadow-4" style="width: 70%">
+    <p>Select which phonemes you want to train on.</p>
     <div style="margin-bottom: 10px">
-      <Button @click="selectAllPhonemes()" style="padding: 0.8rem; margin-right: 10px">Select all</Button>
-      <Button @click="deselectAllPhonemes()" style="padding: 0.8rem">Deselect all</Button>
+      <Button @click="selectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Select all</Button>
+      <Button @click="deselectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem">Deselect all</Button>
     </div>
     <div v-for="item in phonemes" v-bind:key="item.name" class="p-field-checkbox"
          style="display: inline-block; margin-right: 20px">
@@ -27,10 +27,10 @@
     <br>
 
     <!-- Subpanel for forced identification -->
-    <Panel header="Forced identification">
+    <Panel header="Forced identification" class="p-shadow-2">
       <p>By clicking the button, a phoneme will be send to the arduino, and you will get to see three buttons, and have
         to choose which one you felt.</p>
-      <Button @click="sendForcedIdentification()" style="padding: 1.2rem">Forced identification!</Button>
+      <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem">Forced identification</Button>
       <div id="forcedIdentificationButtons"></div>
       <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true">
         <table id="phoneme-table">
@@ -44,8 +44,8 @@
     </Panel>
 
     <!-- Subpanel for sending random phoneme -->
-    <Panel header="Send random">
-      <Button @click="sendRandomPhoneme()" style="padding: 1.2rem">Send random phoneme!</Button>
+    <Panel header="Send random" class="p-shadow-2">
+      <Button @click="sendRandomPhoneme()" class="p-shadow-2" style="padding: 0.9rem">Send random phoneme</Button>
       <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true">
         <table id="random-phoneme-table">
           <tr>
@@ -176,7 +176,7 @@ export default defineComponent({
 
         // Add div for button to the button div
         buttonDiv.appendChild(div);
-        createApp(Button, {label: phoneme, id: "fid_" + phoneme}).mount(div);
+        createApp(Button, {label: phoneme, id: "fid_" + phoneme, class: "p-shadow-2", style: "margin-bottom: 4px"}).mount(div);
 
         // Get the button from the page
         const btn = document.getElementById("fid_" + phoneme);
@@ -192,10 +192,10 @@ export default defineComponent({
           const bgColor = btn.style.background;
           if (phoneme === playedPhoneme) {
             btn.style.background = "green";
-            guessesCell.innerHTML += "<span style='background: green; margin-right: 3px; padding: 2px'>" + phoneme + "</span>";
+            guessesCell.innerHTML += "<span style='background: rgba(0, 255, 0, 0.4); margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + phoneme + "</span>";
           } else {
             btn.style.background = "red";
-            guessesCell.innerHTML += "<span style='background: red; margin-right: 3px; padding: 2px'>" + phoneme + "</span>";
+            guessesCell.innerHTML += "<span style='background: rgba(255, 0, 0, 0.4); margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + phoneme + "</span>";
           }
           setTimeout(() => {
             btn.style.background = bgColor
