@@ -14,9 +14,13 @@
   <!-- Main panel for training -->
   <Panel header="Training">
     <p>Select which phonemes you want to train on!</p>
+    <div style="margin-bottom: 10px">
+      <Button @click="selectAllPhonemes()" style="padding: 0.8rem; margin-right: 10px">Select all</Button>
+      <Button @click="deselectAllPhonemes()" style="padding: 0.8rem">Deselect all</Button>
+    </div>
     <div v-for="item in phonemes" v-bind:key="item.name" class="p-field-checkbox"
          style="display: inline-block; margin-right: 20px">
-      <Checkbox :id="'checkbox_' + item.name" name="item.nam3" :value="item.name" v-model="selectedTrainPhonemes"/>
+      <Checkbox :id="'checkbox_' + item.name" name="item.name" :value="item.name" v-model="selectedTrainPhonemes"/>
       <label :for="item">{{ item.name }}</label>
 
     </div>
@@ -106,7 +110,9 @@ export default defineComponent({
 
         // Add answer to the table
         const pTable = document.getElementById("random-phoneme-table");
-        if (pTable === null) {return;}
+        if (pTable === null) {
+          return;
+        }
 
         const row = document.createElement("tr");
         raRows.value++;
@@ -204,6 +210,20 @@ export default defineComponent({
       phonemes.push({name: pho})
     })
 
+    /**
+     * Function for selecting all phonemes
+     */
+    function selectAllPhonemes() {
+      selectedTrainPhonemes.value = []
+      phonemeData.forEach((pho: string) => {
+        (selectedTrainPhonemes.value as string[]).push(pho);
+      })
+    }
+
+    function deselectAllPhonemes() {
+      selectedTrainPhonemes.value = [];
+    }
+
     // Return all variables
     return {
       phonemes,
@@ -214,7 +234,9 @@ export default defineComponent({
 
       sendDropdownPhoneme,
       sendRandomPhoneme,
-      sendForcedIdentification
+      sendForcedIdentification,
+      selectAllPhonemes,
+      deselectAllPhonemes
     }
   },
   created() {
