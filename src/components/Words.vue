@@ -15,6 +15,10 @@
   <Panel header="Selection based training">
     <p>Select (using the autocomplete function), the words that you would like to train on. Only words from the list
       (which can be configured above) can be used for training.</p>
+    <div style="margin-bottom: 10px">
+    <Button @click="selectAllWords()" style="padding: 0.8rem; margin-right: 10px">Select all words</Button>
+    <Button @click="deselectAllWords()" style="padding: 0.8rem">Deselect all words</Button>
+    </div>
     <AutoComplete :multiple="true" v-model="selectedWords" :suggestions="filteredWords.value" :dropdown="true"
                   @complete="searchWord($event)" field="name" class="p-shadow-2" style="width: 100%; margin-bottom: 10px"/>
 
@@ -286,6 +290,23 @@ export default defineComponent({
       }
     }
 
+    /**
+     * Function for selecting all words
+     */
+    function selectAllWords() {
+      selectedWords.value = [];
+      words.value.forEach((word: any) => {
+        (selectedWords.value as any).push(word);
+      })
+    }
+
+    /**
+     * Function for deselecting all words
+     */
+    function deselectAllWords() {
+      selectedWords.value = [];
+    }
+
     return {
       selectedWord,
       selectedWords,
@@ -303,6 +324,8 @@ export default defineComponent({
       sendSentence,
       addWord,
       removeWord,
+      selectAllWords,
+      deselectAllWords
     }
   },
   created() {
