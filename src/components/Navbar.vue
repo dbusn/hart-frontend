@@ -1,5 +1,5 @@
 <template>
-  <TabMenu :model="items" >something else</TabMenu>
+  <TabMenu :model="items" class="p-shadow-2">something else</TabMenu>
 </template>
 
 <script lang="ts">
@@ -13,7 +13,7 @@ export default defineComponent({
     // const themeChanger = new ThemeChanger();
 
     const items = [
-      {label: 'Home', icon: 'pi pi-fw piq-home', to: '/'},
+      {label: 'Home', icon: 'pi pi-fw pi-home', to: '/'},
       {label: 'Documentation', icon: 'pi pi-fw pi-file', to: '/documentation'},
       {label: 'Phonemes', icon: 'pi pi-fw pi-comment', to: '/phonemes'},
       {label: 'Words', icon: 'pi pi-fw pi-comments', to: '/words'},

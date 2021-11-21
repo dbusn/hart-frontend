@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navbar></Navbar>
-    <div id="content" class="p-shadow-1">
+    <div id="content" class="p-shadow-2">
       <Suspense>
         <router-view/>
       </Suspense>

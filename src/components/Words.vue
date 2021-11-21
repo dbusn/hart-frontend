@@ -1,53 +1,65 @@
 <template>
-  <h1>Words!</h1>
+  <div style="margin-left:auto;margin-right:auto; width: 70%">
+    <h1 style="margin-bottom: 4px">Words</h1>
 
-  <!-- Panel for sending a specific word -->
-  <Panel header="Configure list of words, and send specific word">
-    <p>In this panel you can configure the list by adding (or removing) word to (from) the preprogrammed list of words.
-      Additionally, you can send any word you want to the microcontroller.</p>
-    <AutoComplete v-model="selectedWord" :dropdown="true" :suggestions="filteredWords.value"
-                  @complete="searchWord($event)"
-                  field="name" style="margin-right: 10px"/>
-    <Button @click="addWord()" style="padding: 1.1rem; margin-right: 10px">Add word to list!</Button>
-    <Button @click="removeWord()" style="padding: 1.1rem; margin-right: 10px">Remove word from list!</Button>
-    <Button @click="sendACWord()" style="padding: 1.1rem">Send word!</Button>
-  </Panel>
-  <Panel header="Selection based training">
-    <p>Select (using the autocomplete function), the words that you would like to train on. Only words from the list
-      (which can be configured above) can be used for training.</p>
-    <div style="margin-bottom: 10px">
-    <Button @click="selectAllWords()" style="padding: 0.8rem; margin-right: 10px">Select all words</Button>
-    <Button @click="deselectAllWords()" style="padding: 0.8rem">Deselect all words</Button>
-    </div>
-    <AutoComplete :multiple="true" v-model="selectedWords" :suggestions="filteredWords.value" :dropdown="true"
-                  @complete="searchWord($event)" field="name" class="p-shadow-2" style="width: 100%; margin-bottom: 10px"/>
-
-    <Panel header="Forced identification">
-      <p>By clicking the button, a word will be send to the microcontroller. You will then get to see three buttons
-        representing words, and you will have to choose which one you felt.</p>
-      <Button @click="sendForcedIdentification()" style="padding: 1.2rem">Forced identification!</Button>
-      <div id="forcedIdentificationButtons"></div>
-      <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true">
-        <table id="fi-answer-table">
-          <tr>
-            <th>Round</th>
-            <th>Correct answer</th>
-            <th>Guessed answers</th>
-          </tr>
-        </table>
-      </Fieldset>
+    <!-- Panel for sending a specific word -->
+    <Panel header="Configure list of words, and send specific words" class="p-shadow-4" style="margin-bottom: 50px">
+      <p>In this panel you can configure the list by adding (or removing) word to (from) the preprogrammed list of
+        words.
+        Additionally, you can send any word you want to the prototype.</p>
+      <AutoComplete v-model="selectedWord" :dropdown="true" :suggestions="filteredWords.value" class="p-shadow-2"
+                    @complete="searchWord($event)"
+                    field="name" style="margin-right: 10px"/>
+      <Button @click="addWord()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Add word to list
+      </Button>
+      <Button @click="removeWord()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Remove word from
+        list
+      </Button>
+      <Button @click="sendACWord()" class="p-shadow-2" style="padding: 0.9rem">Send word</Button>
     </Panel>
-  </Panel>
+    <Panel header="Selection based training" class="p-shadow-4" style="margin-bottom: 50px">
+      <p>Select the words that you would like to train on. Only words from the list
+        (which can be configured above) can be used for training.</p>
+      <div style="margin-bottom: 10px">
+        <Button @click="selectAllWords()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Select all
+          words
+        </Button>
+        <Button @click="deselectAllWords()" class="p-shadow-2" style="padding: 0.9rem">Deselect all words</Button>
+      </div>
+      <AutoComplete :multiple="true" v-model="selectedWords" :suggestions="filteredWords.value" :dropdown="true"
+                    @complete="searchWord($event)" field="name" class="p-shadow-2"
+                    style="width: 100%; margin-bottom: 10px"/>
 
-  <Panel header="Send sentences">
-    <p>Type a sentence you want to send to the microcontroller and select a language that it is written in.</p>
-    <InputText type="text" v-model="inputSentence" style="width: 100%; margin-bottom: 10px"/>
-    <AutoComplete v-model="selectedLanguage" :dropdown="true" :suggestions="filteredLanguages.value"
-                  placeholder="Select language" @complete="searchLanguage($event)"
-                  field="language" style="margin-right: 10px"/>
-    <Button @click="sendSentence()" style="padding: 1.1rem; margin-right: 10px">Send sentence!</Button>
+      <Panel header="Forced identification" class="p-shadow-2" style="margin-top: 20px">
+        <p>By clicking the button, a word will be send to the microcontroller. You will then get to see three buttons
+          representing words, and you will have to choose which one you felt.</p>
+        <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem">Forced identification
+        </Button>
+        <div id="forcedIdentificationButtons"></div>
+        <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
+          <table id="fi-answer-table">
+            <tr>
+              <th>Round</th>
+              <th>Correct answer</th>
+              <th>Guessed answers</th>
+            </tr>
+          </table>
+        </Fieldset>
+      </Panel>
+    </Panel>
 
-  </Panel>
+    <Panel header="Send sentences" class="p-shadow-4">
+      <p>Type a sentence you want to send to the microcontroller and select a language that it is written in.</p>
+      <InputText type="text" class="p-shadow-2" v-model="inputSentence" style="width: 100%; margin-bottom: 10px"/>
+      <AutoComplete v-model="selectedLanguage" class="p-shadow-2" :dropdown="true"
+                    :suggestions="filteredLanguages.value"
+                    placeholder="Select language" @complete="searchLanguage($event)"
+                    field="language" style="margin-right: 10px"/>
+      <Button @click="sendSentence()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Send sentence!
+      </Button>
+
+    </Panel>
+  </div>
 </template>
 
 <script lang="ts">
@@ -167,7 +179,9 @@ export default defineComponent({
       }
 
       // Get a set of random words from the selected words.
-      const randomWords = (selectedWords.value as any).map((w: {name: string}) => {return w.name});
+      const randomWords = (selectedWords.value as any).map((w: { name: string }) => {
+        return w.name
+      });
       const playedWord = getRandom(randomWords, 1)[0];
 
       // Play chosen word on the microcontroller
@@ -178,7 +192,9 @@ export default defineComponent({
 
       // Get div from page for placing buttons
       const buttonDiv = document.getElementById("forcedIdentificationButtons")
-      if (buttonDiv === null) {return;}
+      if (buttonDiv === null) {
+        return;
+      }
 
       // empty button div
       buttonDiv.innerHTML = '';
@@ -190,7 +206,9 @@ export default defineComponent({
 
       // Get the answer table
       const pTable = document.getElementById("fi-answer-table");
-      if (pTable === null) {return;}
+      if (pTable === null) {
+        return;
+      }
 
       // Create new row element for table
       const row = document.createElement("tr");
@@ -207,22 +225,29 @@ export default defineComponent({
 
         // Add div for button to the page
         buttonDiv.appendChild(div);
-        createApp(Button, {label: word, id: "fid_" + word}).mount(div);
+        createApp(Button, {
+          label: word,
+          id: "fid_" + word,
+          class: "p-shadow-2",
+          style: "margin-bottom: 4px"
+        }).mount(div);
 
         // Get the button from the page and the table cell for guesses.
         const btn = document.getElementById("fid_" + word);
         const guessesCell = document.getElementById("fi-answer-table-row_" + fiRows.value);
-        if (btn === null || guessesCell === null) {return;}
+        if (btn === null || guessesCell === null) {
+          return;
+        }
 
         // Add button event listener
         btn.addEventListener("click", () => {
           const bgColor = btn.style.background;
           if (word === playedWord) {
             btn.style.background = "green";
-            guessesCell.innerHTML += "<span style='background: green; margin-right: 3px; padding: 2px'>" + word + "</span>";
+            guessesCell.innerHTML += "<span style='background: rgba(103, 58, 183, 0.6); margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #673AB7; font-weight: bolder'>" + word + "</span>";
           } else {
             btn.style.background = "red";
-            guessesCell.innerHTML += "<span style='background: red; margin-right: 3px; padding: 2px'>" + word + "</span>";
+            guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + word + "</span>";
           }
 
           // Log the identification
@@ -247,7 +272,10 @@ export default defineComponent({
         alert("Please write a sentence that you would like to send.");
       }
 
-      APIWrapper.sendSentencesMicrocontroller({'sentences': [inputSentence.value], 'language': selectedLanguage.value.short});
+      APIWrapper.sendSentencesMicrocontroller({
+        'sentences': [inputSentence.value],
+        'language': selectedLanguage.value.short
+      });
     }
 
     /**
