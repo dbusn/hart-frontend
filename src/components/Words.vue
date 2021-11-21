@@ -6,7 +6,7 @@
     <Panel header="Configure list of words, and send specific words" class="p-shadow-4" style="margin-bottom: 50px">
       <p>In this panel you can configure the list by adding (or removing) word to (from) the preprogrammed list of
         words.
-        Additionally, you can send any word you want to the prototype.</p>
+        Additionally, you can send any word you want to the sleeve.</p>
       <AutoComplete v-model="selectedWord" :dropdown="true" :suggestions="filteredWords.value" class="p-shadow-2"
                     @complete="searchWord($event)"
                     field="name" style="margin-right: 10px"/>
@@ -31,7 +31,7 @@
                     style="width: 100%; margin-bottom: 10px"/>
 
       <Panel header="Forced identification" class="p-shadow-2" style="margin-top: 20px">
-        <p>By clicking the button, a word will be send to the microcontroller. You will then get to see three buttons
+        <p>By clicking the button, a word will be send to the sleeve. You will then get to see three buttons
           representing words, and you will have to choose which one you felt.</p>
         <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem">Forced identification
         </Button>
@@ -49,7 +49,7 @@
     </Panel>
 
     <Panel header="Send sentences" class="p-shadow-4">
-      <p>Type a sentence you want to send to the microcontroller and select a language that it is written in.</p>
+      <p>Type a sentence you want to send to the sleeve and select a language that it is written in.</p>
       <InputText type="text" class="p-shadow-2" v-model="inputSentence" style="width: 100%; margin-bottom: 10px"/>
       <AutoComplete v-model="selectedLanguage" class="p-shadow-2" :dropdown="true"
                     :suggestions="filteredLanguages.value"

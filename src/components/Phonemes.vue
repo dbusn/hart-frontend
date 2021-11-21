@@ -4,8 +4,8 @@
 
     <!-- Panel for sending a specific phoneme -->
     <Panel header="Send a chosen phoneme" class="p-shadow-4" style="margin-bottom: 50px">
-      <p>To just try out how a single phoneme feels, and play it on the prototype, you can select a phoneme in the
-        dropdown menu and send it to the prototype</p>
+      <p>To just try out how a single phoneme feels, and play it on the sleeve, you can select a phoneme in the
+        dropdown menu and send it to the sleeve.</p>
 
       <Dropdown v-model="dropdownPhoneme" class="p-shadow-2" :options="phonemes" optionLabel="name"
                 placeholder="Phoneme" :filter="true"
@@ -33,9 +33,8 @@
 
       <!-- Subpanel for forced identification -->
       <Panel header="Forced identification" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
-        <p>By clicking the button, a phoneme will be send to the arduino, and you will get to see three buttons, and
-          have
-          to choose which one you felt.</p>
+        <p>By clicking the button, a phoneme will be send to the sleeve, and you will get to see three buttons, and
+          have to choose which one you felt.</p>
         <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem">Forced identification
         </Button>
         <div id="forcedIdentificationButtons"></div>
@@ -52,7 +51,9 @@
 
       <!-- Subpanel for sending random phoneme -->
       <Panel header="Send random" class="p-shadow-2">
-        <Button @click="sendRandomPhoneme()" class="p-shadow-2" style="padding: 0.9rem; margin-top: 20px">Send random phoneme</Button>
+        <Button @click="sendRandomPhoneme()" class="p-shadow-2" style="padding: 0.9rem; margin-top: 20px">Send random
+          phoneme
+        </Button>
         <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
           <table id="random-phoneme-table">
             <tr>
