@@ -78,47 +78,27 @@ export default defineComponent({
     const inputSentence = ref();
     const fiRows = ref(0);
     const words = ref([
-      // 2 phoneme words
-      {name: "see"},
-      {name: "me"},
-      {name: "tea"},
-      {name: "key"},
-      {name: "he"},
-      {name: "eat"},
-      {name: "saw"},
-      {name: "raw"},
-
-      // 3 phoneme words
-      {name: "meet"}, // (also) meat
-      {name: "hurt"},
-      {name: "heat"},
-      {name: "seat"},
-      {name: "rot"},
-      {name: "hot"},
-      {name: "hook"},
-      {name: "seek"},
-      {name: "took"},
-      {name: "cook"},
-      {name: "seem"},
-      {name: "meme"},
-      {name: "team"},
-      {name: "sought"},
-
-      // 4 phoneme words
-      {name: "treat"},
-      {name: "skirt"},
-      {name: "cost"},
-      {name: "straw"},
-      {name: "heart"}, // (also) HART
-      {name: "mask"}, // (also) mosque
-      {name: "scar"},
-
-      // 5 phoneme words
-      {name: "smart"},
-
-      // 6 phoneme words
-      {name: "retard"},
-
+      {name: "human"},
+      {name: "purple"},
+      {name: "laptop"},
+      {name: "jacket"},
+      {name: "cyborg"},
+      {name: "sleeve"},
+      {name: "prototype"},
+      {name: "keyword"},
+      {name: "phone"},
+      {name: "charger"},
+      {name: "battery"},
+      {name: "students"},
+      {name: "HART"},
+      {name: "research"},
+      {name: "innovation"},
+      {name: "augmentation"},
+      {name: "hearing"},
+      {name: "sense"},
+      {name: "feeling"},
+      {name: "showcase"},
+      {name: "student team"},
     ]);
     const languages = ref([
       {language: "English", short: "en"},
