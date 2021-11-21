@@ -1,62 +1,70 @@
 <template class="temp">
-  <h1 style="margin-bottom: 4px">Phonemes</h1>
+  <div style="margin-left:auto;margin-right:auto; width: 70%">
+    <h1 style="margin-bottom: 4px">Phonemes</h1>
 
-  <!-- Panel for sending a specific phoneme -->
-  <Panel header="Send a chosen phoneme" class="p-shadow-4" style="width: 70%">
-    <p>To just try out how a single phoneme feels, and play it on the prototype, you can select a phoneme in the
-      dropdown menu and send it to the prototype</p>
+    <!-- Panel for sending a specific phoneme -->
+    <Panel header="Send a chosen phoneme" class="p-shadow-4" style="margin-bottom: 50px">
+      <p>To just try out how a single phoneme feels, and play it on the prototype, you can select a phoneme in the
+        dropdown menu and send it to the prototype</p>
 
-    <Dropdown v-model="dropdownPhoneme" class="p-shadow-2" :options="phonemes" optionLabel="name" placeholder="Phoneme" :filter="true"
-              style="margin-right: 10px"/>
-    <Button @click="sendDropdownPhoneme()" class="p-shadow-2" style="padding: 0.9rem">Send phoneme</Button>
-  </Panel>
-
-  <!-- Main panel for training -->
-  <Panel header="Training" class="p-shadow-4" style="width: 70%">
-    <p>Select which phonemes you want to train on.</p>
-    <div style="margin-bottom: 10px">
-      <Button @click="selectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Select all</Button>
-      <Button @click="deselectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem">Deselect all</Button>
-    </div>
-    <div v-for="item in phonemes" v-bind:key="item.name" class="p-field-checkbox"
-         style="display: inline-block; margin-right: 20px">
-      <Checkbox :id="'checkbox_' + item.name" name="item.name" :value="item.name" v-model="selectedTrainPhonemes"/>
-      <label :for="item">{{ item.name }}</label>
-
-    </div>
-    <br>
-
-    <!-- Subpanel for forced identification -->
-    <Panel header="Forced identification" class="p-shadow-2">
-      <p>By clicking the button, a phoneme will be send to the arduino, and you will get to see three buttons, and have
-        to choose which one you felt.</p>
-      <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem">Forced identification</Button>
-      <div id="forcedIdentificationButtons"></div>
-      <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true">
-        <table id="phoneme-table">
-          <tr>
-            <th>Round</th>
-            <th>Correct answer</th>
-            <th>Guessed answers</th>
-          </tr>
-        </table>
-      </Fieldset>
+      <Dropdown v-model="dropdownPhoneme" class="p-shadow-2" :options="phonemes" optionLabel="name"
+                placeholder="Phoneme" :filter="true"
+                style="margin-right: 10px"/>
+      <Button @click="sendDropdownPhoneme()" class="p-shadow-2" style="padding: 0.9rem">Send phoneme</Button>
     </Panel>
 
-    <!-- Subpanel for sending random phoneme -->
-    <Panel header="Send random" class="p-shadow-2">
-      <Button @click="sendRandomPhoneme()" class="p-shadow-2" style="padding: 0.9rem">Send random phoneme</Button>
-      <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true">
-        <table id="random-phoneme-table">
-          <tr>
-            <th>Round</th>
-            <th>Correct answer</th>
-          </tr>
-        </table>
-      </Fieldset>
-    </Panel>
+    <!-- Main panel for training -->
+    <Panel header="Training" class="p-shadow-4">
+      <p>Select which phonemes you want to train on.</p>
+      <div style="margin-bottom: 10px">
+        <Button @click="selectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Select all
+        </Button>
+        <Button @click="deselectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem">Deselect all</Button>
+      </div>
+      <div style="width: min(100%, max(60%, 600px)); margin-top: 20px">
+        <div v-for="item in phonemes" v-bind:key="item.name" class="p-field-checkbox"
+             style="display: inline-block; width: 70px;">
+          <Checkbox :id="'checkbox_' + item.name" name="item.name" :value="item.name" v-model="selectedTrainPhonemes"/>
+          <label :for="item">{{ item.name }}</label>
 
-  </Panel>
+        </div>
+      </div>
+      <br>
+
+      <!-- Subpanel for forced identification -->
+      <Panel header="Forced identification" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
+        <p>By clicking the button, a phoneme will be send to the arduino, and you will get to see three buttons, and
+          have
+          to choose which one you felt.</p>
+        <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem">Forced identification
+        </Button>
+        <div id="forcedIdentificationButtons"></div>
+        <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
+          <table id="phoneme-table">
+            <tr>
+              <th>Round</th>
+              <th>Correct answer</th>
+              <th>Guessed answers</th>
+            </tr>
+          </table>
+        </Fieldset>
+      </Panel>
+
+      <!-- Subpanel for sending random phoneme -->
+      <Panel header="Send random" class="p-shadow-2">
+        <Button @click="sendRandomPhoneme()" class="p-shadow-2" style="padding: 0.9rem; margin-top: 20px">Send random phoneme</Button>
+        <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
+          <table id="random-phoneme-table">
+            <tr>
+              <th>Round</th>
+              <th>Correct answer</th>
+            </tr>
+          </table>
+        </Fieldset>
+      </Panel>
+
+    </Panel>
+  </div>
 </template>
 
 <script lang="ts">
@@ -176,7 +184,12 @@ export default defineComponent({
 
         // Add div for button to the button div
         buttonDiv.appendChild(div);
-        createApp(Button, {label: phoneme, id: "fid_" + phoneme, class: "p-shadow-2", style: "margin-bottom: 4px"}).mount(div);
+        createApp(Button, {
+          label: phoneme,
+          id: "fid_" + phoneme,
+          class: "p-shadow-2",
+          style: "margin-bottom: 4px"
+        }).mount(div);
 
         // Get the button from the page
         const btn = document.getElementById("fid_" + phoneme);
@@ -192,10 +205,10 @@ export default defineComponent({
           const bgColor = btn.style.background;
           if (phoneme === playedPhoneme) {
             btn.style.background = "green";
-            guessesCell.innerHTML += "<span style='background: rgba(0, 255, 0, 0.4); margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + phoneme + "</span>";
+            guessesCell.innerHTML += "<span style='background: rgba(103, 58, 183, 0.6); margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #673AB7; font-weight: bolder'>" + phoneme + "</span>";
           } else {
             btn.style.background = "red";
-            guessesCell.innerHTML += "<span style='background: rgba(255, 0, 0, 0.4); margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + phoneme + "</span>";
+            guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + phoneme + "</span>";
           }
           setTimeout(() => {
             btn.style.background = bgColor
