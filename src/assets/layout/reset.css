@@ -10,7 +10,7 @@
     outline: 3px dashed #228bec;
 }
 html {
-    font: 62.5% / 1.15 sans-serif;
+    font: 62.5% / 1.15 'Poppins';
 }
 h1,
 h2 {
@@ -20,6 +20,11 @@ ul {
     list-style: none;
     padding: 0;
 }
+
+.p-component {
+    font: 62.5% / 1.15 'Poppins';
+}
+
 button {
     border: none;
     margin: 0;
@@ -57,7 +62,7 @@ input[type="text"] {
 body {
     width: 100%;
     margin: 0 auto;
-    font: 1.6rem/1.25 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 1.6rem/1.25 'Poppins', "Helvetica Neue", Helvetica, Arial, sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }
