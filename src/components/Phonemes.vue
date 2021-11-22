@@ -206,7 +206,7 @@ export default defineComponent({
           const bgColor = btn.style.background;
           if (phoneme === playedPhoneme) {
             btn.style.background = "green";
-            guessesCell.innerHTML += "<span style='background: rgba(103, 58, 183, 0.6); margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #673AB7; font-weight: bolder'>" + phoneme + "</span>";
+            guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #8800FF; font-weight: bolder'>" + phoneme + "</span>";
           } else {
             btn.style.background = "red";
             guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + phoneme + "</span>";

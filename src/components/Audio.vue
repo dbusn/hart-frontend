@@ -1,30 +1,41 @@
 <template>
-  <h1>Audio!</h1>
-  <Panel header="Send audio file">
-    <p>Select and upload a file you want to send to the microcontroller and select a language that it is spoken in.</p>
-    <input
-        type="file"
-        ref="fileInput"
-        @change="onFileSelected($event)"/><br>
-    <AutoComplete v-model="selectedLanguage1" :dropdown="true" :suggestions="filteredLanguages.value"
-                  placeholder="Select language" @complete="searchLanguage($event)"
-                  field="language" style="margin-bottom: 10px; margin-top: 10px"/>
-    <br>
-    <Button @click="sendFile()" style="margin-right: 10px">Send File to Microcontroller</Button>
-  </Panel>
-  <Panel header="Record Audio">
-    <p>In this panel, you can record some audio, select the language which you spoke and then send that for processing towards the microcontroller. Be aware, the compression on the audio is quite severe, so quality is not very good.</p>
-    <Button @click="startRecord()" type="button" id="button_record" class="p-button" style="margin-right: 10px">Record</Button>
-    <Button @click="stopRecord()" type="button" id="button_stop" class="p-button-danger" style="margin-right: 10px">Stop Recording</Button>
-    <Button id="play-btn" class="p-button" disabled>play</Button><br>
+  <div style="margin-left:auto;margin-right:auto; width: 70%">
+    <h1>Audio!</h1>
+    <Panel header="Send audio file" class="p-shadow-4">
+      <p>Select and upload a file you want to send to the microcontroller and select a language that it is spoken
+        in.</p>
+      <input
+          type="file"
+          ref="fileInput"
+          @change="onFileSelected($event)"/><br>
+      <AutoComplete v-model="selectedLanguage1" :dropdown="true" :suggestions="filteredLanguages.value"
+                    placeholder="Select language" @complete="searchLanguage($event)"
+                    field="language" style="margin-bottom: 10px; margin-top: 10px"/>
+      <br>
+      <Button @click="sendFile()" style="margin-right: 10px" class="p-shadow-2">Send File to Microcontroller</Button>
+    </Panel>
+    <Panel header="Record Audio" class="p-shadow-4">
+      <p>In this panel, you can record some audio, select the language which you spoke and then send that for processing
+        towards the microcontroller. Be aware, the compression on the audio is quite severe, so quality is not very
+        good.</p>
+      <Button @click="startRecord()" type="button" id="button_record" class="p-button p-shadow-2" style="margin-right: 10px">
+        Record
+      </Button>
+      <Button @click="stopRecord()" type="button" id="button_stop" class="p-button-danger p-shadow-2" style="margin-right: 10px">
+        Stop Recording
+      </Button>
+      <Button id="play-btn" class="p-button p-shadow-2" disabled>play</Button>
+      <br>
 
-    <AutoComplete v-model="selectedLanguage2" :dropdown="true" :suggestions="filteredLanguages.value"
-                  placeholder="Select language" @complete="searchLanguage($event)"
-                  field="language" style="margin-bottom: 10px; margin-top: 10px"/> <br>
+      <AutoComplete v-model="selectedLanguage2" :dropdown="true" :suggestions="filteredLanguages.value"
+                    placeholder="Select language" @complete="searchLanguage($event)"
+                    field="language" style="margin-bottom: 10px; margin-top: 10px"/>
+      <br>
 
-    <Button @click="sendRecording()" id="send-btn" class="p-button" disabled>Send Audio!</Button>
+      <Button @click="sendRecording()" id="send-btn" class="p-button p-shadow-2" disabled>Send Audio!</Button>
 
-  </Panel>
+    </Panel>
+  </div>
 
 </template>
 

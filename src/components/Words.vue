@@ -7,7 +7,7 @@
       <p>In this panel you can configure the list by adding (or removing) word to (from) the preprogrammed list of
         words.
         Additionally, you can send any word you want to the sleeve.</p>
-      <AutoComplete v-model="selectedWord" :dropdown="true" :suggestions="filteredWords.value" class="p-shadow-2"
+      <AutoComplete v-model="selectedWord" :dropdown="true" :suggestions="filteredWords.value"
                     @complete="searchWord($event)"
                     field="name" style="margin-right: 10px"/>
       <Button @click="addWord()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Add word to list
@@ -27,7 +27,7 @@
         <Button @click="deselectAllWords()" class="p-shadow-2" style="padding: 0.9rem">Deselect all words</Button>
       </div>
       <AutoComplete :multiple="true" v-model="selectedWords" :suggestions="filteredWords.value" :dropdown="true"
-                    @complete="searchWord($event)" field="name" class="p-shadow-2"
+                    @complete="searchWord($event)" field="name"
                     style="width: 100%; margin-bottom: 10px"/>
 
       <Panel header="Forced identification" class="p-shadow-2" style="margin-top: 20px">
@@ -51,7 +51,7 @@
     <Panel header="Send sentences" class="p-shadow-4">
       <p>Type a sentence you want to send to the sleeve and select a language that it is written in.</p>
       <InputText type="text" class="p-shadow-2" v-model="inputSentence" style="width: 100%; margin-bottom: 10px"/>
-      <AutoComplete v-model="selectedLanguage" class="p-shadow-2" :dropdown="true"
+      <AutoComplete v-model="selectedLanguage" :dropdown="true"
                     :suggestions="filteredLanguages.value"
                     placeholder="Select language" @complete="searchLanguage($event)"
                     field="language" style="margin-right: 10px"/>
@@ -223,7 +223,7 @@ export default defineComponent({
           const bgColor = btn.style.background;
           if (word === playedWord) {
             btn.style.background = "green";
-            guessesCell.innerHTML += "<span style='background: rgba(103, 58, 183, 0.6); margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #673AB7; font-weight: bolder'>" + word + "</span>";
+            guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #8800FF; font-weight: bolder'>" + word + "</span>";
           } else {
             btn.style.background = "red";
             guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + word + "</span>";

@@ -1,15 +1,19 @@
 <template>
-  <div style="width: min(800px, 100%)">
+  <div style="margin-left:auto;margin-right:auto; width: 70%">
     <h1>How to get started</h1>
-    <p>In the tab for phonemes, you can do everything related to phonemes! This includes viewing all the phonemes that
-      are used, just training single phonemes, but also taking a test. In the tab 'Words', you can do similar stuff as
-      in the phonemes tab, but then with words. In the 'Audio' tab, you can upload an audio file for processing.</p>
-    <p>Before getting started, put on the sleeve and check whether all the motors work correctly!</p>
-    <Button @click="check_motors()">Check all motors in order!</Button><br>
+    <Panel class="p-shadow-4">
+      <p>In the tab for phonemes, you can do everything related to phonemes! This includes viewing all the phonemes that
+        are used, just training single phonemes, but also taking a test. In the tab 'Words', you can do similar stuff as
+        in the phonemes tab, but then with words. In the 'Audio' tab, you can upload an audio file for processing.</p>
+      <p>Before getting started, put on the sleeve and check whether all the motors work correctly!</p>
+      <Button @click="check_motors()" class="p-shadow-2" style="padding: 0.9rem; margin-bottom: 20px">Check all motors in order!</Button>
+      <br>
 
-    <Dropdown v-model="selectedMotor" :options="motors" optionLabel="coord" placeholder="Select a motor"  :filter="true"
-              style="margin-right: 10px"/>
-    <Button @click="check_specific_motor()">Check specific motor</Button>
+      <Dropdown v-model="selectedMotor" :options="motors" class="p-shadow-2" optionLabel="coord" placeholder="Select a motor"
+                :filter="true"
+                style="margin-right: 10px"/>
+      <Button @click="check_specific_motor()" class="p-shadow-2" style="padding: 0.9rem">Check specific motor</Button>
+    </Panel>
   </div>
 </template>
 

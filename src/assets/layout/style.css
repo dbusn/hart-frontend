@@ -14,6 +14,14 @@
     padding: 1px 30px 30px 30px;
 }
 
+.p-button {
+    border-radius: 12px;
+}
+
+.p-panel .p-panel-header .p-panel-title {
+    font-weight: bolder;
+}
+
 .p-tabmenu {
     font-size: 2.5rem;
 }
@@ -56,7 +64,7 @@ th, td {
 }
 
 th {
-    background-color: #673AB7;
+    background-color: #8800FF;
     color: white;
 }
 
