@@ -25,6 +25,11 @@
     <Button @click="sendRecording()" id="send-btn" class="p-button" disabled>Send Audio!</Button>
 
   </Panel>
+  <Panel header="Record Realtime">
+    <p>In this panel, you can turn on/off the microphone to record all incoming sound and translate it in realtime!</p>
+    <Button @click="toggleRecording()" type="button" id="button_record" class="p-button" style="margin-right: 10px">Toggle Mic</Button>
+    <Button id="play-btn" class="p-button" disabled>play</Button><br>
+  </Panel>
 
 </template>
 
@@ -208,6 +213,14 @@ export default defineComponent({
       fileReader.readAsArrayBuffer(blob);
     }
 
+    /**
+     * Function to toggle mic on/off in the backend and start realtime recording
+     */
+    function toggleRecording() {
+      const status = APIWrapper.getToggleRequest();
+      console.log(status);
+    }
+
     return {
       selectedLanguage1,
       selectedLanguage2,
@@ -221,6 +234,8 @@ export default defineComponent({
       startRecord,
       stopRecord,
       sendRecording,
+
+      toggleRecording,
     }
   },
   created() {
