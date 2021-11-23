@@ -219,6 +219,14 @@ export default defineComponent({
       fileReader.readAsArrayBuffer(blob);
     }
 
+    /**
+     * Function to toggle mic on/off in the backend and start realtime recording
+     */
+    function toggleRecording() {
+      const status = APIWrapper.getToggleRequest();
+      console.log(status);
+    }
+
     return {
       selectedLanguage1,
       selectedLanguage2,
@@ -232,6 +240,8 @@ export default defineComponent({
       startRecord,
       stopRecord,
       sendRecording,
+
+      toggleRecording,
     }
   },
   created() {
