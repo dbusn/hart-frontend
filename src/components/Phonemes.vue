@@ -35,7 +35,9 @@
       <Panel header="Forced identification" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
         <p>By clicking the button, a phoneme will be send to the sleeve, and you will get to see three buttons, and
           have to choose which one you felt.</p>
-        <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem">Forced identification
+        <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Forced identification
+        </Button>
+        <Button @click="repeatPreviousPhoneme()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
         </Button>
         <div id="forcedIdentificationButtons"></div>
         <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
@@ -88,6 +90,9 @@ export default defineComponent({
     const dropdownPhoneme = ref();
     const fiRows = ref(0);
     const raRows = ref(0);
+    const identificationActive = ref(false);
+
+    const playedPhoneme = ref();
 
     /**
      * Function for sending a phoneme from the dropdown menu.
@@ -152,10 +157,11 @@ export default defineComponent({
 
       // get a set of random phonemes from the selected phonemes
       const randomPhonemes = (selectedTrainPhonemes.value as any)
-      const playedPhoneme: string = getRandom(randomPhonemes, 1)[0];
+      playedPhoneme.value = getRandom(randomPhonemes, 1)[0];
+      identificationActive.value = true;
 
       // Send selected phoneme to backend
-      APIWrapper.sendPhonemeMicrocontroller({'phonemes': [playedPhoneme]});
+      APIWrapper.sendPhonemeMicrocontroller({'phonemes': [playedPhoneme.value]});
 
       // Increase the number of forced identification rounds.
       fiRows.value++;
@@ -168,7 +174,7 @@ export default defineComponent({
 
       // Create new row element for table
       const row = document.createElement("tr");
-      row.innerHTML = "<td>" + fiRows.value + "</td><td>" + playedPhoneme + "</td><td id='pTableRow_" + fiRows.value + "'></td>";
+      row.innerHTML = "<td>" + fiRows.value + "</td><td>" + playedPhoneme.value + "</td><td id='pTableRow_" + fiRows.value + "'></td>";
       pTable.appendChild(row);
 
       // Add explanation div
@@ -204,7 +210,7 @@ export default defineComponent({
         // Add button event listener
         btn.addEventListener("click", () => {
           const bgColor = btn.style.background;
-          if (phoneme === playedPhoneme) {
+          if (phoneme === playedPhoneme.value) {
             btn.style.background = "green";
             guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #8800FF; font-weight: bolder'>" + phoneme + "</span>";
           } else {
@@ -216,6 +222,10 @@ export default defineComponent({
           }, 1000);
         });
       })
+    }
+
+    function repeatPreviousPhoneme() {
+      APIWrapper.sendPhonemeMicrocontroller({'phonemes': [playedPhoneme.value]});
     }
 
     // Format gotten phonemes from backend.
@@ -245,10 +255,12 @@ export default defineComponent({
       dropdownPhoneme,
       fiRows,
       raRows,
+      identificationActive,
 
       sendDropdownPhoneme,
       sendRandomPhoneme,
       sendForcedIdentification,
+      repeatPreviousPhoneme,
       selectAllPhonemes,
       deselectAllPhonemes
     }
