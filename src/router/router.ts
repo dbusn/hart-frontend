@@ -5,7 +5,6 @@ import Phonemes from "@/components/Phonemes.vue";
 import Words from "@/components/Words.vue";
 import Audio from "@/components/Audio.vue";
 import Settings from "@/components/Settings.vue";
-import Training from "@/components/Training.vue";
 
 const routes = [
     {
@@ -37,11 +36,6 @@ const routes = [
         path: "/settings",
         name: "Settings",
         component: Settings,
-    },
-    {
-        path: "/training",
-        name: "Training",
-        component: Training,
     }]
 
 export const router = createRouter({
