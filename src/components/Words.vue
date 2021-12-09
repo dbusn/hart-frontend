@@ -33,7 +33,9 @@
       <Panel header="Forced identification" class="p-shadow-2" style="margin-top: 20px">
         <p>By clicking the button, a word will be send to the sleeve. You will then get to see three buttons
           representing words, and you will have to choose which one you felt.</p>
-        <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem">Forced identification
+        <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Forced identification
+        </Button>
+        <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!wordIdentificationActive'>Repeat
         </Button>
         <div id="forcedIdentificationButtons"></div>
         <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
@@ -110,6 +112,9 @@ export default defineComponent({
 
     let filteredWords = ref(words.value)
     let filteredLanguages = ref(languages.value)
+    const wordIdentificationActive = ref(false);
+
+    const playedWord = ref();
 
     /**
      * Function that filters the words list for all autocomplete input fields.
@@ -161,10 +166,11 @@ export default defineComponent({
       const randomWords = (selectedWords.value as any).map((w: { name: string }) => {
         return w.name
       });
-      const playedWord = getRandom(randomWords, 1)[0];
+      playedWord.value = getRandom(randomWords, 1)[0];
+      wordIdentificationActive.value = true;
 
       // Play chosen word on the microcontroller
-      APIWrapper.sendWordsMicrocontroller({'words': [playedWord]});
+      APIWrapper.sendWordsMicrocontroller({'words': [playedWord.value]});
 
       // Increase the number of forced identification rounds
       fiRows.value++;
@@ -191,8 +197,10 @@ export default defineComponent({
 
       // Create new row element for table
       const row = document.createElement("tr");
-      row.innerHTML = "<td>" + fiRows.value + "</td><td>" + playedWord
+      row.innerHTML = "<td>" + fiRows.value + "</td><td>" + playedWord.value
           + "</td><td id='fi-answer-table-row_" + fiRows.value + "'></td>";
+      // row.innerHTML = "<td>" + fiRows.value + "</td><td>" + playedWord
+      //     + "</td><td id='fi-answer-table-row_" + fiRows.value + "'></td>";
       pTable.appendChild(row);
 
       // For each of the words selected, create buttons and assign listeners to it.
@@ -221,7 +229,7 @@ export default defineComponent({
         // Add button event listener
         btn.addEventListener("click", () => {
           const bgColor = btn.style.background;
-          if (word === playedWord) {
+          if (word === playedWord.value) {
             btn.style.background = "green";
             guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #8800FF; font-weight: bolder'>" + word + "</span>";
           } else {
@@ -310,6 +318,10 @@ export default defineComponent({
       selectedWords.value = [];
     }
 
+    function repeatPreviousWord() {
+      APIWrapper.sendWordsMicrocontroller({'words': [playedWord.value]});
+    }
+
     return {
       selectedWord,
       selectedWords,
@@ -319,6 +331,7 @@ export default defineComponent({
       filteredLanguages,
       selectedLanguage,
       inputSentence,
+      wordIdentificationActive,
 
       searchWord,
       searchLanguage,
@@ -328,7 +341,8 @@ export default defineComponent({
       addWord,
       removeWord,
       selectAllWords,
-      deselectAllWords
+      deselectAllWords,
+      repeatPreviousWord
     }
   },
   created() {
