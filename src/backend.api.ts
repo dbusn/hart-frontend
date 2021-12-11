@@ -137,8 +137,8 @@ export default class APIWrapper {
             .catch(handleApiErrorResponse);
     }
 
-    public static async getToggleRequest(): Promise<any> {
-        return backendApi.get('/microcontroller/togglestream')
+    public static getToggleRequest(): any {
+        return backendApi.get('/api/v1/microcontroller/togglestream')
             .then(handleApiResponse)
             .catch(handleApiErrorResponse);
     }

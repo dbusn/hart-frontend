@@ -52,6 +52,8 @@ export default defineComponent({
     let recorder: any; // Stores the MediaRecorder object
     let mime: any; // Stores the mime type of the recording
     let audio: any = undefined; // Stores the audio of the recording
+    let streamLive = false; // Stores the status of live/realtime recording
+    let activeStyle = "p-button"; // Stores the style type based on realtime recording activity
 
     // Set supported languages.
     const languages = ref([
@@ -222,9 +224,15 @@ export default defineComponent({
     /**
      * Function to toggle mic on/off in the backend and start realtime recording
      */
-    function toggleRecording() {
-      const status = APIWrapper.getToggleRequest();
-      console.log(status);
+    async function toggleRecording() {
+      const status = await APIWrapper.getToggleRequest();
+      console.log(status.is_stream_live);
+      streamLive = !streamLive;
+      if (streamLive) {
+        activeStyle = "p-button-success";
+      } else {
+        activeStyle = "p-button";
+      }
     }
 
     return {
@@ -232,6 +240,8 @@ export default defineComponent({
       selectedLanguage2,
       filteredLanguages,
       languages,
+      streamLive,
+      activeStyle,
 
       sendFile,
       onFileSelected,
