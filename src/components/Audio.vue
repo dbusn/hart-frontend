@@ -35,6 +35,11 @@
       <Button @click="sendRecording()" id="send-btn" class="p-button p-shadow-2" disabled>Send Audio!</Button>
 
     </Panel>
+    <Panel header="Record Realtime">
+      <p>In this panel, you can turn on/off the microphone to record all incoming sound and translate it in realtime!</p>
+      <Button @click="toggleRecording()" type="button" id="button_record" class="p-button" style="margin-right: 10px">Toggle Mic</Button>
+      <Button id="play-btn" class="p-button" disabled>play</Button><br>
+    </Panel>
   </div>
 
 </template>
