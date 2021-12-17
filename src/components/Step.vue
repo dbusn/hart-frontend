@@ -1,7 +1,7 @@
 <template class="temp">
   <div style="margin-left:auto;margin-right:auto; width: 70%">
     <!-- Panel for choosing the steps-->
-    <Panel header="Step" class="p-shadow-4" style="margin-bottom: 50px">
+    <Panel header="Step"  class="p-shadow-4" style="margin-bottom: 50px">
       <p>{{phonemes}} {{StepNumber}}.</p>
     </Panel>
   </div>

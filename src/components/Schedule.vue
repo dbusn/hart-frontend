@@ -6,7 +6,7 @@
     <Panel header="Follow the steps" class="p-shadow-4" style="margin-bottom: 50px">
       <p>You are going to learn the phonemes step by step. Complete the steps and go on to the next one.</p>
       <div v-for="number in weekNumbers" v-bind:key="number">
-        <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Step {{number}}</Button>
+        <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; margin-bottom: 10px">Step {{number}}</Button>
       </div>
 <!--      <Button @click="ViewStep()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Step 1</Button>-->
     </Panel>
@@ -35,23 +35,27 @@ export default defineComponent({
     const phonemeData = (await APIWrapper.getPhonemes()).phonemes;
 
     // Weeknumbers
-    const weekNumbers = ref([1, 2, 3])
+    const weekNumbers = ref([1, 2, 3, 4, 5, 6])
 
     // Week to Phonemes
-    const weekToPhoneme =
+    const weekToPhoneme: any =
         {
           1: ["AH", "AA"],
           2 : ["EE", "B"],
-          3 : ["K", "L"]
+          3 : ["K", "L"],
+          4: ["F", "AW"],
+          5 : ["T", "Z"],
+          6 : ["B", "Y"],
         }
 
     // this function needs to be deleted, its now for buttons that need to be assigned to a page
-    function ViewStep(i){
+    function ViewStep(i : number){
       // Create div for button
       const stepDad = document.getElementById("stepdad");
       if(stepDad===null){
         return;
       }
+
       // clear the div
       stepDad.innerHTML = "";
 
@@ -61,7 +65,8 @@ export default defineComponent({
       // add Step to it
       const div = document.createElement('div');
       stepDad.appendChild(div);
-      createApp(Step, {"phonemes" : phonemes, "StepNumber" : i}).mount(stepDad);
+      const app = createApp(Step, {"phonemes" : phonemes, "StepNumber" : i})
+      app.mount(div);
     }
 
 
