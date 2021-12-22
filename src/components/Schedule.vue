@@ -6,10 +6,7 @@
     <Panel header="Follow the steps" class="p-shadow-4" style="margin-bottom: 50px">
       <p>You are going to learn the phonemes step by step. Complete the steps and go on to the next one.</p>
       <div v-for="number in stepNumbers" v-bind:key="number" style="display: inline-block; width: 90px;">
-        <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 7px; margin-bottom: 7px">Step {{number}}</Button>
-      </div>
-      <div v-for="number in stepNumbers" v-bind:key="number" style="display: inline-block; width: 90px;">
-        <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 7px">Test {{number}}</Button>
+        <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 7px; margin-bottom: 50px">Step {{number}}</Button>
       </div>
 <!--      <Button @click="ViewStep()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Step 1</Button>-->
     </Panel>
@@ -38,7 +35,7 @@ export default defineComponent({
     const phonemeData = (await APIWrapper.getPhonemes()).phonemes;
 
     // Stepnumbers
-    const stepNumbers = ref([1, 2, 3, 4, 5, 6])
+    const stepNumbers = ref([1, 2, 3, 4, 5, 6]);
 
     // Step to Phonemes
     const stepToPhoneme: any =
@@ -82,9 +79,8 @@ export default defineComponent({
 
     // Return all variables
     return {
-      phonemes,
       stepNumbers,
-
+      phonemes,
       ViewStep
     }
   },

@@ -235,7 +235,7 @@ export default defineComponent({
     //   phonemes.push({name: pho})
     // })
 
-    var phonemes: { name: string }[] = [];
+    const phonemes: { name: string }[] = [];
     phonemeData.forEach((pho: string) => {
       phonemes.push({name: pho})
     })
