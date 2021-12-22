@@ -23,7 +23,7 @@ import {createApp, defineComponent, ref} from "vue";
 import APIWrapper from "@/backend.api";
 import Button from "primevue/button";
 import Step from "@/components/Step.vue";
-// import {getRandom} from "@/helpers/array.helper";
+
 
 export default defineComponent({
   name: 'Schedule',
@@ -60,27 +60,27 @@ export default defineComponent({
       stepDad.innerHTML = "";
 
       // get the right phonemes for this step i
-      const phonemes = stepToPhoneme[i]
+      const selectedPhonemes = stepToPhoneme[i]
 
       // add Step to it
       const div = document.createElement('div');
       stepDad.appendChild(div);
-      const app = createApp(Step, {"phonemes" : phonemes, "StepNumber" : i})
+      const app = createApp(Step, {"selectedPhonemes" : selectedPhonemes, "StepNumber" : i})
       app.mount(div);
     }
 
 
     // Format gotten phonemes from backend.
-    const phonemes: { name: string }[] = [];
+    const selectedPhonemes: { name: string }[] = [];
     phonemeData.forEach((pho: string) => {
-      phonemes.push({name: pho})
+      selectedPhonemes.push({name: pho})
     })
 
 
     // Return all variables
     return {
       stepNumbers,
-      phonemes,
+      selectedPhonemes,
       ViewStep
     }
   },
