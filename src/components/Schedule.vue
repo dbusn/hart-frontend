@@ -5,8 +5,11 @@
     <!-- Panel for choosing the steps-->
     <Panel header="Follow the steps" class="p-shadow-4" style="margin-bottom: 50px">
       <p>You are going to learn the phonemes step by step. Complete the steps and go on to the next one.</p>
-      <div v-for="number in weekNumbers" v-bind:key="number">
-        <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; margin-bottom: 10px">Step {{number}}</Button>
+      <div v-for="number in stepNumbers" v-bind:key="number" style="display: inline-block; width: 90px;">
+        <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 7px; margin-bottom: 7px">Step {{number}}</Button>
+      </div>
+      <div v-for="number in stepNumbers" v-bind:key="number" style="display: inline-block; width: 90px;">
+        <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 7px">Test {{number}}</Button>
       </div>
 <!--      <Button @click="ViewStep()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Step 1</Button>-->
     </Panel>
@@ -34,11 +37,11 @@ export default defineComponent({
     // Get phoneme data from the backend
     const phonemeData = (await APIWrapper.getPhonemes()).phonemes;
 
-    // Weeknumbers
-    const weekNumbers = ref([1, 2, 3, 4, 5, 6])
+    // Stepnumbers
+    const stepNumbers = ref([1, 2, 3, 4, 5, 6])
 
-    // Week to Phonemes
-    const weekToPhoneme: any =
+    // Step to Phonemes
+    const stepToPhoneme: any =
         {
           1: ["AH", "AA"],
           2 : ["EE", "B"],
@@ -59,8 +62,8 @@ export default defineComponent({
       // clear the div
       stepDad.innerHTML = "";
 
-      // get the right phonemes for this week i
-      const phonemes = weekToPhoneme[i]
+      // get the right phonemes for this step i
+      const phonemes = stepToPhoneme[i]
 
       // add Step to it
       const div = document.createElement('div');
@@ -80,7 +83,7 @@ export default defineComponent({
     // Return all variables
     return {
       phonemes,
-      weekNumbers,
+      stepNumbers,
 
       ViewStep
     }

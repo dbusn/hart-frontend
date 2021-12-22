@@ -84,6 +84,7 @@ export default defineComponent({
 
     // Get phoneme data from the backend
     const phonemeData = (await APIWrapper.getPhonemes()).phonemes;
+    // const phonemeData = ["AH", "K"];
 
     // Initialize variables used throughout component
     const selectedTrainPhonemes = ref([]);
@@ -229,7 +230,12 @@ export default defineComponent({
     }
 
     // Format gotten phonemes from backend.
-    const phonemes: { name: string }[] = [];
+    // const phonemes: { name: string }[] = [];
+    // phonemeData.forEach((pho: string) => {
+    //   phonemes.push({name: pho})
+    // })
+
+    var phonemes: { name: string }[] = [];
     phonemeData.forEach((pho: string) => {
       phonemes.push({name: pho})
     })
