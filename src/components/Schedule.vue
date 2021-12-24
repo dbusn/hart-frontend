@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import {createApp, defineComponent, ref} from "vue";
-import APIWrapper from "@/backend.api";
+// import APIWrapper from "@/backend.api";
 import Button from "primevue/button";
 import Step from "@/components/Step.vue";
 
@@ -32,7 +32,7 @@ export default defineComponent({
   setup: async () => {
 
     // Get phoneme data from the backend
-    const phonemeData = (await APIWrapper.getPhonemes()).phonemes;
+    // const phonemeData = (await APIWrapper.getPhonemes()).phonemes;
 
     // Stepnumbers
     const stepNumbers = ref([1, 2, 3, 4, 5, 6]);
@@ -69,18 +69,9 @@ export default defineComponent({
       app.mount(div);
     }
 
-
-    // Format gotten phonemes from backend.
-    const selectedPhonemes: { name: string }[] = [];
-    phonemeData.forEach((pho: string) => {
-      selectedPhonemes.push({name: pho})
-    })
-
-
     // Return all variables
     return {
       stepNumbers,
-      selectedPhonemes,
       ViewStep
     }
   },

@@ -39,8 +39,8 @@ import Fieldset from "primevue/fieldset";
 export default defineComponent({
   name: 'Step',
   props: [ "selectedPhonemes", "StepNumber" ],
-  components: {Panel},
-  extends: {Button, Checkbox, Dropdown, Fieldset},
+  components: {Panel, Button, Checkbox},
+  extends: {Dropdown, Fieldset},
   setup(props) {
     const selectedTrainPhonemes = ref([]);
 
