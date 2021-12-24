@@ -40,12 +40,12 @@ export default defineComponent({
     // Step to Phonemes
     const stepToPhoneme: any =
         {
-          1: ["AH", "AA"],
-          2 : ["EE", "B"],
-          3 : ["K", "L"],
-          4: ["F", "AW"],
-          5 : ["T", "Z"],
-          6 : ["B", "Y"],
+          1: ["T", "D", "P", "B", "TH", "DH"],
+          2 : ["AH", "OO", "EE", "UU", "UH", "EH"],
+          3 : ["Y", "W", "S", "Z", "F", "V"],
+          4: ["OE", "I", "H", "IH", "AY"],
+          5 : ["AE", "AW", "ER", "OY", "OW"],
+          6 : ["J", "CH", "SH", "L", "N", "G", "K", "NG"],
         }
 
     // this function needs to be deleted, its now for buttons that need to be assigned to a page
