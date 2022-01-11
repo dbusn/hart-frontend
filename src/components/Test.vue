@@ -9,20 +9,6 @@
   </div>
 
   <Panel header="Training" class="p-shadow-4">
-    <p>Select which phonemes you want to train on.</p>
-    <div style="margin-bottom: 10px">
-      <Button @click="selectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Select all
-      </Button>
-      <Button @click="deselectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem">Deselect all</Button>
-    </div>
-    <div style="width: min(100%, max(60%, 600px)); margin-top: 20px">
-      <div v-for="item in phonemes" v-bind:key="item.name" class="p-field-checkbox"
-           style="display: inline-block; width: 70px;">
-        <Checkbox :id="'checkbox_' + item.name" name="item.name" :value="item.name" v-model="selectedTrainPhonemes"/>
-        <label :for="item">{{ item.name }}</label>
-      </div>
-    </div>
-
     <Panel header="Forced identification" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
       <p>By clicking the button, a phoneme will be send to the sleeve, and you will get to see three buttons, and
         have to choose which one you felt.</p>
@@ -42,7 +28,7 @@
       </Fieldset>
     </Panel>
   </Panel>
-    </template>
+</template>
 
 
   <script lang="ts">
@@ -52,27 +38,23 @@
 import {createApp, defineComponent, ref} from "vue";
 import Button from "primevue/button";
 import Panel from "primevue/panel";
-import Checkbox from "primevue/checkbox";
-import Dropdown from "primevue/dropdown";
 import Fieldset from "primevue/fieldset";
 import APIWrapper from "@/backend.api";
-import {getRandom} from "@/helpers/array.helper";
-// import {getRandom} from "@/helpers/array.helper";
 
 export default defineComponent({
-  name: 'Step',
-  props: [ "selectedPhonemes", "StepNumber" ],
-  components: {Panel, Button, Checkbox, Dropdown, Fieldset},
+  name: 'Test',
+  props: [ "testPhonemes", "StepNumber", "randomTestPhonemes"],
+  components: {Panel, Button, Fieldset},
 
 
   setup(props) {
-    const selectedTrainPhonemes = ref([]);
+    var i = 0;
     const playedPhoneme = ref();
     const identificationActive = ref(false);
     const fiRows = ref(0);
     const dropdownPhoneme = ref();
     const phonemes: { name: string }[] = [];
-    props["selectedPhonemes"].forEach((pho: string) => {
+    props["testPhonemes"].forEach((pho: string) => {
       phonemes.push({name: pho})
     })
 
@@ -84,13 +66,8 @@ export default defineComponent({
 
       buttonDiv.innerHTML = '';
 
-      if (selectedTrainPhonemes.value.length === 0) {
-        alert("Please select phonemes to train on");
-        return;
-      }
-
-      const randomPhonemes = (selectedTrainPhonemes.value as any)
-      playedPhoneme.value = getRandom(randomPhonemes, 1)[0];
+      playedPhoneme.value = props['randomTestPhonemes'][i];
+      i++
       identificationActive.value = true;
 
       APIWrapper.sendPhonemeMicrocontroller({'phonemes': [playedPhoneme.value]});
@@ -112,8 +89,8 @@ export default defineComponent({
       textDiv.innerHTML = '<p>Which phoneme was just played?</p>';
       buttonDiv.appendChild(textDiv);
 
-      // For each of the phonemes selected, create buttons and assign listeners to it.
-      randomPhonemes.forEach((phoneme: string) => {
+      // For each of the phonemes, create buttons and assign listeners to it.
+      props['testPhonemes'].forEach((phoneme: string) => {
         // Create div for button
         const div = document.createElement('div');
         div.style.display = "inline-block";
@@ -158,7 +135,6 @@ export default defineComponent({
 
     return {
       phonemes,
-      selectedTrainPhonemes,
       dropdownPhoneme,
 
       sendForcedIdentification,

@@ -108,7 +108,7 @@ export default defineComponent({
 
         const testPhonemes = testToPhoneme[i]
 
-        const randomTestPhonemes = shuffleArray(testPhonemes);
+        var randomTestPhonemes = shuffleArray(testPhonemes);
         const div = document.createElement('div');
         testDad.appendChild(div);
         const app = createApp(Test, {"testPhonemes" : testPhonemes, "TestNumber" : i, "randomTestPhonemes" : randomTestPhonemes })
