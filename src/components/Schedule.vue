@@ -15,6 +15,9 @@
     <div id="stepdad">
     </div>
 
+    <div id="testdad">
+    </div>
+
 
 
   </div>
@@ -57,44 +60,76 @@ export default defineComponent({
           6 : ["J", "CH", "SH", "L", "N", "G", "K", "NG", "AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH"],
         }
 
+      function ViewStep(i : number){
+      // delete previous page
 
-    function ViewStep(i : number){
-      // Create div for button
-      const stepDad = document.getElementById("stepdad");
-      if(stepDad===null){
-        return;
+        // Create div for button
+        const stepDad = document.getElementById("stepdad");
+        if(stepDad===null){
+          return;
+        }
+
+        const testDad = document.getElementById("testdad");
+        if(testDad===null){
+          return;
+        }
+
+
+        // clear the div
+        stepDad.innerHTML = "";
+        testDad.innerHTML = "";
+
+        const selectedPhonemes = stepToPhoneme[i]
+
+
+        const div = document.createElement('div');
+        stepDad.appendChild(div);
+        const app = createApp(Step, {"selectedPhonemes" : selectedPhonemes, "StepNumber" : i})
+        app.mount(div);
       }
 
-      // clear the div
-      stepDad.innerHTML = "";
 
-      const selectedPhonemes = stepToPhoneme[i]
+      function ViewTest(i : number){
+        // Create div for button
+        const testDad = document.getElementById("testdad");
+        if(testDad===null){
+          return;
+        }
+
+        const stepDad = document.getElementById("stepdad");
+        if(stepDad===null){
+          return;
+        }
 
 
-      const div = document.createElement('div');
-      stepDad.appendChild(div);
-      const app = createApp(Step, {"selectedPhonemes" : selectedPhonemes, "StepNumber" : i})
-      app.mount(div);
-    }
+        // clear the div
+        testDad.innerHTML = "";
+        stepDad.innerHTML = "";
 
-    function ViewTest(i : number){
-      // Create div for button
-      const testDad = document.getElementById("testdad");
-      if(testDad===null){
-        return;
+        const testPhonemes = testToPhoneme[i]
+
+        const randomTestPhonemes = shuffleArray(testPhonemes);
+        const div = document.createElement('div');
+        testDad.appendChild(div);
+        const app = createApp(Test, {"testPhonemes" : testPhonemes, "TestNumber" : i, "randomTestPhonemes" : randomTestPhonemes })
+        app.mount(div);
       }
 
-      // clear the div
-      testDad.innerHTML = "";
+    function shuffleArray(someArray : string[]) {
+      let array = Array<string>();
+      for (let i = 0; i < someArray.length; i++) {
+        array.push(someArray[i]);
+      }
 
-      const testPhonemes = testToPhoneme[i]
-
-
-      const div = document.createElement('div');
-      testDad.appendChild(div);
-      const app = createApp(Test, {"testPhonemes" : testPhonemes, "TestNumber" : i})
-      app.mount(div);
+      for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+      }
+      return array;
     }
+
 
     // Return all variables
     return {
@@ -102,7 +137,7 @@ export default defineComponent({
       testNumbers,
 
       ViewStep,
-      ViewTest
+      ViewTest,
     }
   },
   created() {
