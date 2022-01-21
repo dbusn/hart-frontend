@@ -34,8 +34,8 @@
       <p>By clicking the button, a phoneme will be send to the sleeve, you have to choose which one you've felt. If you chose the wrong phoneme, it turns red and if you chose the right phoneme the button turns green. You can try other buttons until you've found the right one. On the bottom you can see an overview of your answers. </p>
       <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Forced identification
       </Button>
-<!--      <Button @click="repeatPreviousPhoneme()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat-->
-<!--      </Button>-->
+      <Button @click="repeatPreviousPhoneme()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
+      </Button>
       <div id="forcedIdentificationButtons"></div>
       <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
         <table id="phoneme-table">
@@ -179,7 +179,9 @@ export default defineComponent({
       })
     }
 
-
+    function repeatPreviousPhoneme() {
+      APIWrapper.sendPhonemeMicrocontroller({'phonemes': [playedPhoneme.value]});
+    }
 
 
 
@@ -188,11 +190,13 @@ export default defineComponent({
       phonemes,
       selectedTrainPhonemes,
       dropdownPhoneme,
+      identificationActive,
 
       selectAllPhonemes,
       deselectAllPhonemes,
       sendForcedIdentification,
       sendDropdownPhoneme,
+      repeatPreviousPhoneme,
     }
   }
 })

@@ -7,7 +7,11 @@
       <p>You are going to learn the phonemes step by step. Complete the steps and go on to the next one.</p>
       <div v-for="number in stepNumbers" v-bind:key="number" style="display: inline-block; width: 90px;">
         <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 7px; margin-bottom: 10px">Step {{number}}</Button>
-        <Button @click="ViewTest(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 7px; margin-bottom: 3px">Test {{number}}</Button>
+        <Button @click="ViewTest(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 7px; margin-bottom: 10px">Test {{number}}</Button>
+      </div>
+      
+      <div v-for="number in wordNumbers" v-bind:key="number" style="display: inline-block; width: 90px;">
+        <Button @click="ViewTest(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 7px; margin-bottom: 10px">Word {{number}}</Button>
       </div>
     </Panel>
 
@@ -38,6 +42,7 @@ export default defineComponent({
 
     const stepNumbers = ref([1, 2, 3, 4, 5, 6]);
     const testNumbers = ref([1, 2, 3, 4, 5, 6]);
+    const wordNumbers = ref([2, 4, 6]);
 
 
     const stepToPhoneme: any =
@@ -135,6 +140,7 @@ export default defineComponent({
     return {
       stepNumbers,
       testNumbers,
+      wordNumbers,
 
       ViewStep,
       ViewTest,

@@ -15,7 +15,7 @@
       <Button @click="repeatPreviousPhoneme()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
         </Button>
       <div id="forcedIdentificationButtons"></div>
-      <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
+      <!-- <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
         <table id="phoneme-table">
           <tr>
             <th>Round</th>
@@ -23,9 +23,12 @@
             <th>Guessed answers</th>
           </tr>
         </table>
-      </Fieldset>
+      </Fieldset> -->
+      <Button @click="viewGrade()" class="p-shadow-2" style="padding: 0.9rem; margin-top: 20px" :disabled='!gradeActive'>View your grade!
+        </Button>
     </Panel>
-
+    <div style="margin-left:auto;margin-right:auto; width: 100%" id="finalGrade">
+    </div>
 </template>
 
 
@@ -36,13 +39,13 @@
 import {createApp, defineComponent, ref} from "vue";
 import Button from "primevue/button";
 import Panel from "primevue/panel";
-import Fieldset from "primevue/fieldset";
+//import Fieldset from "primevue/fieldset";
 import APIWrapper from "@/backend.api";
 
 export default defineComponent({
   name: 'Test',
   props: [ "testPhonemes", "StepNumber", "randomTestPhonemes"],
-  components: {Panel, Button, Fieldset},
+  components: {Panel, Button/*, Fieldset*/},
 
 
   setup(props) {
@@ -55,13 +58,22 @@ export default defineComponent({
     let randomTestPhonemes: string[] = [];
     let correctBtn: HTMLElement | null;
     let mutex = 0;
+    let correctGuesses = 0;
+    let guesses = 0;
+    let grade = ref(0);
+    let gradeActive = ref(false);
     props["testPhonemes"].forEach((pho: string) => {
       phonemes.push({name: pho})
     })
 
     function sendForcedIdentification() {
+      if (mutex === 1) {
+        setTimeout(() => {
+          mutex = 0;
+        }, 300);
+      }
       if (randomTestPhonemes.length == 0) {
-        props['testPhonemes'].forEach((phoneme: string) => {
+        props['randomTestPhonemes'].forEach((phoneme: string) => {
           randomTestPhonemes.push(phoneme);
         });
       }
@@ -79,22 +91,20 @@ export default defineComponent({
 
       fiRows.value++;
 
-      const pTable = document.getElementById("phoneme-table");
-      if (pTable === null) {
-        return
-      }
+      //const pTable = document.getElementById("phoneme-table");
+      //if (pTable === null) {
+      //  return
+      //}
 
       // Create new row element for table
-      const row = document.createElement("tr");
-      row.innerHTML = "<td>" + fiRows.value + "</td><td>" + playedPhoneme.value + "</td><td id='pTableRow_" + fiRows.value + "'></td>";
-      pTable.appendChild(row);
+      //const row = document.createElement("tr");
+      //row.innerHTML = "<td>" + fiRows.value + "</td><td>" + playedPhoneme.value + "</td><td id='pTableRow_" + fiRows.value + "'></td>";
+      //pTable.appendChild(row);
 
       // Add explanation div
       const textDiv = document.createElement('div');
       textDiv.innerHTML = '<p>Which phoneme was just played?</p>';
       buttonDiv.appendChild(textDiv);
-
-      mutex = 0;
 
       // For each of the phonemes, create buttons and assign listeners to it.
       props['testPhonemes'].forEach((phoneme: string) => {
@@ -119,9 +129,13 @@ export default defineComponent({
           correctBtn = btn;
         }
 
-        const guessesCell = document.getElementById("pTableRow_" + fiRows.value);
-        if (btn === null || guessesCell === null) {
-          return
+        //const guessesCell = document.getElementById("pTableRow_" + fiRows.value);
+        //if (btn === null || guessesCell === null) {
+        //  return
+        //}
+
+        if (btn === null) {
+          return;
         }
 
         btn.addEventListener("click", () => {
@@ -130,15 +144,23 @@ export default defineComponent({
             mutex = 1;
             if (phoneme === playedPhoneme.value) {
               btn.style.background = "green";
-              guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #8800FF; font-weight: bolder'>" + phoneme + "</span>";
+              //guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #8800FF; font-weight: bolder'>" + phoneme + "</span>";
+              correctGuesses++;
+              guesses++;
               i++;
             } else {
               btn.style.background = "red";
-              guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + phoneme + "</span>";
+              //guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + phoneme + "</span>";
+              guesses++;
               i++;
               // Show the correct phoneme, and add the current phoneme to randomTestPhonemes
               randomTestPhonemes.push(playedPhoneme.value);
             }
+            grade.value = (correctGuesses / guesses) * 100;
+            grade.value = Math.round(grade.value) / 10;
+            console.log(correctGuesses);
+            console.log(guesses);
+            console.log(grade);
             setTimeout(() => {
               btn.style.background = bgColor;
               if (correctBtn !== btn && correctBtn !== null) {
@@ -147,9 +169,12 @@ export default defineComponent({
                   if (correctBtn !== null) {
                     correctBtn.style.background = bgColor;
                   }
-                }, 1000);
+                }, 500);
               }
-            }, 1000);
+              if (i >= randomTestPhonemes.length) {
+                gradeActive.value = true;
+              }
+            }, 500);
           }
         });
       })
@@ -159,16 +184,27 @@ export default defineComponent({
       APIWrapper.sendPhonemeMicrocontroller({'phonemes': [playedPhoneme.value]});
     }
 
-
-
+    function viewGrade() {
+      if (gradeActive.value) {
+        if (document.getElementById("finalGrade") != null && document != null) {
+          let someDiv = document.getElementById("finalGrade");
+          if (someDiv != null) {
+            someDiv.innerHTML = "<h1 style='margin-bottom: 4px'> Grade: " + grade.value + " </h1>";
+          }
+        }
+      }
+    }
 
     return {
       phonemes,
       dropdownPhoneme,
       identificationActive,
+      grade,
+      gradeActive,
 
       sendForcedIdentification,
       repeatPreviousPhoneme,
+      viewGrade,
     }
   }
 })
