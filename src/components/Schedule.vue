@@ -5,13 +5,14 @@
 
     <Panel header="Follow the steps" class="p-shadow-4" >
       <p>You are going to learn the phonemes step by step. Complete the steps and go on to the next one.</p>
-      <div v-for="number in stepNumbers" v-bind:key="number" style="display: inline-block; width: 90px;">
-        <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 7px; margin-bottom: 10px">Step {{number}}</Button>
-        <Button @click="ViewTest(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 7px; margin-bottom: 10px">Test {{number}}</Button>
+      <div v-for="number in stepNumbers" v-bind:key="number" style="display: inline-block; width: 100px;">
+        <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; width: 80px; margin:auto">Step {{number}}</Button>
+        <p><b> </b></p>
+        <Button @click="ViewTest(number)" class="p-shadow-2" style="padding: 0.9rem; width: 80px; margin:auto;">Test {{number}}</Button>
       </div>
-      
-      <div v-for="number in wordNumbers" v-bind:key="number" style="display: inline-block; width: 90px;">
-        <Button @click="ViewTest(number)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 7px; margin-bottom: 10px">Word {{number}}</Button>
+      <p><b> </b></p>
+      <div v-for="number in wordNumbers" v-bind:key="number" style="display: inline-block; width: 100px; margin-left: 100px;">
+        <Button @click="ViewTest(number)" class="p-shadow-2" style="padding: 0.9rem; width: 80px; margin:auto">Word {{number}}</Button>
       </div>
     </Panel>
 
