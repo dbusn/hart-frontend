@@ -6,6 +6,10 @@
             <div class="modal-content" style="background-color: #fefefe; margin: auto; padding: 20px; border: 1px solid #888; width: 80%;">
                 <span class="close">&times;</span>
                 <p>Some explanation</p>
+                <span class="p-float-label">
+                    <InputText type="text" class="p-shadow-2" v-model="value" style="width: 100%; margin-bottom: 10px"/>
+                    <label for="username">Username</label>
+                </span>
             </div>
         </div>
   </div>
