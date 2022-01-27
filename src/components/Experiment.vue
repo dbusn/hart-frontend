@@ -7,20 +7,29 @@
                 <span class="close">&times;</span>
                 <p>Some explanation</p>
                 <span class="p-float-label">
-                    <InputText type="text" class="p-shadow-2" v-model="value" style="width: 100%; margin-bottom: 10px"/>
+                    <InputText id="username" type="text" v-model="user" style="width: 100%; margin-bottom: 10px"/>
                     <label for="username">Username</label>
                 </span>
+                <Button @click="sendInfo()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px; position: absolute;
+                    top: 45%; left: 45%;">Submit</Button>
+                <div id="errorMessage"></div>
             </div>
         </div>
   </div>
 </template>
 
 <script lang="ts">
-import {/**createApp, */defineComponent} from "vue";
+import {createApp, defineComponent, ref} from "vue";
+import Survey from "@/components/Survey.vue";
 
 export default defineComponent({
     name: 'Words',
     setup : async () => {
+        const user = ref();
+        const participants: string[] = 
+            [
+                "penguin"
+            ];
         function initialize() {
             const modal = document.getElementById("myModal");
             if (modal !== null) {
@@ -35,9 +44,31 @@ export default defineComponent({
             //app.mount(screen);
         }
 
-        return {
-            initialize
+        function sendInfo() {
+            if (participants.includes(user.value)) {
+                const modal = document.getElementById("myModal");
+                if (modal !== null) {
+                    modal.style.display = "none";
+                }
 
+                const app = createApp(Survey, {"user" : user.value});
+
+                const screen = document.getElementById("state");
+                if (screen !== null) {
+                    screen.innerHTML = "";
+                    app.mount(screen);
+                }
+            } else {
+                const error = document.getElementById("errorMessage");
+                if (error !== null) {
+                    error.innerHTML = "<p>Your username was incorrect. Try again.</p>"
+                }
+            }
+        }
+
+        return {
+            initialize,
+            sendInfo
         }
     }
 });
