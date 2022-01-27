@@ -2,10 +2,10 @@
   <div id="state">
       <Button @click="initialize()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px; position: absolute;
         top: 45%; left: 45%;">Start the survey</Button>
-        <div id="myModal" class="modal" style="display: none">
-            <div class="modal-content">
+        <div id="myModal" class="modal" style="display: none; z-index:1; position: fixed; width: 100%; height:100%; background-color: rgba(0,0,0,0.4); left:0; top:0">
+            <div class="modal-content" style="background-color: #fefefe; margin: auto; padding: 20px; border: 1px solid #888; width: 80%;">
                 <span class="close">&times;</span>
-                <p>Some text in the Modal..</p>
+                <p>Some explanation</p>
             </div>
         </div>
   </div>
