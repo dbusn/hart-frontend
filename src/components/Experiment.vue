@@ -56,7 +56,9 @@ export default defineComponent({
                 const screen = document.getElementById("state");
                 if (screen !== null) {
                     screen.innerHTML = "";
-                    app.mount(screen);
+                    const div = document.createElement('div')
+                    screen.appendChild(div);
+                    app.mount(div);
                 }
             } else {
                 const error = document.getElementById("errorMessage");
@@ -67,6 +69,7 @@ export default defineComponent({
         }
 
         return {
+            user,
             initialize,
             sendInfo
         }

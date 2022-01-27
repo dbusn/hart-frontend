@@ -23,6 +23,7 @@ import Panel from "primevue/panel";
 import Fieldset from "primevue/fieldset";
 import InputText from 'primevue/inputtext';
 import AutoComplete from "primevue/autocomplete";
+import SelectButton from "primevue/selectbutton";
 
 import './assets/layout/reset.css';
 import './assets/layout/style.css';
@@ -40,5 +41,6 @@ app.component('Panel', Panel);
 app.component('Fieldset', Fieldset);
 app.component('AutoComplete', AutoComplete);
 app.component('InputText', InputText);
+app.component('SelectButton', SelectButton);
 
 app.mount('#app')

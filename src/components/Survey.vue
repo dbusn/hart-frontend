@@ -1,35 +1,41 @@
 <template class="temp">
   <div id="state">
-      <SelectButton v-model="selectedScale" :options="scale" optionLabel="brand">
-            <div class="scale-option">
-                <img :alt="slotProps.option.brand" :src="'demo/images/car/' + slotProps.option.brand + '.png'" />
-                <div>{{slotProps.option.brand}}</div>
-            </div>
+      <SelectButton v-model="selectedScale" :options="scale" optionLabel="name">
         </SelectButton>
+        <Button @click="submitRating()">Next</Button>
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent, ref} from "vue";
-import Survey from "@/components/Survey.vue";
+import SelectButton from "primevue/selectbutton";
+import Button from "primevue/button";
 
 export default defineComponent({
-    name: 'Words',
+    name: 'Survey',
     props: ["user"],
-    components: {},
-    setup(props) {
+    components: {SelectButton, Button},
+    setup() {
         const selectedScale = ref();
         const scale = [
-            "Not different", 
-            "Somewhat different",
-            "Moderately different",
-            "Very different"
+            {name: "Not different", value: 1},
+            {name: "Somewhat different", value: 2},
+            {name: "Moderately different", value: 3},
+            {name: "Very different", value: 4}
         ]
+        
+        //const user = props["user"];
+
+        function submitRating(){
+            console.log(selectedScale.value.name);
+            console.log(selectedScale.value.value);
+        }
 
         return {
             selectedScale,
             scale,
 
+            submitRating
         }
     }
 });
