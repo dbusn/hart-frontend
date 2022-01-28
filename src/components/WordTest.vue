@@ -6,12 +6,28 @@
 
   <Panel header="Feeling words" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
       <p>By clicking the button, a random word will be send to the sleeve. You will see the word on the screen, and how it's split up into phonemes.</p>
-      <Button @click="sendRandomWord()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Send word
+      <Button @click="sendRandomWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Send word
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
       </Button>
-      <div id="phonemeSplitup"></div>
-      <div id="word"></div>
+      <div id="word0"></div>
+      <p>By clicking the button, a random word will be send to the sleeve. You will see the word on the screen, and how it's split up into phonemes.</p>
+      <Button @click="sendRandomWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Send word
+      </Button>
+      <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
+      </Button>
+      <div id="word1"></div>
+    </Panel>
+
+    <Panel header="Find the phonemes" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
+      <p>By clicking the button, a random word will be send to the sleeve. You will see the word on the screen, and how it's split up into phonemes.</p>
+      <Button @click="findSplitupWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Send word
+      </Button>
+      <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
+      </Button>
+      <div id="buttonDiv0"></div>
+      <div id="ctrlBtn0"></div>
+      <div id="splitup0"></div>
     </Panel>
 
     <!-- <Panel header="Test" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
@@ -42,7 +58,7 @@
 // import {createApp, defineComponent, ref} from "vue";
 // import APIWrapper from "@/backend.api";
 
-import {defineComponent, ref} from "vue";
+import {createApp, defineComponent, ref} from "vue";
 import Button from "primevue/button";
 import Panel from "primevue/panel";
 //import Fieldset from "primevue/fieldset";
@@ -50,29 +66,29 @@ import APIWrapper from "@/backend.api";
 
 export default defineComponent({
   name: 'WordTest',
-  props: ["testWords", "WordNumber"],
+  props: ["testWords", "WordNumber", "phonemes"],
   components: {Panel, Button/*, Fieldset*/},
   setup(props) {
     const identificationActive = ref(false);
 
     let selectedWord = "";
+
+    let selectedPhonemes : string[] = [];
+    let phon : any;
       
-    async function sendRandomWord() {
-      const len = props["testWords"].length;
-      selectedWord = props["testWords"][Math.floor(Math.random() * len)];
+    async function sendRandomWord(test : number) {
+      //const len = props["testWords"].length;
+      selectedWord = props["testWords"][test];
 
       const wrapper = await APIWrapper.sendWordsMicrocontroller({'words': [selectedWord]});
 
       const phon = wrapper.decomposition[0].phonemes;
-      const phonemeSplitup = document.getElementById("phonemeSplitup");
-      if (phonemeSplitup != null) {
-        phonemeSplitup.innerHTML = "<p>" + prettyPrint(phon) + "</p>";
-      }
 
-      const word = document.getElementById("word");
-      if (word != null) {
-        word.innerHTML = "<p>" + selectedWord + "</p>";
+      const word = document.getElementById("word" + test);
+      if (word === null) {
+        return
       }
+      word.innerHTML = "<p> " + selectedWord + " | " + prettyPrint(phon) + " </p>";
 
       identificationActive.value = true;
 
@@ -98,11 +114,106 @@ export default defineComponent({
       return dummy.substring(0, dummy.length - 3);
     }
 
+    async function findSplitupWord(test : number) {
+      selectedWord = props["testWords"][2 + test];
+      const wrapper = await APIWrapper.sendWordsMicrocontroller({'words': [selectedWord]});
+      phon = wrapper.decomposition[0].phonemes;
+
+      const buttonDiv = document.getElementById("buttonDiv" + test);
+      if (buttonDiv === null) {
+        return;
+      }
+
+      props["phonemes"].forEach((phoneme: string) => {
+        // Create div for button
+        const div = document.createElement('div');
+        div.style.display = "inline-block";
+        div.style.marginRight = "10px";
+
+        // Add div for button to the button div
+        buttonDiv.appendChild(div);
+        createApp(Button, {
+          label: phoneme,
+          id: "fid_" + phoneme,
+          class: "p-shadow-2",
+          style: "margin-bottom: 4px"
+        }).mount(div);
+
+        const btn = document.getElementById("fid_" + phoneme);
+
+        // Remember the button storing the correct phoneme
+        //if (phoneme === playedPhoneme.value) {
+        //  correctBtn = btn;
+        //}
+
+        //const guessesCell = document.getElementById("pTableRow_" + fiRows.value);
+        //if (btn === null || guessesCell === null) {
+        //  return
+        //}
+
+        if (btn === null) {
+          return;
+        }
+
+        btn.addEventListener("click", () => {
+          selectedPhonemes.push(phoneme);
+        });
+      })
+
+      const ctrlBtn = document.getElementById("ctrlBtn" + test);
+      if (ctrlBtn === null) {
+        return;
+      }
+
+      const div1 = document.createElement('div');
+      div1.style.display = "inline-block";
+      div1.style.marginRight = "10px";
+      ctrlBtn.appendChild(div1);
+      createApp(Button, {
+        label: "reset",
+        id: "reset" + test,
+        class: "p-shadow-2",
+        style: "margin-bottom: 4px"
+      }).mount(div1);
+      const rst = document.getElementById("reset" + test);
+      if (rst === null) {
+        return;
+      }
+      rst.addEventListener("click", () => {
+        selectedPhonemes = [];
+      })
+
+      const div2 = document.createElement('div');
+      div2.style.display = "inline-block";
+      div2.style.marginRight = "10px";
+      ctrlBtn.appendChild(div2);
+      createApp(Button, {
+        label: "submit",
+        id: "submit" + test,
+        class: "p-shadow-2",
+        style: "margin-bottom: 4px"
+      }).mount(div2);
+      const submit = document.getElementById("submit" + test);
+      if (submit === null) {
+        return;
+      }
+      submit.addEventListener("click", () => {
+        const sol = document.getElementById("splitup" + test);
+        if (sol === null) {
+          return
+        }
+        sol.innerHTML = "<p> " + prettyPrint(selectedPhonemes) + " | " + prettyPrint(phon) + " | " + selectedWord + "</p>";
+        buttonDiv.innerHTML = "";
+      })
+    }
+
     return {
       identificationActive,
 
       sendRandomWord,
-      repeatPreviousWord
+      repeatPreviousWord,
+      findSplitupWord,
+
     }
   }
 

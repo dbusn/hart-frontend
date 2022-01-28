@@ -1,5 +1,18 @@
 <template class="temp">
   <div style="margin-left:auto;margin-right:auto; width: 70%">
+    <div id="myModal" class="modal" style="display: block; z-index:1; position: fixed; width: 100%; height:100%; background-color: rgba(0,0,0,0.4); left:0; top:0">
+        <div class="modal-content" style="background-color: #fefefe; margin: auto; padding: 20px; border: 1px solid #888; width: 80%;">
+            <span class="close">&times;</span>
+            <p>Some explanation</p>
+            <span class="p-float-label">
+                <InputText id="username" type="text" v-model="user" style="width: 100%; margin-bottom: 10px"/>
+                <label for="username">Username</label>
+            </span>
+            <Button @click="sendInfo()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px; position: absolute;
+                    top: 45%; left: 45%;">Submit</Button>
+            <div id="errorMessage"></div>
+        </div>
+      </div>
     <h1 style="margin-bottom: 4px">Training Schedule</h1>
 
 
@@ -74,10 +87,16 @@ export default defineComponent({
 
     const wordsArray: any =
         {
-          2 : ["Peop", "OeP", "Yeet"],
+          2 : ["Tea", "Eat", "Toe", "Bat", "Bet", "Pet"],
           4 : ["Vier", "Ik", "Hoi"],
           6 : ["test", "Zes", "ja"],
         }
+
+      const participants: string[] =
+      [
+        "penguin"
+      ]
+      const user = ref();
 
       function ViewStep(i : number){
       // delete previous page
@@ -185,22 +204,36 @@ export default defineComponent({
 
       const div = document.createElement('div');
       wordDad.appendChild(div);
-      const app = createApp(WordTest, {"testWords" : testWords, "WordNumber" : i})
+      const app = createApp(WordTest, {"testWords" : testWords, "WordNumber" : i, "phonemes" : testToPhoneme[i]})
       app.mount(div);
 
     }
 
-
+    function sendInfo() {
+      if (participants.includes(user.value)) {
+        const modal = document.getElementById("myModal");
+        if (modal !== null) {
+          modal.style.display = "none";
+        }
+      } else {
+        const error = document.getElementById("errorMessage");
+        if (error !== null) {
+          error.innerHTML = "<p>Your username was incorrect. Try again.</p>"
+        }
+      }
+    }
 
     // Return all variables
     return {
       stepNumbers,
       testNumbers,
       wordNumbers,
+      user,
 
       ViewStep,
       ViewTest,
       ViewWord,
+      sendInfo
     }
   },
   created() {
