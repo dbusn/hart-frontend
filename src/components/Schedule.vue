@@ -122,12 +122,13 @@ export default defineComponent({
         testDad.innerHTML = "";
         wordDad.innerHTML = "";
 
-        const selectedPhonemes = stepToPhoneme[i]
+        const selectedPhonemes = stepToPhoneme[i];
+        const oldPhonemes = i > 1 ? testToPhoneme[i - 1] : [];
 
 
         const div = document.createElement('div');
         stepDad.appendChild(div);
-        const app = createApp(Step, {"selectedPhonemes" : selectedPhonemes, "StepNumber" : i})
+        const app = createApp(Step, {"selectedPhonemes" : selectedPhonemes, "oldPhonemes" : oldPhonemes, "StepNumber" : i})
         app.mount(div);
       }
 

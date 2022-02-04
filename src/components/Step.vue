@@ -2,14 +2,14 @@
   <div style="margin-left:auto;margin-right:auto; width: 100%">
       <h1 style="margin-bottom: 4px"> Step {{StepNumber}} </h1>
       <h4 style="margin-bottom: 26px"> This is the training page. Here you can train yourself to learn which patterns stands for which phonemes. You can decide for yourself if you want to train phoneme per phoneme or all in one go. If you think you know the phonemes, you can move on to the test.</h4>
-      <h4 style="margin-bottom: 26px"> This training you can train {{selectedPhonemes}}</h4>
+      <h4 style="margin-bottom: 26px"> This training you can train {{selectedPhonemes}} and {{oldPhonemes}}</h4>
   </div>
 
   <Panel header="Feeling phonemes" class="p-shadow-4" style="margin-bottom: 50px">
     <p>Try out how a single phoneme feels. You can select a phoneme in the
       dropdown menu and send it to the sleeve. If you think you are able to recognize them you can go to the training.</p>
 
-    <Dropdown v-model="dropdownPhoneme" class="p-shadow-2" :options="phonemes" optionLabel="name"
+    <Dropdown v-model="dropdownPhoneme" class="p-shadow-2" :options="allPhonemes" optionLabel="name"
               placeholder="Phoneme" :filter="true"
               style="margin-right: 10px"/>
     <Button @click="sendDropdownPhoneme()" class="p-shadow-2" style="padding: 0.9rem">Send phoneme</Button>
@@ -20,10 +20,12 @@
       <div style="margin-bottom: 10px">
         <Button @click="selectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Select all
         </Button>
-        <Button @click="deselectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem">Deselect all</Button>
+        <Button @click="selectNewPhonemes()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Select new
+        </Button>
+        <Button @click="deselectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Deselect all</Button>
       </div>
       <div style="width: min(100%, max(60%, 600px)); margin-top: 20px">
-        <div v-for="item in phonemes" v-bind:key="item.name" class="p-field-checkbox"
+        <div v-for="item in allPhonemes" v-bind:key="item.name" class="p-field-checkbox"
              style="display: inline-block; width: 70px;">
           <Checkbox :id="'checkbox_' + item.name" name="item.name" :value="item.name" v-model="selectedTrainPhonemes"/>
           <label :for="item">{{ item.name }}</label>
@@ -66,7 +68,7 @@ import {getRandom} from "@/helpers/array.helper";
 
 export default defineComponent({
   name: 'Step',
-  props: [ "selectedPhonemes", "StepNumber" ],
+  props: [ "selectedPhonemes", "oldPhonemes", "StepNumber" ],
   components: {Panel, Button, Checkbox, Dropdown, Fieldset},
 
 
@@ -77,11 +79,17 @@ export default defineComponent({
     const fiRows = ref(0);
     const dropdownPhoneme = ref();
 
-
-
-    const phonemes: { name: string }[] = [];
+    let newPhonemes: { name: string }[] = [];
     props["selectedPhonemes"].forEach((pho: string) => {
-      phonemes.push({name: pho})
+      newPhonemes.push({name: pho})
+    })
+
+    let allPhonemes: { name: string }[] = [];
+    props["selectedPhonemes"].forEach((pho: string) => {
+      allPhonemes.push({name: pho})
+    })
+    props["oldPhonemes"].forEach((pho: string) => {
+      allPhonemes.push({name: pho})
     })
 
     function sendDropdownPhoneme() {
@@ -94,6 +102,16 @@ export default defineComponent({
     }
 
     function selectAllPhonemes() {
+      selectedTrainPhonemes.value = []
+      props["selectedPhonemes"].forEach((pho: string) => {
+        (selectedTrainPhonemes.value as string[]).push(pho);
+      })
+      props["oldPhonemes"].forEach((pho: string) => {
+        (selectedTrainPhonemes.value as string[]).push(pho);
+      })
+    }
+
+    function selectNewPhonemes() {
       selectedTrainPhonemes.value = []
       props["selectedPhonemes"].forEach((pho: string) => {
         (selectedTrainPhonemes.value as string[]).push(pho);
@@ -187,12 +205,14 @@ export default defineComponent({
 
 
     return {
-      phonemes,
+      allPhonemes,
+      newPhonemes,
       selectedTrainPhonemes,
       dropdownPhoneme,
       identificationActive,
 
       selectAllPhonemes,
+      selectNewPhonemes,
       deselectAllPhonemes,
       sendForcedIdentification,
       sendDropdownPhoneme,
