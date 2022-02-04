@@ -5,11 +5,11 @@
             <span class="close">&times;</span>
             <p>Some explanation</p>
             <span class="p-float-label">
-                <InputText id="username" type="text" v-model="user" style="width: 100%; margin-bottom: 10px"/>
+                <InputText id="username" type="text" v-model="user" style="width: 40%; margin-bottom: 10px"/>
                 <label for="username">Username</label>
             </span>
             <Button @click="sendInfo()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px; position: absolute;
-                    top: 45%; left: 45%;">Submit</Button>
+                    top: 10%; left: 45%;">Submit</Button>
             <div id="errorMessage"></div>
         </div>
       </div>

@@ -6,24 +6,24 @@
 
   <Panel header="Feeling words" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
       <p>By clicking the button, a random word will be send to the sleeve. You will see the word on the screen, and how it's split up into phonemes.</p>
-      <Button @click="sendRandomWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Send word
+      <Button @click="sendRandomWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
       </Button>
-      <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
+      <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
       <div id="word0"></div>
       <p>By clicking the button, a random word will be send to the sleeve. You will see the word on the screen, and how it's split up into phonemes.</p>
-      <Button @click="sendRandomWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Send word
+      <Button @click="sendRandomWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
       </Button>
-      <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
+      <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
       <div id="word1"></div>
     </Panel>
 
     <Panel header="Find the phonemes" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
       <p>By clicking the button, a random word will be send to the sleeve. You will see the word on the screen, and how it's split up into phonemes.</p>
-      <Button @click="findSplitupWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Send word
+      <Button @click="findSplitupWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
       </Button>
-      <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
+      <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
       <div id="buttonDiv0"></div>
       <div id="ctrlBtn0"></div>
@@ -136,7 +136,7 @@ export default defineComponent({
           label: phoneme,
           id: "fid_" + phoneme,
           class: "p-shadow-2",
-          style: "margin-bottom: 4px"
+          style: "margin: 4px"
         }).mount(div);
 
         const btn = document.getElementById("fid_" + phoneme);
@@ -173,7 +173,7 @@ export default defineComponent({
         label: "reset",
         id: "reset" + test,
         class: "p-shadow-2",
-        style: "margin-bottom: 4px"
+        style: "margin: 4px"
       }).mount(div1);
       const rst = document.getElementById("reset" + test);
       if (rst === null) {
@@ -202,7 +202,7 @@ export default defineComponent({
         if (sol === null) {
           return
         }
-        sol.innerHTML = "<p> " + prettyPrint(selectedPhonemes) + " | " + prettyPrint(phon) + " | " + selectedWord + "</p>";
+        sol.innerHTML = "<p> " + " Your input: " + prettyPrint(selectedPhonemes) + " Correct phonemes: " + prettyPrint(phon) + " Word: " + selectedWord + "</p>";
         buttonDiv.innerHTML = "";
       })
     }
