@@ -1,13 +1,16 @@
 <template class="temp">
   <div style="margin-left:auto;margin-right:auto; width: 100%">
       <h1 style="margin-bottom: 4px"> Step {{StepNumber}} </h1>
-      <h4 style="margin-bottom: 26px"> This is the training page. Here you can train yourself to learn which patterns stands for which phonemes. You can decide for yourself if you want to train phoneme per phoneme or all in one go. If you think you know the phonemes, you can move on to the test.</h4>
-      <h4 style="margin-bottom: 26px"> This training you can train {{selectedPhonemes}} and {{oldPhonemes}}</h4>
+       <h4 style="margin-bottom: 4px"> {{selectedPhonemes}}</h4>
+        <ul style="margin-bottom: 26px">
+            <li> • Train to learn which patterns represents which phoneme. </li>
+            <li> • You can decide yourself if you would like to train them separately, or all in one go. </li>
+            <li> • If you think you know them all, you can move on to the test. </li>
+        </ul>
   </div>
 
   <Panel header="Feeling phonemes" class="p-shadow-4" style="margin-bottom: 50px">
-    <p>Try out how a single phoneme feels. You can select a phoneme in the
-      dropdown menu and send it to the sleeve. If you think you are able to recognize them you can go to the training.</p>
+    <p> • Try out how a single phoneme feels. </p>
 
     <Dropdown v-model="dropdownPhoneme" class="p-shadow-2" :options="allPhonemes" optionLabel="name"
               placeholder="Phoneme" :filter="true"
@@ -16,7 +19,13 @@
   </Panel>
 
   <Panel header="Training" class="p-shadow-4">
-      <p>You can select here which phonemes you want to train on.</p>
+    <ul style="margin-bottom: 26px">
+      <li> • Select which phonemes you want to train on. </li>
+      <li> • You will feel a random phoneme. </li>
+      <li> • Test yourself by choosing the right phoneme. </li>
+      <li> • You can guess as many times as you would like. </li>
+      <li> • You can view your answers by clicking below. </li>
+    </ul>
       <div style="margin-bottom: 10px">
         <Button @click="selectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Select all
         </Button>
@@ -32,11 +41,10 @@
         </div>
       </div>
 
-    <Panel header="Recognition training" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
-      <p>By clicking the button, a phoneme will be send to the sleeve, you have to choose which one you've felt. If you chose the wrong phoneme, it turns red and if you chose the right phoneme the button turns green. You can try other buttons until you've found the right one. On the bottom you can see an overview of your answers. </p>
-      <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Forced identification
+    <Panel>
+      <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Send phoneme
       </Button>
-      <Button @click="repeatPreviousPhoneme()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
+      <Button @click="repeatPreviousPhoneme()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat phoneme
       </Button>
       <div id="forcedIdentificationButtons"></div>
       <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">

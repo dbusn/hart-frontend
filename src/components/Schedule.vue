@@ -3,7 +3,7 @@
     <div id="myModal" class="modal" style="display: block; z-index:1; position: fixed; width: 100%; height:100%; background-color: rgba(0,0,0,0.4); left:0; top:0">
         <div class="modal-content" style="background-color: #fefefe; margin: auto; padding: 20px; border: 1px solid #888; width: 80%;">
             <span class="close">&times;</span>
-            <p>Some explanation</p>
+            <p>Fill in your participant number</p>
             <span class="p-float-label">
                 <InputText id="username" type="text" v-model="user" style="width: 40%; margin-bottom: 10px"/>
                 <label for="username">Username</label>
@@ -94,7 +94,7 @@ export default defineComponent({
 
       const participants: string[] =
       [
-        "penguin"
+        "1","2","3","4"
       ]
       const user = ref();
 

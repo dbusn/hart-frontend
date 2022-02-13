@@ -1,11 +1,18 @@
 <template class="temp">
   <div style="margin-left:auto;margin-right:auto; width: 100%">
-    <h1 style="margin-bottom: 4px"> Test {{WordNumber}} WORDS </h1>
-    <h4 style="margin-bottom: 26px"> This is a test to see if you know the words {{testWords}}</h4>
+    <h1 style="margin-bottom: 4px"> Word exercise {{WordNumber}} </h1>
+    <ul style="margin-bottom: 26px">
+      <li> • Multiple phonemes create a word </li>
+      <li> • This is an exercise to get you familiar with feeling words. </li>
+      <li> • If you make some mistakes you can just move on. </li>
+    </ul>
   </div>
 
   <Panel header="Feeling words" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
-      <p>By clicking the button, a random word will be send to the sleeve. You will see the word on the screen, and how it's split up into phonemes.</p>
+    <ul style="margin-bottom: 26px">
+      <li> • Feel multiple phonemes. </li>
+      <li> • Read which word it represents. </li>
+    </ul>
       <Button @click="sendRandomWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
@@ -18,8 +25,13 @@
       <div id="word1"></div>
     </Panel>
 
-    <Panel header="Find the phonemes" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
-      <p>Click on the button, a random word will be send to the sleeve again. Now you have to guess which phonemes you feel. After you are certain about your imput you can see the right answer.</p>
+    <Panel header="Finding phonemes" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
+      <ul style="margin-bottom: 26px">
+        <li> • Guess which phonemes you've felt by clicking the buttons in the right order. </li>
+        <li> • Submit your answer. </li>
+        <li> • See if your answer is correct. </li>
+        <li> • See which word the phonemes represent. </li>
+      </ul>
       <Button @click="findSplitupWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
@@ -38,7 +50,10 @@
 
 
     <Panel header="Guess the word" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
-      <p>Click on the button, a random word will be send to the sleeve. You need to guess which word you feel. After submitting your input you see the right answer.</p>
+      <ul style="margin-bottom: 26px">
+        <li> • Type in the textbox which word you think you have felt. </li>
+        <li> • See if your answer is the correct one. </li>
+      </ul>
       <Button @click="guessWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
@@ -55,26 +70,6 @@
       <div id="resultWord1"></div>
     </Panel>
 
-
-    <!-- <Panel header="Test" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
-      <p>Just like with the training you will send a phoneme to the sleeve and have to guess which one it is. However, now you can only try once and you see immidiatly which one was the right one after making a mistake. At the end you get a score. If this score is higher then ...%, you can move on to the next step. If this score is lower, go back to the training in which you made the most mistakes so you will do better next try. </p>
-      <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Forced identification
-      </Button>
-      <Button @click="repeatPreviousPhoneme()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
-        </Button>
-      <div id="forcedIdentificationButtons"></div>
-       <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
-        <table id="phoneme-table">
-          <tr>
-            <th>Round</th>
-            <th>Correct answer</th>
-            <th>Guessed answers</th>
-          </tr>
-        </table>
-      </Fieldset> 
-      <Button @click="viewGrade()" class="p-shadow-2" style="padding: 0.9rem; margin-top: 20px" :disabled='!gradeActive'>View your grade!
-        </Button>
-    </Panel> -->
     <div style="margin-left:auto;margin-right:auto; width: 100%" id="finalGrade">
     </div>
 </template>
