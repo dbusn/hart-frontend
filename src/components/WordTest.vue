@@ -13,12 +13,12 @@
       <li> • Feel multiple phonemes. </li>
       <li> • Read which word it represents. </li>
     </ul>
-      <Button @click="sendRandomWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
+      <Button @click="sendRandomWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word 1
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
       <div id="word0"></div>
-      <Button @click="sendRandomWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
+      <Button @click="sendRandomWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word 2
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
@@ -32,14 +32,14 @@
         <li> • See if your answer is correct. </li>
         <li> • See which word the phonemes represent. </li>
       </ul>
-      <Button @click="findSplitupWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
+      <Button @click="findSplitupWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word 1
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
       <div id="buttonDiv0"></div>
       <div id="ctrlBtn0"></div>
       <div id="splitup0"></div>
-      <Button @click="findSplitupWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
+      <Button @click="findSplitupWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word 2
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
@@ -54,18 +54,18 @@
         <li> • Type in the textbox which word you think you have felt. </li>
         <li> • See if your answer is the correct one. </li>
       </ul>
-      <Button @click="guessWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
+      <Button @click="guessWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word 1
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
       <div id="inputText0"><InputText id=input0 type="text" v-model="writtenWord0" style="width: 40%; margin: 10px"/></div>
       <div id="sub0"></div>
       <div id="resultWord0"></div>
-      <Button @click="guessWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
+      <Button @click="guessWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word 2
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
-      <div id="inputText1"><InputText id=input0 type="text" v-model="writtenWord0" style="width: 40%; margin: 10px"/></div>
+      <div id="inputText1"><InputText id=input0 type="text" v-model="writtenWord1" style="width: 40%; margin: 10px"/></div>
       <div id="sub1"></div>
       <div id="resultWord1"></div>
     </Panel>
@@ -114,7 +114,7 @@ export default defineComponent({
       if (word === null) {
         return
       }
-      word.innerHTML = "<p> " + selectedWord + " | " + prettyPrint(phon) + " </p>";
+      word.innerHTML = "<p> " + "Phonemes: " + prettyPrint(phon) + "</p><p> " +"<p> "+ " Word: " + selectedWord + "</p>";
 
       identificationActive.value = true;
 
@@ -157,28 +157,18 @@ export default defineComponent({
         // Create div for button
         const div = document.createElement('div');
         div.style.display = "inline-block";
-        div.style.marginRight = "10px";
+        div.style.margin = "10px";
 
         // Add div for button to the button div
         buttonDiv.appendChild(div);
         createApp(Button, {
           label: phoneme,
           id: "fid_" + phoneme,
-          class: "p-shadow-2",
+          class: "p-shadow-3",
           style: "margin: 4px"
         }).mount(div);
 
         const btn = document.getElementById("fid_" + phoneme);
-
-        // Remember the button storing the correct phoneme
-        //if (phoneme === playedPhoneme.value) {
-        //  correctBtn = btn;
-        //}
-
-        //const guessesCell = document.getElementById("pTableRow_" + fiRows.value);
-        //if (btn === null || guessesCell === null) {
-        //  return
-        //}
 
         if (btn === null) {
           return;
@@ -195,9 +185,10 @@ export default defineComponent({
       }
       ctrlBtn.innerHTML = "";
 
+
       const div1 = document.createElement('div');
       div1.style.display = "inline-block";
-      div1.style.marginRight = "10px";
+      div1.style.margin = "10px";
       ctrlBtn.appendChild(div1);
       createApp(Button, {
         label: "reset",
@@ -210,6 +201,7 @@ export default defineComponent({
       if (rst === null) {
         return;
       }
+
 
       rst.addEventListener("click", () => {
         selectedPhonemes = [];
@@ -236,7 +228,8 @@ export default defineComponent({
         }
         sol.innerHTML = "<p> " + " Your input: " + prettyPrint(selectedPhonemes) + "</p><p> "+ " Correct phonemes: " + prettyPrint(phon) +"<p> "+ " Word: " + selectedWord + "</p>";
         buttonDiv.innerHTML = "";
-      })
+      }
+      )
     }
 
     async function guessWord(test : number) {
