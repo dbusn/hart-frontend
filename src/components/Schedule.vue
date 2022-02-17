@@ -77,24 +77,24 @@ export default defineComponent({
 
     const testToPhoneme: any =
         {
-          1 : ["T", "D", "P", "B", "TH", "DH"],
-          2 : ["AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH"],
-          3 : ["Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH"],
-          4 : ["OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH"],
-          5 : ["AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH"],
-          6 : ["J", "CH", "SH", "L", "N", "G", "K", "NG", "AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH"],
+          1 : ["T", "D", "P", "B", "TH", "DH", "R"],
+          2 : ["AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
+          3 : ["Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
+          4 : ["OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
+          5 : ["AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
+          6 : ["J", "CH", "SH", "L", "N", "G", "K", "NG", "AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
         }
 
     const wordsArray: any =
         {
-          2 : ["Tea", "Eat", "Toe", "Bat", "Bet", "Pet"],
-          4 : ["Vier", "Ik", "Hoi"],
-          6 : ["test", "Zes", "ja"],
+          2 : ["Ear", "Eat", "Bee", "Tea", "Teeth", "Put"],
+          4 : ["Hide", "What", "Wait", "Zoo", "Boost", "Yes"],
+          6 : ["Push", "Better", "Phone", "Calling", "Phone", "Hart"],
         }
 
       const participants: string[] =
       [
-        "1","2","3","4"
+        "1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","999",
       ]
       const user = ref();
 

@@ -57,6 +57,7 @@ export default defineComponent({
     let guesses = 0;
     let grade = ref(0);
     let gradeActive = ref(false);
+    let passed = ref(false);
     props["testPhonemes"].forEach((pho: string) => {
       phonemes.push({name: pho})
     })
@@ -171,9 +172,14 @@ export default defineComponent({
               }
             }, 500);
           }
+          if (grade.value >= 7.9) {
+            passed.value = true;
+          }
         });
       })
     }
+
+
 
     function repeatPreviousPhoneme() {
       APIWrapper.sendPhonemeMicrocontroller({'phonemes': [playedPhoneme.value]});
@@ -186,9 +192,17 @@ export default defineComponent({
           if (someDiv != null) {
             someDiv.innerHTML = "<h1 style='margin-bottom: 4px'> Grade: " + grade.value + " </h1>";
           }
-        }
+        //   if (passed.value) {
+        //     someDiv.innerHTML = "<h1 style='margin-bottom: 4px'> You passed this test! Move on to the next step. + " </h1>";
+        //   }
+        //   if (passed.value === false{
+        //     someDiv.innerHTML = "<h1 style='margin-bottom: 4px'> You have failed the text, train a bit more and try again. + " < /h1>";
+        // }
       }
+        }
     }
+
+
 
     return {
       phonemes,
@@ -196,6 +210,7 @@ export default defineComponent({
       identificationActive,
       grade,
       gradeActive,
+      passed,
 
       sendForcedIdentification,
       repeatPreviousPhoneme,
