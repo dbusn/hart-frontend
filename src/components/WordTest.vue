@@ -50,7 +50,7 @@
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
-      <div id="inputText1"><InputText id=input0 type="text" v-model="writtenWord0" style="width: 40%; margin: 10px"/></div>
+      <div id="inputText1"><InputText id=input0 type="text" v-model="writtenWord1" style="width: 40%; margin: 10px"/></div>
       <div id="sub1"></div>
       <div id="resultWord1"></div>
     </Panel>
