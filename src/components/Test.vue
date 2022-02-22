@@ -1,29 +1,24 @@
 <template class="temp">
   <div style="margin-left:auto;margin-right:auto; width: 100%">
-    <h1 style="margin-bottom: 4px"> Test {{StepNumber}} </h1>
-    <h4 style="margin-bottom: 26px"> This is a test to see if you know the phonemes {{testPhonemes}}</h4>
+    <h1 style="margin-bottom: 4px"> Test {{TestNumber}} </h1>
+    <ul style="margin-bottom: 26px">
+      <li> • Guess which phoneme is send to you. </li>
+      <li> • Unlike the training, you can only choose once. </li>
+      <li> • If you are done you can view your grade. </li>
+      <li> • You passed the test if your grade is 8 or higher. </li>
+    </ul>
   </div>
 
-  <div style="margin-left:auto;margin-right:auto; width: 100%">
-    <h4 style="margin-bottom: 26px"> PHONEMES IN ORDER: {{randomTestPhonemes}}</h4>
-  </div>
+<!--  <div style="margin-left:auto;margin-right:auto; width: 100%">-->
+<!--    <h4 style="margin-bottom: 26px"> PHONEMES IN ORDER: {{randomTestPhonemes}}</h4>-->
+<!--  </div>-->
 
     <Panel header="Test" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
-      <p>Just like with the training you will send a phoneme to the sleeve and have to guess which one it is. However, now you can only try once and you see immidiatly which one was the right one after making a mistake. At the end you get a score. If this score is higher then ...%, you can move on to the next step. If this score is lower, go back to the training in which you made the most mistakes so you will do better next try. </p>
-      <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Forced identification
+      <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Send phoneme
       </Button>
-      <Button @click="repeatPreviousPhoneme()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
+      <Button @click="repeatPreviousPhoneme()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat phoneme
         </Button>
       <div id="forcedIdentificationButtons"></div>
-      <!-- <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
-        <table id="phoneme-table">
-          <tr>
-            <th>Round</th>
-            <th>Correct answer</th>
-            <th>Guessed answers</th>
-          </tr>
-        </table>
-      </Fieldset> -->
       <Button @click="viewGrade()" class="p-shadow-2" style="padding: 0.9rem; margin-top: 20px" :disabled='!gradeActive'>View your grade!
         </Button>
     </Panel>
@@ -44,7 +39,7 @@ import APIWrapper from "@/backend.api";
 
 export default defineComponent({
   name: 'Test',
-  props: [ "testPhonemes", "StepNumber", "randomTestPhonemes"],
+  props: [ "testPhonemes", "TestNumber", "randomTestPhonemes"],
   components: {Panel, Button/*, Fieldset*/},
 
 
@@ -62,6 +57,7 @@ export default defineComponent({
     let guesses = 0;
     let grade = ref(0);
     let gradeActive = ref(false);
+    let passed = ref(false);
     props["testPhonemes"].forEach((pho: string) => {
       phonemes.push({name: pho})
     })
@@ -176,9 +172,14 @@ export default defineComponent({
               }
             }, 500);
           }
+          if (grade.value >= 7.9) {
+            passed.value = true;
+          }
         });
       })
     }
+
+
 
     function repeatPreviousPhoneme() {
       APIWrapper.sendPhonemeMicrocontroller({'phonemes': [playedPhoneme.value]});
@@ -191,9 +192,17 @@ export default defineComponent({
           if (someDiv != null) {
             someDiv.innerHTML = "<h1 style='margin-bottom: 4px'> Grade: " + grade.value + " </h1>";
           }
-        }
+        //   if (passed.value) {
+        //     someDiv.innerHTML = "<h1 style='margin-bottom: 4px'> You passed this test! Move on to the next step. + " </h1>";
+        //   }
+        //   if (passed.value === false{
+        //     someDiv.innerHTML = "<h1 style='margin-bottom: 4px'> You have failed the text, train a bit more and try again. + " < /h1>";
+        // }
       }
+        }
     }
+
+
 
     return {
       phonemes,
@@ -201,6 +210,7 @@ export default defineComponent({
       identificationActive,
       grade,
       gradeActive,
+      passed,
 
       sendForcedIdentification,
       repeatPreviousPhoneme,

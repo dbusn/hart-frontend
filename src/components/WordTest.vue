@@ -1,33 +1,45 @@
 <template class="temp">
   <div style="margin-left:auto;margin-right:auto; width: 100%">
-    <h1 style="margin-bottom: 4px"> Test {{WordNumber}} WORDS </h1>
-    <h4 style="margin-bottom: 26px"> This is a test to see if you know the words {{testWords}}</h4>
+    <h1 style="margin-bottom: 4px"> Word exercise {{WordNumber}} </h1>
+    <ul style="margin-bottom: 26px">
+      <li> • Multiple phonemes create a word </li>
+      <li> • This is an exercise to get you familiar with feeling words. </li>
+      <li> • If you make some mistakes you can just move on. </li>
+    </ul>
   </div>
 
   <Panel header="Feeling words" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
-      <p>By clicking the button, a random word will be send to the sleeve. You will see the word on the screen, and how it's split up into phonemes.</p>
-      <Button @click="sendRandomWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
+    <ul style="margin-bottom: 26px">
+      <li> • Feel multiple phonemes. </li>
+      <li> • Read which word it represents. </li>
+    </ul>
+      <Button @click="sendRandomWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word 1
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
       <div id="word0"></div>
-      <Button @click="sendRandomWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
+      <Button @click="sendRandomWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word 2
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
       <div id="word1"></div>
     </Panel>
 
-    <Panel header="Find the phonemes" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
-      <p>Click on the button, a random word will be send to the sleeve again. Now you have to guess which phonemes you feel. After you are certain about your imput you can see the right answer.</p>
-      <Button @click="findSplitupWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
+    <Panel header="Finding phonemes" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
+      <ul style="margin-bottom: 26px">
+        <li> • Guess which phonemes you've felt by clicking the buttons in the right order. </li>
+        <li> • Submit your answer. </li>
+        <li> • See if your answer is correct. </li>
+        <li> • See which word the phonemes represent. </li>
+      </ul>
+      <Button @click="findSplitupWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word 1
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
       <div id="buttonDiv0"></div>
       <div id="ctrlBtn0"></div>
       <div id="splitup0"></div>
-      <Button @click="findSplitupWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
+      <Button @click="findSplitupWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word 2
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
@@ -38,15 +50,18 @@
 
 
     <Panel header="Guess the word" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
-      <p>Click on the button, a random word will be send to the sleeve. You need to guess which word you feel. After submitting your input you see the right answer.</p>
-      <Button @click="guessWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
+      <ul style="margin-bottom: 26px">
+        <li> • Type in the textbox which word you think you have felt. </li>
+        <li> • See if your answer is the correct one. </li>
+      </ul>
+      <Button @click="guessWord(0)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word 1
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
       <div id="inputText0"><InputText id=input0 type="text" v-model="writtenWord0" style="width: 40%; margin: 10px"/></div>
       <div id="sub0"></div>
       <div id="resultWord0"></div>
-      <Button @click="guessWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word
+      <Button @click="guessWord(1)" class="p-shadow-2" style="padding: 0.9rem; margin: 10px">Send word 2
       </Button>
       <Button @click="repeatPreviousWord()" class="p-shadow-2" style="padding: 0.9rem; margin: 10px" :disabled='!identificationActive'>Repeat
       </Button>
@@ -55,26 +70,6 @@
       <div id="resultWord1"></div>
     </Panel>
 
-
-    <!-- <Panel header="Test" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
-      <p>Just like with the training you will send a phoneme to the sleeve and have to guess which one it is. However, now you can only try once and you see immidiatly which one was the right one after making a mistake. At the end you get a score. If this score is higher then ...%, you can move on to the next step. If this score is lower, go back to the training in which you made the most mistakes so you will do better next try. </p>
-      <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Forced identification
-      </Button>
-      <Button @click="repeatPreviousPhoneme()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
-        </Button>
-      <div id="forcedIdentificationButtons"></div>
-       <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
-        <table id="phoneme-table">
-          <tr>
-            <th>Round</th>
-            <th>Correct answer</th>
-            <th>Guessed answers</th>
-          </tr>
-        </table>
-      </Fieldset> 
-      <Button @click="viewGrade()" class="p-shadow-2" style="padding: 0.9rem; margin-top: 20px" :disabled='!gradeActive'>View your grade!
-        </Button>
-    </Panel> -->
     <div style="margin-left:auto;margin-right:auto; width: 100%" id="finalGrade">
     </div>
 </template>
@@ -119,7 +114,7 @@ export default defineComponent({
       if (word === null) {
         return
       }
-      word.innerHTML = "<p> " + selectedWord + " | " + prettyPrint(phon) + " </p>";
+      word.innerHTML = "<p> " + "Phonemes: " + prettyPrint(phon) + "</p><p> " +"<p> "+ " Word: " + selectedWord + "</p>";
 
       identificationActive.value = true;
 
@@ -162,28 +157,18 @@ export default defineComponent({
         // Create div for button
         const div = document.createElement('div');
         div.style.display = "inline-block";
-        div.style.marginRight = "10px";
+        div.style.margin = "10px";
 
         // Add div for button to the button div
         buttonDiv.appendChild(div);
         createApp(Button, {
           label: phoneme,
           id: "fid_" + phoneme,
-          class: "p-shadow-2",
+          class: "p-shadow-3",
           style: "margin: 4px"
         }).mount(div);
 
         const btn = document.getElementById("fid_" + phoneme);
-
-        // Remember the button storing the correct phoneme
-        //if (phoneme === playedPhoneme.value) {
-        //  correctBtn = btn;
-        //}
-
-        //const guessesCell = document.getElementById("pTableRow_" + fiRows.value);
-        //if (btn === null || guessesCell === null) {
-        //  return
-        //}
 
         if (btn === null) {
           return;
@@ -200,9 +185,10 @@ export default defineComponent({
       }
       ctrlBtn.innerHTML = "";
 
+
       const div1 = document.createElement('div');
       div1.style.display = "inline-block";
-      div1.style.marginRight = "10px";
+      div1.style.margin = "10px";
       ctrlBtn.appendChild(div1);
       createApp(Button, {
         label: "reset",
@@ -215,6 +201,7 @@ export default defineComponent({
       if (rst === null) {
         return;
       }
+
 
       rst.addEventListener("click", () => {
         selectedPhonemes = [];
@@ -241,7 +228,8 @@ export default defineComponent({
         }
         sol.innerHTML = "<p> " + " Your input: " + prettyPrint(selectedPhonemes) + "</p><p> "+ " Correct phonemes: " + prettyPrint(phon) +"<p> "+ " Word: " + selectedWord + "</p>";
         buttonDiv.innerHTML = "";
-      })
+      }
+      )
     }
 
     async function guessWord(test : number) {

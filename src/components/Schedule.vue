@@ -3,7 +3,7 @@
     <div id="myModal" class="modal" style="display: block; z-index:1; position: fixed; width: 100%; height:100%; background-color: rgba(0,0,0,0.4); left:0; top:0">
         <div class="modal-content" style="background-color: #fefefe; margin: auto; padding: 20px; border: 1px solid #888; width: 80%;">
             <span class="close">&times;</span>
-            <p>Some explanation</p>
+            <p>Fill in your participant number</p>
             <span class="p-float-label">
                 <InputText id="username" type="text" v-model="user" style="width: 40%; margin-bottom: 10px"/>
                 <label for="username">Username</label>
@@ -77,24 +77,24 @@ export default defineComponent({
 
     const testToPhoneme: any =
         {
-          1 : ["T", "D", "P", "B", "TH", "DH"],
-          2 : ["AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH"],
-          3 : ["Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH"],
-          4 : ["OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH"],
-          5 : ["AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH"],
-          6 : ["J", "CH", "SH", "L", "N", "G", "K", "NG", "AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH"],
+          1 : ["T", "D", "P", "B", "TH", "DH", "R"],
+          2 : ["AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
+          3 : ["Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
+          4 : ["OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
+          5 : ["AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
+          6 : ["J", "CH", "SH", "L", "N", "G", "K", "NG", "AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
         }
 
     const wordsArray: any =
         {
-          2 : ["Tea", "Eat", "Toe", "Bat", "Bet", "Pet"],
-          4 : ["Vier", "Ik", "Hoi"],
-          6 : ["test", "Zes", "ja"],
+          2 : ["Ear", "Eat", "Bee", "Tea", "Teeth", "Put"],
+          4 : ["Hide", "What", "Wait", "Zoo", "Boost", "Yes"],
+          6 : ["Push", "Better", "Phone", "Calling", "Phone", "Hart"],
         }
 
       const participants: string[] =
       [
-        "penguin"
+        "1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","999",
       ]
       const user = ref();
 
