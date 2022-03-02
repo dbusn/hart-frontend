@@ -23,8 +23,9 @@ import Panel from "primevue/panel";
 import Fieldset from "primevue/fieldset";
 import InputText from 'primevue/inputtext';
 import AutoComplete from "primevue/autocomplete";
-import Step from "@/components/Step.vue"
-import Test from "@/components/Test.vue"
+import Step from "@/components/Step.vue";
+import Test from "@/components/Test.vue";
+import Timer from "@/components/Timer.vue";
 
 import './assets/layout/reset.css';
 import './assets/layout/style.css';
@@ -42,7 +43,8 @@ app.component('Panel', Panel);
 app.component('Fieldset', Fieldset);
 app.component('AutoComplete', AutoComplete);
 app.component('InputText', InputText);
-app.component('Step', Step)
-app.component('Test', Test)
+app.component('Step', Step);
+app.component('Test', Test);
+app.component('Timer', Timer);
 
 app.mount('#app')
