@@ -160,7 +160,7 @@ export default defineComponent({
         var randomTestPhonemes = shuffleArray(testPhonemes);
         const div = document.createElement('div');
         testDad.appendChild(div);
-        const app = createApp(Test, {"testPhonemes" : testPhonemes, "TestNumber" : i, "randomTestPhonemes" : randomTestPhonemes })
+        const app = createApp(Test, {props :{"testPhonemes" : testPhonemes, "TestNumber" : i, "randomTestPhonemes" : randomTestPhonemes }})
         app.mount(div);
       }
 
