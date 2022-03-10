@@ -195,12 +195,12 @@ export default defineComponent({
           if (phoneme === playedPhoneme.value) {
             btn.style.background = "green";
             guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #8800FF; font-weight: bolder'>" + phoneme + "</span>";
-            ActivityLogger.log_activity("penguin", phoneme, "correct");
+            ActivityLogger.log_activity("Step", playedPhoneme.value, phoneme);
           } else {
             btn.style.background = "red";
             guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + phoneme + "</span>";
-            ActivityLogger.log_activity("penguin", phoneme, "wrong");
-          }
+            ActivityLogger.log_activity("Step", playedPhoneme.value, phoneme);
+          }                  
           setTimeout(() => {
             btn.style.background = bgColor
           }, 1000);

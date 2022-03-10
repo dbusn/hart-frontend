@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore"
+import { getFirestore, collection, addDoc, getDoc, DocumentReference, Firestore, doc } from "firebase/firestore"
+import { state } from "@/helpers/state.js"
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyAADUKI0VsiphL6ToyW_ASGl2TUB1hCD6o",
@@ -10,24 +12,29 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore();
 
-export default class ActivityLogger {
-
+export default class ActivityLogger { 
+    
     /*
     Log the forcedidentifcation activity
     */
     public static async log_activity(type : string, sent: string, guess: string){
         const d = new Date()
-        let res;
 
+        console.log(state.userval);
+        
+        let res;
         
         if(sent == guess){
             res = "Correct"
         } else {
             res = "Incorrect"
         }
-        
+
+        console.log(res);
+                
         try {
-            const docRef = await addDoc(collection(db, "User-Testing"), {
+            const docRef = await addDoc(collection(db, "User-Testing2.0"), {
+                user: state.userval,
                 type: type,
                 sent: sent,
                 guess: guess,
@@ -35,9 +42,9 @@ export default class ActivityLogger {
                 time: d.getTime()
             });
             console.log("Document written with ID: ", docRef.id);
-        } catch (e) {
+        } 
+        catch (e) {
             console.error("Error adding document: ", e);
-        }
+        }        
     }
-
 }

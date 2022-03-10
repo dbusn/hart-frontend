@@ -29,6 +29,18 @@
       </div>
     </Panel>
 
+    <Panel header="Follow the steps v2.0" class="p-shadow-4" >
+      <p>You are going to learn the phonemes step by step. Complete the steps and go on to the next one.</p>
+      <div v-for="number in stepNumbers" v-bind:key="number" style="display: inline-block; width: 100px;">
+        <Button @click="ViewStep2(number)" class="p-shadow-2" style="padding: 0.9rem; width: 80px; margin:auto">Step {{number}}</Button>
+        <p><b> </b></p>
+        <Button @click="ViewTest2(number)" class="p-shadow-2" style="padding: 0.9rem; width: 80px; margin:auto;">Test {{number}}</Button>
+      </div>
+      <p><b> </b></p>
+      <div v-for="number in wordNumbers" v-bind:key="number" style="display: inline-block; width: 100px; margin-left: 100px;">
+        <Button @click="ViewWord2(number)" class="p-shadow-2" style="padding: 0.9rem; width: 80px; margin:auto">Word {{number}}</Button>
+      </div>
+    </Panel>
 
     <div id="stepdad">
     </div>
@@ -40,9 +52,6 @@
     </div>
 
 
-
-
-
   </div>
 </template>
 
@@ -52,7 +61,7 @@ import Button from "primevue/button";
 import Step from "@/components/Step.vue";
 import Test from "@/components/Test.vue";
 import WordTest from "@/components/WordTest.vue";
-
+import { state } from "@/helpers/state.js"
 
 export default defineComponent({
   name: 'Schedule',
@@ -64,7 +73,6 @@ export default defineComponent({
     const testNumbers = ref([1, 2, 3, 4, 5, 6]);
     const wordNumbers = ref([2, 4, 6]);
 
-
     const stepToPhoneme: any =
         {
           1: ["T", "D", "P", "B", "TH", "DH"],
@@ -73,6 +81,16 @@ export default defineComponent({
           4: ["OE", "I", "H", "IH", "AY"],
           5 : ["AE", "AW", "ER", "OY", "OW"],
           6 : ["J", "CH", "SH", "L", "N", "G", "K", "NG"],
+        }
+    
+    const stepToPhoneme2: any =
+        {
+          1: ["T", "D", "P"],
+          2 : ["AH", "OO", "EE"],
+          3 : ["Y", "W", "S"],
+          4: ["OE", "I", "H"],
+          5 : ["AE", "AW", "ER"],
+          6 : ["J", "CH", "SH", "L"],
         }
 
     const testToPhoneme: any =
@@ -84,6 +102,16 @@ export default defineComponent({
           5 : ["AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
           6 : ["J", "CH", "SH", "L", "N", "G", "K", "NG", "AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
         }
+    
+    const testToPhoneme2: any =
+        {
+          1 : ["T", "D", "P"],
+          2 : ["AH", "OO", "EE"],
+          3 : ["Y", "W", "S"],
+          4 : ["OE", "I", "H"],
+          5 : ["AE", "AW", "ER"],
+          6 : ["J", "CH", "SH", "L"],
+        }
 
     const wordsArray: any =
         {
@@ -92,11 +120,18 @@ export default defineComponent({
           6 : ["Push", "Better", "Phone", "Calling", "Phone", "Hart"],
         }
 
-      const participants: string[] =
-      [
-        "1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","999",
-      ]
-      const user = ref();
+    const wordsArray2: any =
+        {
+          2 : ["Eat", "Tea", "Put"],
+          4 : ["What", "Zoo", "Yes"],
+          6 : ["Calling", "Phone", "Hart"],
+        }
+
+    const participants: string[] =
+        [
+          "1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","999",
+        ]
+    const user = ref();
 
       function ViewStep(i : number){
       // delete previous page
@@ -132,6 +167,41 @@ export default defineComponent({
         app.mount(div);
       }
 
+      function ViewStep2(i : number){
+      // delete previous page
+
+        // Create div for button
+        const stepDad = document.getElementById("stepdad");
+        if(stepDad===null){
+          return;
+        }
+
+        const testDad = document.getElementById("testdad");
+        if(testDad===null){
+          return;
+        }
+
+        const wordDad = document.getElementById("worddad");
+        if(wordDad===null){
+          return;
+        }
+
+        // clear the div
+        stepDad.innerHTML = "";
+        testDad.innerHTML = "";
+        wordDad.innerHTML = "";
+
+        const selectedPhonemes = stepToPhoneme2[i];
+        const oldPhonemes = i > 1 ? testToPhoneme2[i - 1] : [];
+
+
+        const div = document.createElement('div');
+        stepDad.appendChild(div);
+        const app = createApp(Step, {"selectedPhonemes" : selectedPhonemes, "oldPhonemes" : oldPhonemes, "StepNumber" : i})
+        app.mount(div);
+      }
+
+
 
       function ViewTest(i : number){
         // Create div for button
@@ -160,7 +230,38 @@ export default defineComponent({
         var randomTestPhonemes = shuffleArray(testPhonemes);
         const div = document.createElement('div');
         testDad.appendChild(div);
-        const app = createApp(Test, {props :{"testPhonemes" : testPhonemes, "TestNumber" : i, "randomTestPhonemes" : randomTestPhonemes }})
+        const app = createApp(Test, {"testPhonemes" : testPhonemes, "TestNumber" : i, "randomTestPhonemes" : randomTestPhonemes })
+        app.mount(div);
+      }
+    
+    function ViewTest2(i : number){
+        // Create div for button
+        const testDad = document.getElementById("testdad");
+        if(testDad===null){
+          return;
+        }
+
+        const stepDad = document.getElementById("stepdad");
+        if(stepDad===null){
+          return;
+        }
+
+        const wordDad = document.getElementById("worddad");
+        if(wordDad===null){
+          return;
+        }
+
+        // clear the div
+        testDad.innerHTML = "";
+        stepDad.innerHTML = "";
+        wordDad.innerHTML = "";
+
+        const testPhonemes = testToPhoneme[i]
+
+        var randomTestPhonemes = shuffleArray(testPhonemes);
+        const div = document.createElement('div');
+        testDad.appendChild(div);
+        const app = createApp(Test, {"testPhonemes" : testPhonemes, "TestNumber" : i, "randomTestPhonemes" : randomTestPhonemes })
         app.mount(div);
       }
 
@@ -210,8 +311,40 @@ export default defineComponent({
 
     }
 
+    function ViewWord2(i : number){
+      // Create div for button
+      const testDad = document.getElementById("testdad");
+      if(testDad===null){
+        return;
+      }
+
+      const stepDad = document.getElementById("stepdad");
+      if(stepDad===null){
+        return;
+      }
+
+      const wordDad = document.getElementById("worddad");
+      if(wordDad===null){
+        return;
+      }
+
+      // clear the div
+      testDad.innerHTML = "";
+      stepDad.innerHTML = "";
+      wordDad.innerHTML = "";
+
+      const testWords = wordsArray2[i]
+
+      const div = document.createElement('div');
+      wordDad.appendChild(div);
+      const app = createApp(WordTest, {"testWords" : testWords, "WordNumber" : i, "phonemes" : testToPhoneme[i]})
+      app.mount(div);
+
+    }
+
     function sendInfo() {
       if (participants.includes(user.value)) {
+          state.userval = user.value;
         const modal = document.getElementById("myModal");
         if (modal !== null) {
           modal.style.display = "none";
@@ -223,7 +356,7 @@ export default defineComponent({
         }
       }
     }
-
+    
     // Return all variables
     return {
       stepNumbers,
@@ -234,7 +367,10 @@ export default defineComponent({
       ViewStep,
       ViewTest,
       ViewWord,
-      sendInfo
+      sendInfo,
+      ViewStep2,
+      ViewTest2,
+      ViewWord2,
     }
   },
   created() {

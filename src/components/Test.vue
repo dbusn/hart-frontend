@@ -36,6 +36,7 @@ import Button from "primevue/button";
 import Panel from "primevue/panel";
 //import Fieldset from "primevue/fieldset";
 import APIWrapper from "@/backend.api";
+import ActivityLogger from "@/helpers/logging"
 
 export default defineComponent({
   name: 'Test',
@@ -144,6 +145,7 @@ export default defineComponent({
               correctGuesses++;
               guesses++;
               i++;
+              ActivityLogger.log_activity("Test", playedPhoneme.value, phoneme);
             } else {
               btn.style.background = "red";
               //guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + phoneme + "</span>";
@@ -151,12 +153,14 @@ export default defineComponent({
               i++;
               // Show the correct phoneme, and add the current phoneme to randomTestPhonemes
               randomTestPhonemes.push(playedPhoneme.value);
+              ActivityLogger.log_activity("Test", playedPhoneme.value, phoneme);
             }
             grade.value = (correctGuesses / guesses) * 100;
             grade.value = Math.round(grade.value) / 10;
             console.log(correctGuesses);
             console.log(guesses);
             console.log(grade);
+
             setTimeout(() => {
               btn.style.background = bgColor;
               if (correctBtn !== btn && correctBtn !== null) {
