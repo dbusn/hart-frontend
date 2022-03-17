@@ -87,6 +87,8 @@ export default defineComponent({
     const identificationActive = ref(false);
     const fiRows = ref(0);
     const dropdownPhoneme = ref();
+    let correctBtn: HTMLElement | null;
+
 
     let newPhonemes: { name: string }[] = [];
     props["selectedPhonemes"].forEach((pho: string) => {
@@ -185,6 +187,11 @@ export default defineComponent({
 
         const btn = document.getElementById("fid_" + phoneme);
 
+        // Remember the button storing the correct phoneme
+        if (phoneme === playedPhoneme.value) {
+          correctBtn = btn;
+        }
+
         const guessesCell = document.getElementById("pTableRow_" + fiRows.value);
         if (btn === null || guessesCell === null) {
           return
@@ -202,8 +209,16 @@ export default defineComponent({
             ActivityLogger.log_activity("Step", playedPhoneme.value, phoneme);
           }                  
           setTimeout(() => {
-            btn.style.background = bgColor
-          }, 1000);
+              btn.style.background = bgColor;
+              if (correctBtn !== btn && correctBtn !== null) {
+                correctBtn.style.background = "green";
+                setTimeout(() => {
+                  if (correctBtn !== null) {
+                    correctBtn.style.background = bgColor;
+                  }
+                }, 500);
+              }
+            }, 500);
         });
       })
     }

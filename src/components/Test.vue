@@ -52,7 +52,6 @@ export default defineComponent({
     const dropdownPhoneme = ref();
     const phonemes: { name: string }[] = [];
     let randomTestPhonemes: string[] = [];
-    let correctBtn: HTMLElement | null;
     let mutex = 0;
     let correctGuesses = 0;
     let guesses = 0;
@@ -121,11 +120,6 @@ export default defineComponent({
 
         const btn = document.getElementById("fid_" + phoneme);
 
-        // Remember the button storing the correct phoneme
-        if (phoneme === playedPhoneme.value) {
-          correctBtn = btn;
-        }
-
         //const guessesCell = document.getElementById("pTableRow_" + fiRows.value);
         //if (btn === null || guessesCell === null) {
         //  return
@@ -161,20 +155,15 @@ export default defineComponent({
             console.log(guesses);
             console.log(grade);
 
+            gradeActive.value = true;
+            
             setTimeout(() => {
               btn.style.background = bgColor;
-              if (correctBtn !== btn && correctBtn !== null) {
-                correctBtn.style.background = "green";
-                setTimeout(() => {
-                  if (correctBtn !== null) {
-                    correctBtn.style.background = bgColor;
-                  }
-                }, 500);
-              }
               if (i >= randomTestPhonemes.length) {
                 gradeActive.value = true;
               }
             }, 500);
+
           }
           if (grade.value >= 7.9) {
             passed.value = true;
