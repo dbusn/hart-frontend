@@ -2,5 +2,9 @@
 import { reactive } from 'vue'
 
 export const state = reactive({
-  userval: 0
+  userVal: 0
+})
+
+export const progress = reactive({
+  userProgress: 0
 })

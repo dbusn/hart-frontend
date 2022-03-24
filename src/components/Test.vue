@@ -4,8 +4,9 @@
     <ul style="margin-bottom: 26px">
       <li> • Guess which phoneme is send to you. </li>
       <li> • Unlike the training, you can only choose once. </li>
-      <li> • If you are done you can view your grade. </li>
-      <li> • You passed the test if your grade is 8 or higher. </li>
+      <li> • If you make a mistake you must go back to the training. </li>
+      <li> • You pass the test if there are no errors and your grade is 10. </li>
+      <li> • The test is completed once the "View your grade!" button becomes available. </li>
     </ul>
   </div>
 
@@ -128,7 +129,7 @@ export default defineComponent({
         if (btn === null) {
           return;
         }
-
+        console.log(playedPhoneme.value);
         btn.addEventListener("click", () => {
           const bgColor = btn.style.background;
           if (mutex === 0) {
@@ -140,6 +141,7 @@ export default defineComponent({
               guesses++;
               i++;
               ActivityLogger.log_activity("Test", playedPhoneme.value, phoneme);
+              ActivityLogger.log_progress("Test");
             } else {
               btn.style.background = "red";
               //guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + phoneme + "</span>";
@@ -148,6 +150,7 @@ export default defineComponent({
               // Show the correct phoneme, and add the current phoneme to randomTestPhonemes
               randomTestPhonemes.push(playedPhoneme.value);
               ActivityLogger.log_activity("Test", playedPhoneme.value, phoneme);
+              ActivityLogger.log_progress("Test");
             }
             grade.value = (correctGuesses / guesses) * 100;
             grade.value = Math.round(grade.value) / 10;
@@ -155,8 +158,6 @@ export default defineComponent({
             console.log(guesses);
             console.log(grade);
 
-            gradeActive.value = true;
-            
             setTimeout(() => {
               btn.style.background = bgColor;
               if (i >= randomTestPhonemes.length) {
@@ -165,9 +166,10 @@ export default defineComponent({
             }, 500);
 
           }
-          if (grade.value >= 7.9) {
+          if (grade.value >= 10) {
             passed.value = true;
           }
+
         });
       })
     }

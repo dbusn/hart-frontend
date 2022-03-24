@@ -9,15 +9,6 @@
         </ul>
   </div>
 
-  <Panel header="Feeling phonemes" class="p-shadow-4" style="margin-bottom: 50px">
-    <p> • Try out how a single phoneme feels. </p>
-
-    <Dropdown v-model="dropdownPhoneme" class="p-shadow-2" :options="allPhonemes" optionLabel="name"
-              placeholder="Phoneme" :filter="true"
-              style="margin-right: 10px"/>
-    <Button @click="sendDropdownPhoneme()" class="p-shadow-2" style="padding: 0.9rem">Send phoneme</Button>
-  </Panel>
-
   <Panel header="Training" class="p-shadow-4">
     <ul style="margin-bottom: 26px">
       <li> • Select which phonemes you want to train on. </li>
@@ -68,17 +59,33 @@ import {createApp, defineComponent, ref} from "vue";
 import Button from "primevue/button";
 import Panel from "primevue/panel";
 import Checkbox from "primevue/checkbox";
-import Dropdown from "primevue/dropdown";
+//import Dropdown from "primevue/dropdown";
 import Fieldset from "primevue/fieldset";
 import APIWrapper from "@/backend.api";
 import {getRandom} from "@/helpers/array.helper";
-import ActivityLogger from "@/helpers/logging"
+import ActivityLogger from "@/helpers/logging";
 // import {getRandom} from "@/helpers/array.helper";
+
+/* This goes inside the template !!
+
+  <Panel header="Feeling phonemes" class="p-shadow-4" style="margin-bottom: 50px">
+    <p> • Try out how a single phoneme feels. </p>
+
+    <Dropdown v-model="dropdownPhoneme" class="p-shadow-2" :options="allPhonemes" optionLabel="name"
+              placeholder="Phoneme" :filter="true"
+              style="margin-right: 10px"/>
+    <Button @click="sendDropdownPhoneme()" class="p-shadow-2" style="padding: 0.9rem">Send phoneme</Button>
+  </Panel>
+
+*/
+
+//This is for the feel the phonemes panel - replace line 88
+/*components: {Panel, Button, Checkbox, Dropdown, Fieldset},*/
 
 export default defineComponent({
   name: 'Step',
   props: [ "selectedPhonemes", "oldPhonemes", "StepNumber" ],
-  components: {Panel, Button, Checkbox, Dropdown, Fieldset},
+  components: {Panel, Button, Checkbox, Fieldset},
 
 
   setup(props) {
@@ -86,9 +93,8 @@ export default defineComponent({
     const playedPhoneme = ref();
     const identificationActive = ref(false);
     const fiRows = ref(0);
-    const dropdownPhoneme = ref();
+    /*const dropdownPhoneme = ref();*/
     let correctBtn: HTMLElement | null;
-
 
     let newPhonemes: { name: string }[] = [];
     props["selectedPhonemes"].forEach((pho: string) => {
@@ -103,7 +109,7 @@ export default defineComponent({
       allPhonemes.push({name: pho})
     })
 
-    function sendDropdownPhoneme() {
+    /*function sendDropdownPhoneme() {
       if (dropdownPhoneme.value !== undefined) {
         const json = {'phonemes': [dropdownPhoneme.value.name]}
         APIWrapper.sendPhonemeMicrocontroller(json);
@@ -111,6 +117,7 @@ export default defineComponent({
         alert("Please select a phoneme to send");
       }
     }
+*/
 
     function selectAllPhonemes() {
       selectedTrainPhonemes.value = []
@@ -234,14 +241,14 @@ export default defineComponent({
       allPhonemes,
       newPhonemes,
       selectedTrainPhonemes,
-      dropdownPhoneme,
+      //dropdownPhoneme,
       identificationActive,
 
       selectAllPhonemes,
       selectNewPhonemes,
       deselectAllPhonemes,
       sendForcedIdentification,
-      sendDropdownPhoneme,
+      //sendDropdownPhoneme,
       repeatPreviousPhoneme,
     }
   }

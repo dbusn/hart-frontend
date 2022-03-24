@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDoc, DocumentReference, Firestore, doc } from "firebase/firestore"
-import { state } from "@/helpers/state.js"
-
+import { getFirestore, collection, addDoc, getDoc, DocumentReference, Firestore, doc, setDoc } from "firebase/firestore"
+import { progress, state } from "@/helpers/state.js"
 
 const firebaseConfig = {
     apiKey: "AIzaSyAADUKI0VsiphL6ToyW_ASGl2TUB1hCD6o",
@@ -17,10 +16,10 @@ export default class ActivityLogger {
     /*
     Log the forcedidentifcation activity
     */
-    public static async log_activity(type : string, sent: string, guess: string){
+    public static async log_activity(type: string, sent: string, guess: string){
         const d = new Date()
 
-        console.log(state.userval);
+        console.log(state.userVal);
         
         let res;
         
@@ -33,8 +32,9 @@ export default class ActivityLogger {
         console.log(res);
                 
         try {
-            const docRef = await addDoc(collection(db, "User-Testing2.0"), {
-                user: state.userval,
+            const docRef = await addDoc(collection(db, "User-Testing - Data"), {
+                user: state.userVal,
+                progress: progress.userProgress,
                 type: type,
                 sent: sent,
                 guess: guess,
@@ -45,6 +45,24 @@ export default class ActivityLogger {
         } 
         catch (e) {
             console.error("Error adding document: ", e);
-        }        
+        }                
     }
+    
+    public static async log_progress(type: string){
+        const d = new Date()
+
+        try {
+            const docRef = await addDoc(collection(db, "User-Testing - Progress/"+state.userVal+"/progress"), {
+                progress: progress.userProgress,
+                type: type,
+                time: d.getTime()
+            });
+            console.log("Document written with ID: ", docRef.id);
+        } 
+        catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    }
+
 }
+
