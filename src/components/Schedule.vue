@@ -17,15 +17,15 @@
 
 
     <Panel header="Follow the steps" class="p-shadow-4" >
-      <p>You are going to learn the phonemes step by step. Complete the steps and go on to the next one.</p>
+      <p>You are going to learn the phonemes step by step. Complete the steps and go on to the test before going to the next step.</p>
       <div v-for="number in stepNumbers" v-bind:key="number" style="display: inline-block; width: 100px;">
-        <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; width: 80px; margin-top: 30px">Step {{number}}</Button>
+        <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; width: 80px; margin-top: 30px; margin-left: 15px">Step {{number}}</Button>
         <p><b> </b></p>
-        <Button @click="ViewTest(number)" class="p-shadow-2" style="padding: 0.9rem; width: 80px; margin-bottom:15px;">Test {{number}}</Button>
+        <Button @click="ViewTest(number)" class="p-shadow-2" style="padding: 0.9rem; width: 80px; margin-bottom:15px;margin-left: 15px">Test {{number}}</Button>
       </div>
       <p><b> </b></p>
-      <div v-for="number in wordNumbers" v-bind:key="number" style="display: inline-block; width: 100px; margin-left: 100px;">
-        <Button @click="ViewWord(number)" class="p-shadow-2" style="padding: 0.9rem; width: 80px; margin-top:5px">Word {{number}}</Button>
+      <div v-for="number in wordNumbers" v-bind:key="number" style="display: inline-block; width: 100px; margin-left: 150px">
+        <Button @click="ViewWord(number)" class="p-shadow-2" style="padding: 0.9rem; width: 100px; margin-top:5px">Word {{number}}</Button>
       </div>
     </Panel>
 
@@ -59,7 +59,7 @@ export default defineComponent({
 
     const stepNumbers = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
     const testNumbers = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
-    const wordNumbers = ref([2, 4, 6]);
+    const wordNumbers = ref([6, 12, 18]);
 
     /*const stepToPhoneme: any =
         {
@@ -105,7 +105,8 @@ export default defineComponent({
         }
     */
     
-      const testToPhoneme: any =
+
+     const testToPhoneme: any =
         {
           1 : ["T", "D"],
           2 : ["T", "D", "AH", "OO"],
@@ -124,15 +125,13 @@ export default defineComponent({
           15 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH"],
           16 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH", "UU", "EE"],
           17 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH", "UU", "EE", "M", "N"],
-          18 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH", "UU", "EE", "M", "N", "IH", "AY", "I"],
-        }
-
+          18 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH", "UU", "EE", "M", "N", "IH", "AY", "I"],}
 
     const wordsArray: any =
         {
-          2 : ["Ear", "Eat", "Bee", "Tea", "Teeth", "Put"],
-          4 : ["Hide", "What", "Wait", "Zoo", "Boost", "Yes"],
-          6 : ["Push", "Better", "Phone", "Calling", "Phone", "Hart"],
+          6 : ["Ear", "Eat", "Bee", "Tea", "Teeth", "Put"],
+          12 : ["Hide", "What", "Wait", "Zoo", "Boost", "Yes"],
+          18 : ["Push", "Better", "Phone", "Calling", "Phone", "Hart"],
         }
 
     const participants: string[] =

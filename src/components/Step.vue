@@ -15,7 +15,6 @@
       <li> • You will feel a random phoneme. </li>
       <li> • Test yourself by choosing the right phoneme. </li>
       <li> • You can guess as many times as you would like. </li>
-      <li> • You can view your answers by clicking below. </li>
     </ul>
       <div style="margin-bottom: 10px">
         <Button @click="selectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Select all
@@ -38,15 +37,6 @@
       <Button @click="repeatPreviousPhoneme()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat phoneme
       </Button>
       <div id="forcedIdentificationButtons"></div>
-      <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
-        <table id="phoneme-table">
-          <tr>
-            <th>Round</th>
-            <th>Correct answer</th>
-            <th>Guessed answers</th>
-          </tr>
-        </table>
-      </Fieldset>
     </Panel>
   </Panel>
 </template>
@@ -60,11 +50,9 @@ import Button from "primevue/button";
 import Panel from "primevue/panel";
 import Checkbox from "primevue/checkbox";
 //import Dropdown from "primevue/dropdown";
-import Fieldset from "primevue/fieldset";
 import APIWrapper from "@/backend.api";
 import {getRandom} from "@/helpers/array.helper";
 import ActivityLogger from "@/helpers/logging";
-// import {getRandom} from "@/helpers/array.helper";
 
 /* This goes inside the template !!
 
@@ -85,7 +73,7 @@ import ActivityLogger from "@/helpers/logging";
 export default defineComponent({
   name: 'Step',
   props: [ "selectedPhonemes", "oldPhonemes", "StepNumber" ],
-  components: {Panel, Button, Checkbox, Fieldset},
+  components: {Panel, Button, Checkbox},
 
 
   setup(props) {
@@ -167,9 +155,9 @@ export default defineComponent({
       }
 
       // Create new row element for table
-      const row = document.createElement("tr");
+      /*const row = document.createElement("tr");
       row.innerHTML = "<td>" + fiRows.value + "</td><td>" + playedPhoneme.value + "</td><td id='pTableRow_" + fiRows.value + "'></td>";
-      pTable.appendChild(row);
+      pTable.appendChild(row);*/
 
       // Add explanation div
       const textDiv = document.createElement('div');
