@@ -1,46 +1,100 @@
 <template class="temp">
-  <div style="margin-left:auto;margin-right:auto; width: 70%">
+  <div style="margin-left: auto; margin-right: auto; width: 70%">
     <h1 style="margin-bottom: 4px">Phonemes</h1>
 
     <!-- Panel for sending a specific phoneme -->
-    <Panel header="Send a chosen phoneme" class="p-shadow-4" style="margin-bottom: 50px">
-      <p>To just try out how a single phoneme feels, and play it on the sleeve, you can select a phoneme in the
-        dropdown menu and send it to the sleeve.</p>
+    <Panel
+      header="Send a chosen phoneme"
+      class="p-shadow-4"
+      style="margin-bottom: 50px"
+    >
+      <p>
+        To just try out how a single phoneme feels, and play it on the sleeve,
+        you can select a phoneme in the dropdown menu and send it to the sleeve.
+      </p>
 
-      <Dropdown v-model="dropdownPhoneme" class="p-shadow-2" :options="phonemes" optionLabel="name"
-                placeholder="Phoneme" :filter="true"
-                style="margin-right: 10px"/>
-      <Button @click="sendDropdownPhoneme()" class="p-shadow-2" style="padding: 0.9rem">Send phoneme</Button>
+      <Dropdown
+        v-model="dropdownPhoneme"
+        class="p-shadow-2"
+        :options="phonemes"
+        optionLabel="name"
+        placeholder="Phoneme"
+        :filter="true"
+        style="margin-right: 10px"
+      />
+      <Button
+        @click="sendDropdownPhoneme()"
+        class="p-shadow-2"
+        style="padding: 0.9rem"
+        >Send phoneme</Button
+      >
     </Panel>
 
     <!-- Main panel for training -->
     <Panel header="Training" class="p-shadow-4">
       <p>Select which phonemes you want to train on.</p>
       <div style="margin-bottom: 10px">
-        <Button @click="selectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Select all
+        <Button
+          @click="selectAllPhonemes()"
+          class="p-shadow-2"
+          style="padding: 0.9rem; margin-right: 10px"
+          >Select all
         </Button>
-        <Button @click="deselectAllPhonemes()" class="p-shadow-2" style="padding: 0.9rem">Deselect all</Button>
+        <Button
+          @click="deselectAllPhonemes()"
+          class="p-shadow-2"
+          style="padding: 0.9rem"
+          >Deselect all</Button
+        >
       </div>
       <div style="width: min(100%, max(60%, 600px)); margin-top: 20px">
-        <div v-for="item in phonemes" v-bind:key="item.name" class="p-field-checkbox"
-             style="display: inline-block; width: 70px;">
-          <Checkbox :id="'checkbox_' + item.name" name="item.name" :value="item.name" v-model="selectedTrainPhonemes"/>
+        <div
+          v-for="item in phonemes"
+          v-bind:key="item.name"
+          class="p-field-checkbox"
+          style="display: inline-block; width: 70px"
+        >
+          <Checkbox
+            :id="'checkbox_' + item.name"
+            name="item.name"
+            :value="item.name"
+            v-model="selectedTrainPhonemes"
+          />
           <label :for="item">{{ item.name }}</label>
-
         </div>
       </div>
-      <br>
+      <br />
 
       <!-- Subpanel for forced identification -->
-      <Panel header="Forced identification" class="p-shadow-2" style="margin-top: 20px; margin-bottom: 20px">
-        <p>By clicking the button, a phoneme will be send to the sleeve, and you will get to see three buttons, and
-          have to choose which one you felt.</p>
-        <Button @click="sendForcedIdentification()" class="p-shadow-2" style="padding: 0.9rem; margin-right: 10px">Forced identification
+      <Panel
+        header="Forced identification"
+        class="p-shadow-2"
+        style="margin-top: 20px; margin-bottom: 20px"
+      >
+        <p>
+          By clicking the button, a phoneme will be send to the sleeve, and you
+          will get to see three buttons, and have to choose which one you felt.
+        </p>
+        <Button
+          @click="sendForcedIdentification()"
+          class="p-shadow-2"
+          style="padding: 0.9rem; margin-right: 10px"
+          >Forced identification
         </Button>
-        <Button @click="repeatPreviousPhoneme()" class="p-shadow-2" style="padding: 0.9rem" :disabled='!identificationActive'>Repeat
+        <Button
+          @click="repeatPreviousPhoneme()"
+          class="p-shadow-2"
+          style="padding: 0.9rem"
+          :disabled="!identificationActive"
+          >Repeat
         </Button>
         <div id="forcedIdentificationButtons"></div>
-        <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
+        <Fieldset
+          legend="Answers (history)"
+          :toggleable="true"
+          :collapsed="true"
+          style="margin-top: 20px"
+        >
           <table id="phoneme-table">
             <tr>
               <th>Round</th>
@@ -53,10 +107,18 @@
 
       <!-- Subpanel for sending random phoneme -->
       <Panel header="Send random" class="p-shadow-2">
-        <Button @click="sendRandomPhoneme()" class="p-shadow-2" style="padding: 0.9rem; margin-top: 20px">Send random
-          phoneme
+        <Button
+          @click="sendRandomPhoneme()"
+          class="p-shadow-2"
+          style="padding: 0.9rem; margin-top: 20px"
+          >Send random phoneme
         </Button>
-        <Fieldset legend="Answers (history)" :toggleable="true" :collapsed="true" style="margin-top: 20px">
+        <Fieldset
+          legend="Answers (history)"
+          :toggleable="true"
+          :collapsed="true"
+          style="margin-top: 20px"
+        >
           <table id="random-phoneme-table">
             <tr>
               <th>Round</th>
@@ -65,23 +127,21 @@
           </table>
         </Fieldset>
       </Panel>
-
     </Panel>
   </div>
 </template>
 
 <script lang="ts">
-import {createApp, defineComponent, ref} from "vue";
+import { createApp, defineComponent, ref } from "vue";
 import APIWrapper from "@/backend.api";
 import Button from "primevue/button";
-import {getRandom} from "@/helpers/array.helper";
+import { getRandom } from "@/helpers/array.helper";
 
 export default defineComponent({
-  name: 'Phonemes',
-  extends: {Button},
+  name: "Phonemes",
+  extends: { Button },
 
   setup: async () => {
-
     // Get phoneme data from the backend
     const phonemeData = (await APIWrapper.getPhonemes()).phonemes;
 
@@ -101,7 +161,7 @@ export default defineComponent({
       // Check if something was selected
       if (dropdownPhoneme.value !== undefined) {
         // Create json and send to backend
-        const json = {'phonemes': [dropdownPhoneme.value.name]}
+        const json = { phonemes: [dropdownPhoneme.value.name] };
         APIWrapper.sendPhonemeMicrocontroller(json);
       } else {
         // If nothing selected, alert user
@@ -118,8 +178,11 @@ export default defineComponent({
         alert("Please select phonemes to train on");
       } else {
         // Get random phoneme from selected phonemes and send it to the backend
-        const randomPhoneme = selectedTrainPhonemes.value[Math.floor(Math.random() * selectedTrainPhonemes.value.length)]
-        const json = {'phonemes': [randomPhoneme]};
+        const randomPhoneme =
+          selectedTrainPhonemes.value[
+            Math.floor(Math.random() * selectedTrainPhonemes.value.length)
+          ];
+        const json = { phonemes: [randomPhoneme] };
         APIWrapper.sendPhonemeMicrocontroller(json);
 
         // Add answer to the table
@@ -130,8 +193,9 @@ export default defineComponent({
 
         const row = document.createElement("tr");
         raRows.value++;
-        row.insertCell()
-        row.innerHTML = "<td>" + raRows.value + "</td><td>" + randomPhoneme + "</td>";
+        row.insertCell();
+        row.innerHTML =
+          "<td>" + raRows.value + "</td><td>" + randomPhoneme + "</td>";
         pTable.appendChild(row);
       }
     }
@@ -141,13 +205,13 @@ export default defineComponent({
      */
     function sendForcedIdentification() {
       // Get div from page for placing buttons
-      const buttonDiv = document.getElementById("forcedIdentificationButtons")
+      const buttonDiv = document.getElementById("forcedIdentificationButtons");
       if (buttonDiv === null) {
         return;
       }
 
       // empty button div
-      buttonDiv.innerHTML = '';
+      buttonDiv.innerHTML = "";
 
       // check if some phonemes are selected
       if (selectedTrainPhonemes.value.length === 0) {
@@ -156,12 +220,14 @@ export default defineComponent({
       }
 
       // get a set of random phonemes from the selected phonemes
-      const randomPhonemes = (selectedTrainPhonemes.value as any)
+      const randomPhonemes = selectedTrainPhonemes.value as any;
       playedPhoneme.value = getRandom(randomPhonemes, 1)[0];
       identificationActive.value = true;
 
       // Send selected phoneme to backend
-      APIWrapper.sendPhonemeMicrocontroller({'phonemes': [playedPhoneme.value]});
+      APIWrapper.sendPhonemeMicrocontroller({
+        phonemes: [playedPhoneme.value],
+      });
 
       // Increase the number of forced identification rounds.
       fiRows.value++;
@@ -169,23 +235,30 @@ export default defineComponent({
       // Get the answer table
       const pTable = document.getElementById("phoneme-table");
       if (pTable === null) {
-        return
+        return;
       }
 
       // Create new row element for table
       const row = document.createElement("tr");
-      row.innerHTML = "<td>" + fiRows.value + "</td><td>" + playedPhoneme.value + "</td><td id='pTableRow_" + fiRows.value + "'></td>";
+      row.innerHTML =
+        "<td>" +
+        fiRows.value +
+        "</td><td>" +
+        playedPhoneme.value +
+        "</td><td id='pTableRow_" +
+        fiRows.value +
+        "'></td>";
       pTable.appendChild(row);
 
       // Add explanation div
-      const textDiv = document.createElement('div');
-      textDiv.innerHTML = '<p>Which phoneme was just played?</p>';
+      const textDiv = document.createElement("div");
+      textDiv.innerHTML = "<p>Which phoneme was just played?</p>";
       buttonDiv.appendChild(textDiv);
 
       // For each of the phonemes selected, create buttons and assign listeners to it.
       randomPhonemes.forEach((phoneme: string) => {
         // Create div for button
-        const div = document.createElement('div');
+        const div = document.createElement("div");
         div.style.display = "inline-block";
         div.style.marginRight = "10px";
 
@@ -195,16 +268,18 @@ export default defineComponent({
           label: phoneme,
           id: "fid_" + phoneme,
           class: "p-shadow-2",
-          style: "margin-bottom: 4px"
+          style: "margin-bottom: 4px",
         }).mount(div);
 
         // Get the button from the page
         const btn = document.getElementById("fid_" + phoneme);
 
         // Get the table cell for guesses from the page
-        const guessesCell = document.getElementById("pTableRow_" + fiRows.value);
+        const guessesCell = document.getElementById(
+          "pTableRow_" + fiRows.value
+        );
         if (btn === null || guessesCell === null) {
-          return
+          return;
         }
 
         // Add button event listener
@@ -212,36 +287,44 @@ export default defineComponent({
           const bgColor = btn.style.background;
           if (phoneme === playedPhoneme.value) {
             btn.style.background = "green";
-            guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #8800FF; font-weight: bolder'>" + phoneme + "</span>";
+            guessesCell.innerHTML +=
+              "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px; color: #8800FF; font-weight: bolder'>" +
+              phoneme +
+              "</span>";
           } else {
             btn.style.background = "red";
-            guessesCell.innerHTML += "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px'>" + phoneme + "</span>";
+            guessesCell.innerHTML +=
+              "<span style='margin-right: 4px; margin-bottom: 4px; padding: 5px'>" +
+              phoneme +
+              "</span>";
           }
           setTimeout(() => {
-            btn.style.background = bgColor
+            btn.style.background = bgColor;
           }, 1000);
         });
-      })
+      });
     }
 
     function repeatPreviousPhoneme() {
-      APIWrapper.sendPhonemeMicrocontroller({'phonemes': [playedPhoneme.value]});
+      APIWrapper.sendPhonemeMicrocontroller({
+        phonemes: [playedPhoneme.value],
+      });
     }
 
     // Format gotten phonemes from backend.
     const phonemes: { name: string }[] = [];
     phonemeData.forEach((pho: string) => {
-      phonemes.push({name: pho})
-    })
+      phonemes.push({ name: pho });
+    });
 
     /**
      * Function for selecting all phonemes
      */
     function selectAllPhonemes() {
-      selectedTrainPhonemes.value = []
+      selectedTrainPhonemes.value = [];
       phonemeData.forEach((pho: string) => {
         (selectedTrainPhonemes.value as string[]).push(pho);
-      })
+      });
     }
 
     function deselectAllPhonemes() {
@@ -262,15 +345,14 @@ export default defineComponent({
       sendForcedIdentification,
       repeatPreviousPhoneme,
       selectAllPhonemes,
-      deselectAllPhonemes
-    }
+      deselectAllPhonemes,
+    };
   },
   created() {
-    document.title = "HART Prototype - Phonemes"
-  }
-})
+    document.title = "HART Prototype - Phonemes";
+  },
+});
 </script>
 
 <style scoped>
-
 </style>
