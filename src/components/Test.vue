@@ -6,6 +6,7 @@
       <li> • Unlike the training, you can only choose once. </li>
       <li> • If you make a mistake you must go back to the training. </li>
       <li> • You pass the test if there are no errors and your grade is 10. </li>
+      
       <li> • The test is completed once the "View your grade!" button becomes available. </li>
     </ul>
   </div>
@@ -38,6 +39,7 @@ import Panel from "primevue/panel";
 //import Fieldset from "primevue/fieldset";
 import APIWrapper from "@/backend.api";
 import ActivityLogger from "@/helpers/logging"
+import { progress } from "@/helpers/state.js"
 
 export default defineComponent({
   name: 'Test',
@@ -166,7 +168,10 @@ export default defineComponent({
             }, 500);
 
           }
-          if (grade.value >= 10) {
+          if (progress.userProgress <= 5 && grade.value >= 10) {
+            passed.value = true;
+          }
+          if (progress.userProgress > 5 && grade.value >= 8) {
             passed.value = true;
           }
 

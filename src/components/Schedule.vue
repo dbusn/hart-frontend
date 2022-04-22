@@ -57,6 +57,12 @@ export default defineComponent({
 
   setup: async () => {
 
+    /*
+    const stepNumbers = ref([1, 2, 3, 4, 5, 6]);
+    const testNumbers = ref([1, 2, 3, 4, 5, 6]);
+    const wordNumbers = ref([2, 4, 6]);
+    */
+
     const stepNumbers = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
     const testNumbers = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
     const wordNumbers = ref([6, 12, 18]);
