@@ -71,7 +71,7 @@ import Survey from "@/components/Survey.vue";
 
 export default defineComponent({
   name: "Words",
-  setup: async () => {
+  setup() {
     const user = ref();
     const participants: string[] = ["penguin"];
     function initialize() {
@@ -102,6 +102,7 @@ export default defineComponent({
           screen.innerHTML = "";
           const div = document.createElement("div");
           screen.appendChild(div);
+          console.log("This runs!");
           app.mount(div);
         }
       } else {

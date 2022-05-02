@@ -1,7 +1,7 @@
 <template class="temp">
   <div id="state" style="position: absolute; top: 45%; left: 45%">
-    <Button @click="sendPattern(1)">Pattern 1</Button>
-    <Button @click="sendPattern(2)">Pattern 2</Button>
+    <Button @click="sendPattern(0)">Pattern 1</Button>
+    <Button @click="sendPattern(1)">Pattern 2</Button>
     <SelectButton v-model="selectedScale" :options="scale" optionLabel="name">
     </SelectButton>
     <Button @click="submitRating()">Next</Button>
@@ -18,8 +18,10 @@ export default defineComponent({
   name: "Survey",
   props: ["user"],
   components: { SelectButton, Button },
-  setup() {
-    let currentCombination = getNewCombination();
+
+  async setup() {
+    var currentCombination : [String] = getNewCombination();
+
     const selectedScale = ref();
     const scale = [
       { name: "Not different", value: 1 },
@@ -28,27 +30,34 @@ export default defineComponent({
       { name: "Very different", value: 4 },
     ];
 
-    function submitRating() {
+    async function submitRating() {
       console.log(selectedScale.value.name);
       console.log(selectedScale.value.value);
-      currentCombination = getNewCombination();
+      currentCombination = await getNewCombination();
     }
 
-    function getNewCombination() {
-      let combination = APIWrapper.getCombination();
+    async function getNewCombination() {
+      var combination = await APIWrapper.getCombination();
       console.log(combination.phonemes);
-      return combination.phonemes;
+      var realComb : [String] = combination.phonemes;
+      // if (realComb == null) {
+      //   var empty : String[] = [];
+      //   return empty;
+      // }
+      return realComb;
     }
 
     // eslint-disable-next-line no-unused-vars
     function sendPattern(patternID: number) {
-      const patternName = currentCombination
+      const patternName = currentCombination[patternID];
       const json = { phonemes: [patternName] };
       APIWrapper.sendCombinationMicroncontroller(json);
       console.log("Pattern" + patternName + "sent to the microcontroller");
     }
 
     return {
+      getNewCombination,
+      currentCombination,
       selectedScale,
       scale,
       submitRating,
