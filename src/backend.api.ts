@@ -46,7 +46,7 @@ export const handleApiErrorResponse = (res: any) => {
 }
 
 /**
- * Wrapper for communicating with teh backend.
+ * Wrapper for communicating with the backend.
  */
 export default class APIWrapper {
 
@@ -133,6 +133,12 @@ export default class APIWrapper {
 
         // Send request to backend
         return backendApi.post("/api/v1/microcontroller/audiofile", formData)
+            .then(handleApiResponse)
+            .catch(handleApiErrorResponse);
+    }
+
+    public static getToggleRequest(): any {
+        return backendApi.get('/api/v1/microcontroller/togglestream')
             .then(handleApiResponse)
             .catch(handleApiErrorResponse);
     }

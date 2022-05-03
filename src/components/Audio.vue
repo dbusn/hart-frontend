@@ -35,6 +35,11 @@
       <Button @click="sendRecording()" id="send-btn" class="p-button p-shadow-2" disabled>Send Audio!</Button>
 
     </Panel>
+    <Panel header="Record Realtime">
+      <p>In this panel, you can turn on/off the microphone to record all incoming sound and translate it in realtime!</p>
+      <Button @click="toggleRecording()" type="button" id="button_record" class="p-button" style="margin-right: 10px">Toggle Mic</Button>
+      <Button id="play-btn" class="p-button" disabled>play</Button><br>
+    </Panel>
   </div>
 
 </template>
@@ -52,6 +57,8 @@ export default defineComponent({
     let recorder: any; // Stores the MediaRecorder object
     let mime: any; // Stores the mime type of the recording
     let audio: any = undefined; // Stores the audio of the recording
+    let streamLive = false; // Stores the status of live/realtime recording
+    let activeStyle = "p-button"; // Stores the style type based on realtime recording activity
 
     // Set supported languages.
     const languages = ref([
@@ -219,11 +226,27 @@ export default defineComponent({
       fileReader.readAsArrayBuffer(blob);
     }
 
+    /**
+     * Function to toggle mic on/off in the backend and start realtime recording
+     */
+    async function toggleRecording() {
+      const status = await APIWrapper.getToggleRequest();
+      console.log(status.is_stream_live);
+      streamLive = !streamLive;
+      if (streamLive) {
+        activeStyle = "p-button-success";
+      } else {
+        activeStyle = "p-button";
+      }
+    }
+
     return {
       selectedLanguage1,
       selectedLanguage2,
       filteredLanguages,
       languages,
+      streamLive,
+      activeStyle,
 
       sendFile,
       onFileSelected,
@@ -232,6 +255,8 @@ export default defineComponent({
       startRecord,
       stopRecord,
       sendRecording,
+
+      toggleRecording,
     }
   },
   created() {
