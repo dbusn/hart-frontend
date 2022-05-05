@@ -53,7 +53,7 @@ import ActivityLogger from "@/helpers/logging";
 
 export default defineComponent({
   name: 'Schedule',
-  components: {Button, Step, Test, WordTest},
+  extends: {Button, Step, Test, WordTest},
 
   setup: async () => {
 
