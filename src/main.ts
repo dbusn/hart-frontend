@@ -30,6 +30,20 @@ import Timer from "@/components/Timer.vue";
 import './assets/layout/reset.css';
 import './assets/layout/style.css';
 
+// // Create a new store instance.
+// const store = createStore({
+//     state () {
+//       return {
+//         count: 0
+//       }
+//     },
+//     mutations: {
+//       increment (state) {
+//         state.count++
+//       }
+//     }
+//   })
+
 const app = createApp(App);
 
 app.use(PrimeVue, {ripple: true});

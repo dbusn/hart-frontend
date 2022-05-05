@@ -29,7 +29,7 @@
 </template>
 
 
-  <script lang="ts">
+<script lang="ts">
 // import {createApp, defineComponent, ref} from "vue";
 // import APIWrapper from "@/backend.api";
 

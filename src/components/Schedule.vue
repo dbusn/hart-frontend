@@ -53,7 +53,7 @@ import ActivityLogger from "@/helpers/logging";
 
 export default defineComponent({
   name: 'Schedule',
-  extends: {Button, Step, Test, WordTest},
+  components: {Button, Step, Test, WordTest},
 
   setup: async () => {
 
@@ -176,7 +176,6 @@ export default defineComponent({
         const selectedPhonemes = stepToPhoneme[i];
         const oldPhonemes = i > 1 ? testToPhoneme[i - 1] : [];
 
-
         const div = document.createElement('div');
         stepDad.appendChild(div);
         const app = createApp(Step, {"selectedPhonemes" : selectedPhonemes, "oldPhonemes" : oldPhonemes, "StepNumber" : i})
@@ -260,7 +259,6 @@ export default defineComponent({
       wordDad.appendChild(div);
       const app = createApp(WordTest, {"testWords" : testWords, "WordNumber" : i, "phonemes" : testToPhoneme[i]})
       app.mount(div);
-
     }
 
     function sendInfo() {
