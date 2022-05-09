@@ -19,8 +19,14 @@ export default defineComponent({
   props: ["user"],
   components: { SelectButton, Button },
 
-  async setup() {
-    var currentCombination : [String] = getNewCombination();
+  setup() {
+    // var currentCombination: [String] = getNewCombination();
+    var currentCombination: [String];
+    initialize();
+
+    async function initialize() {
+      currentCombination = await getNewCombination();
+    }
 
     const selectedScale = ref();
     const scale = [
@@ -39,17 +45,14 @@ export default defineComponent({
     async function getNewCombination() {
       var combination = await APIWrapper.getCombination();
       console.log(combination.phonemes);
-      var realComb : [String] = combination.phonemes;
-      // if (realComb == null) {
-      //   var empty : String[] = [];
-      //   return empty;
-      // }
+      var realComb: [String] = combination.phonemes;
+
       return realComb;
     }
 
     // eslint-disable-next-line no-unused-vars
     function sendPattern(patternID: number) {
-      const patternName = currentCombination[patternID];
+      const patternName = currentCombination[patternID]
       const json = { phonemes: [patternName] };
       APIWrapper.sendCombinationMicroncontroller(json);
       console.log("Pattern" + patternName + "sent to the microcontroller");
@@ -57,12 +60,14 @@ export default defineComponent({
 
     return {
       getNewCombination,
-      currentCombination,
       selectedScale,
       scale,
       submitRating,
       sendPattern,
     };
+  },
+  created() {
+    document.title = "HART Prototype - Experiment";
   },
 });
 </script>
