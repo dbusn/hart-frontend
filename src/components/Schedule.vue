@@ -17,7 +17,7 @@
 
 
     <Panel header="Follow the steps" class="p-shadow-4" >
-      <p>You are going to learn the phonemes step by step. Complete the steps and go on to the test before going to the next step.</p>
+      <p>You are going to learn the phonemes step by step. Complete the steps and go on to the test before going to the next step. You are now at step {{ prog }}</p>
       <div v-for="number in stepNumbers" v-bind:key="number" style="display: inline-block; width: 100px;">
         <Button @click="ViewStep(number)" class="p-shadow-2" style="padding: 0.9rem; width: 80px; margin-top: 30px; margin-left: 15px">Step {{number}}</Button>
         <p><b> </b></p>
@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import {createApp, defineComponent, ref} from "vue";
+import {createApp, defineComponent, ref, provide} from "vue";
 import Button from "primevue/button";
 import Step from "@/components/Step.vue";
 import Test from "@/components/Test.vue";
@@ -55,19 +55,26 @@ export default defineComponent({
   name: 'Schedule',
   extends: {Button, Step, Test, WordTest},
 
-  setup: async () => {
+  async setup() {
+    const prog = ref(0);
+    provide('Progress', prog);
+    console.log(prog);
 
-    /*
+    const updateProg = () => {
+      prog.value = prog.value++;
+    }
+
+    provide('updateProg', updateProg);
+
     const stepNumbers = ref([1, 2, 3, 4, 5, 6]);
     const testNumbers = ref([1, 2, 3, 4, 5, 6]);
     const wordNumbers = ref([2, 4, 6]);
-    */
 
-    const stepNumbers = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
-    const testNumbers = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
-    const wordNumbers = ref([6, 12, 18]);
+    // const stepNumbers = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
+    // const testNumbers = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
+    // const wordNumbers = ref([6, 12, 18]);
 
-    /*const stepToPhoneme: any =
+    const stepToPhoneme: any =
         {
           1: ["T", "D", "P", "B", "TH", "DH"],
           2 : ["AH", "OO", "EE", "UU", "UH", "EH"],
@@ -76,31 +83,30 @@ export default defineComponent({
           5 : ["AE", "AW", "ER", "OY", "OW"],
           6 : ["J", "CH", "SH", "L", "N", "G", "K", "NG"],
         }
-    */
     
-    const stepToPhoneme: any =
-        {
-          1 : ["T", "D"],
-          2 : ["AH", "OO"],
-          3 : ["Y", "W"],
-          4 : ["S", "Z"],
-          5 : ["F", "V"],
-          6 : ["J", "CH"],
-          7 : ["EH", "UH"],
-          8 : ["K", "G", "NG"],
-          9 : ["P", "B"],
-          10 : ["OY", "OW"],
-          11 : ["ZH", "R"],
-          12 : ["TH", "DH"],
-          13 : ["AW", "ER", "AE"],
-          14 : ["OE", "H"],
-          15 : ["L", "SH"],
-          16 : ["UU", "EE"],
-          17 : ["M", "N"],
-          18 : ["IH", "AY", "I"],
-        }
+    // const stepToPhoneme: any =
+    //     {
+    //       1 : ["T", "D"],
+    //       2 : ["AH", "OO"],
+    //       3 : ["Y", "W"],
+    //       4 : ["S", "Z"],
+    //       5 : ["F", "V"],
+    //       6 : ["J", "CH"],
+    //       7 : ["EH", "UH"],
+    //       8 : ["K", "G", "NG"],
+    //       9 : ["P", "B"],
+    //       10 : ["OY", "OW"],
+    //       11 : ["ZH", "R"],
+    //       12 : ["TH", "DH"],
+    //       13 : ["AW", "ER", "AE"],
+    //       14 : ["OE", "H"],
+    //       15 : ["L", "SH"],
+    //       16 : ["UU", "EE"],
+    //       17 : ["M", "N"],
+    //       18 : ["IH", "AY", "I"],
+    //     }
 
-    /*const testToPhoneme: any =
+    const testToPhoneme: any =
         {
           1 : ["T", "D", "P", "B", "TH", "DH", "R"],
           2 : ["AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
@@ -109,29 +115,28 @@ export default defineComponent({
           5 : ["AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
           6 : ["J", "CH", "SH", "L", "N", "G", "K", "NG", "AE", "AW", "ER", "OY", "OW", "OE", "I", "H", "IH", "AY", "Y", "W", "S", "Z", "F", "V", "AH", "OO", "EE", "UU", "UH", "EH", "T", "D", "P", "B", "TH", "DH", "R"],
         }
-    */
     
 
-     const testToPhoneme: any =
-        {
-          1 : ["T", "D"],
-          2 : ["T", "D", "AH", "OO"],
-          3 : ["T", "D", "AH", "OO", "Y", "W"],
-          4 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z"],
-          5 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V"],
-          6 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH"],
-          7 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH"],
-          8 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG"],
-          9 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B"],
-          10 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW"],
-          11 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R"],
-          12 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH"],
-          13 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE"],
-          14 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H"],
-          15 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH"],
-          16 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH", "UU", "EE"],
-          17 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH", "UU", "EE", "M", "N"],
-          18 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH", "UU", "EE", "M", "N", "IH", "AY", "I"],}
+    // const testToPhoneme: any =
+    //     {
+    //       1 : ["T", "D"],
+    //       2 : ["T", "D", "AH", "OO"],
+    //       3 : ["T", "D", "AH", "OO", "Y", "W"],
+    //       4 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z"],
+    //       5 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V"],
+    //       6 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH"],
+    //       7 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH"],
+    //       8 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG"],
+    //       9 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B"],
+    //       10 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW"],
+    //       11 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R"],
+    //       12 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH"],
+    //       13 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE"],
+    //       14 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H"],
+    //       15 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH"],
+    //       16 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH", "UU", "EE"],
+    //       17 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH", "UU", "EE", "M", "N"],
+    //       18 : ["T", "D", "AH", "OO", "Y", "W", "S", "Z", "F", "V", "J", "CH", "EH", "UH", "K", "G", "NG", "P", "B", "OY", "OW", "ZH", "R", "TH", "DH", "AW", "ER", "AE", "OE", "H", "L", "SH", "UU", "EE", "M", "N", "IH", "AY", "I"],}
 
     const wordsArray: any =
         {
@@ -282,6 +287,7 @@ export default defineComponent({
       testNumbers,
       wordNumbers,
       user,
+      prog,
 
       ViewStep,
       ViewTest,

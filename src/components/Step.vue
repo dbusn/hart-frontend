@@ -45,15 +45,6 @@
 // import {createApp, defineComponent, ref} from "vue";
 // import APIWrapper from "@/backend.api";
 
-import {createApp, defineComponent, ref} from "vue";
-import Button from "primevue/button";
-import Panel from "primevue/panel";
-import Checkbox from "primevue/checkbox";
-//import Dropdown from "primevue/dropdown";
-import APIWrapper from "@/backend.api";
-import {getRandom} from "@/helpers/array.helper";
-import ActivityLogger from "@/helpers/logging";
-
 /* This goes inside the template !!
 
   <Panel header="Feeling phonemes" class="p-shadow-4" style="margin-bottom: 50px">
@@ -70,16 +61,30 @@ import ActivityLogger from "@/helpers/logging";
 //This is for the feel the phonemes panel - replace line 88
 /*components: {Panel, Button, Checkbox, Dropdown, Fieldset},*/
 
+import {createApp, defineComponent, ref, inject, Ref} from "vue"; // eslint-disable-line
+import Button from "primevue/button";
+import Panel from "primevue/panel";
+import Checkbox from "primevue/checkbox";
+//import Dropdown from "primevue/dropdown";
+import APIWrapper from "@/backend.api";
+import {getRandom} from "@/helpers/array.helper";
+import ActivityLogger from "@/helpers/logging";
+
 export default defineComponent({
   name: 'Step',
   props: [ "selectedPhonemes", "oldPhonemes", "StepNumber" ],
   components: {Panel, Button, Checkbox},
 
-
   setup(props) {
+    const progress : Ref<number> = inject<Ref<number>>('Progress', ref(10));
+    const update = inject<() => void>('updateProg', () => {});
+    console.log(progress.value);
+    update();
+    console.log(progress.value);
+
     const selectedTrainPhonemes = ref([]);
     const playedPhoneme = ref();
-    const identificationActive = ref(false);
+    const identificationActive : Ref<boolean> = ref(false);
     const fiRows = ref(0);
     /*const dropdownPhoneme = ref();*/
     let correctBtn: HTMLElement | null;
