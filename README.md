@@ -33,3 +33,11 @@ Navigating the frontend will be based on understanding the structure of these .v
 - main.ts covers all the setup with regards to templates used (such as the TabMenu vue template), activating and defining components of the app that are created in main.ts. From here, Vue activates. 
 - backend.api.ts defines all functions for communication with the backend. The first 2 functions are functions to handle HTTP requests. All remaining functions are simply examples of HTTP post and get requests that you can duplicate and modify for your specific implementation. You'll find many uses for these functions in Audio.vue. 
 - router.ts is the exported const that's responsible for navigating the website using the Navbar.vue. If you add a page, you need to add its name and new route here to make it accessible. 
+
+
+# Bugfixes
+If the terminal shows an error involving firebase or firestore and any hint that it cannot find these modules, run the following line in your terminal:
+```
+npm install firebase
+```
+and try running the frontend again. 
