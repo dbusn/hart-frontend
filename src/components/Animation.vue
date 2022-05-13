@@ -6,7 +6,10 @@ export default {
     name: 'Animation',
     props: ['input'], 
     onMounted(props : any) {
-        function createConst(i : number, duration : number) {
+        // Create a general animation variable where you can add the motor, 
+        // duration of the vibration and whether the animation happens simultaneous
+        // or not with parameter moment. 
+        function createConst(i : number, duration : number, moment : string) {
             const motor = [
                 "." + i + ".lightup",
                 { color: "purple" },
@@ -14,13 +17,38 @@ export default {
                     duration: duration,
                     easing: spring(),
                     direction: "alternate"
+                },
+                {
+                    at : moment
                 }
+
             ];
             return motor;
         }
 
+        // Obtain the pattern and initialize variables
         const patterns = props['input'].pattern;
-        
+        var time = 0;
+        var sequence : any = [];
+
+        // Loop through the sequence provided in the pattern
+        patterns.forEach((obj : any) => {
+            const duration : number = obj.time;
+            // The first animation is not simultaneous to one in an earlier iteration. 
+            // Hence, we assign the time as a string to variable moment. 
+            var moment : string = time.toString();
+
+            // Each iteration contains a list of simultaneous vibrations. 
+            obj.iteration.forEach((obj2 : any) => {
+                sequence.push(createConst(obj2.coord, duration, moment));
+                // Simultaneous
+                moment = "<";
+            });
+            time += duration;
+        });
+
+        // Run the timeline
+        timeline(sequence, { delay : 0.5, endDelay : 1.5 });
     }
 }
 
