@@ -139,7 +139,7 @@ export default defineComponent({
         setTimeout(() => {
           btn1.style.background = "green";
           sendPattern(0);
-        }, 500);
+        }, 3000);
 
         setTimeout(() => {
           btn1.style.background = bgColor;
@@ -150,7 +150,7 @@ export default defineComponent({
           btn1.style.background = bgColor;
           btn2.style.background = "green";
           sendPattern(1);
-        }, 1500);
+        }, 3000);
 
         setTimeout(() => {
           btn1.style.background = bgColor;
