@@ -144,18 +144,18 @@ export default defineComponent({
         setTimeout(() => {
           btn1.style.background = bgColor;
           btn2.style.background = bgColor;
-        }, 1000);
+        }, 2500);
 
         setTimeout(() => {
           btn1.style.background = bgColor;
           btn2.style.background = "green";
           sendPattern(1);
-        }, 1500);
+        }, 3000);
 
         setTimeout(() => {
           btn1.style.background = bgColor;
           btn2.style.background = bgColor;
-        }, 2000);
+        }, 5000);
       });
     }
 
