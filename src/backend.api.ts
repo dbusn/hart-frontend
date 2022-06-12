@@ -60,6 +60,15 @@ export default class APIWrapper {
     }
 
     /**
+     *  Get a combination (a pair) of patterns
+     */
+    public static getCombination(): any {
+        return backendApi.get('/api/v1/combination')
+            .then(handleApiResponse)
+            .catch(handleApiErrorResponse);
+    }
+
+    /**
      * Loops over and activates all motors in order.
      */
     public static checkMotors(): any {
@@ -82,6 +91,18 @@ export default class APIWrapper {
      */
     public static async sendPhonemeMicrocontroller(body: any, config?: AxiosRequestConfig) {
         return backendApi.post('/api/v1/microcontroller/phonemes', body, config)
+            .then(handleApiResponse)
+            .catch(handleApiErrorResponse);
+    }
+
+    /**
+     * Sends a combination to the microcontroller via the microcontroller/combination backend endpoint.
+     * 
+     * @param body JSON containing the phonemes to send (check backend endpoint for specification).
+     * @param config (OPTIONAL) Axios config for configuring request.
+     */
+    public static async sendCombinationMicroncontroller(body: any, config?: AxiosRequestConfig) {
+        return backendApi.post('/api/v1/microcontroller/combination', body, config)
             .then(handleApiResponse)
             .catch(handleApiErrorResponse);
     }
