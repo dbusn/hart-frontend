@@ -141,9 +141,9 @@ export default defineComponent({
   name: "Phonemes",
   extends: { Button },
 
-  setup: async () => {
+  async setup() {
     // Get phoneme data from the backend
-    const phonemeData = (await APIWrapper.getPhonemes()).phonemes;
+    const phonemeData = (await APIWrapper.getPhonemes()).phonemes
 
     // Initialize variables used throughout component
     const selectedTrainPhonemes = ref([]);
